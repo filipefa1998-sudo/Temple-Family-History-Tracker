@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#1c2541">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Temple & FH Record">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="icon-192.png">
+<title>Temple & Family History Record</title>
+<style>
+  :root{
+    --ink:#1c2541; --ink2:#141a30; --ground:#f6f2e9; --card:#ffffff;
+    --gold:#b0893a; --gold-soft:#e7dcc1; --gold-line:#d8c9a3;
+    --text:#262a36; --muted:#6d7180; --line:#e6dfce;
+    --danger:#9d3b3b; --ok:#3f7d5a; --warn:#b07d1a; --info:#365a8c;
+    --shadow:0 6px 24px rgba(20,26,48,.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--ground);color:var(--text);line-height:1.45;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%}
+  header.topbar{padding-top:env(safe-area-inset-top)}
+  #gate{padding-top:max(24px,env(safe-area-inset-top));padding-bottom:max(24px,env(safe-area-inset-bottom))}
+  @supports(padding:max(0px)){
+    header.topbar{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+    main{padding-bottom:max(60px,env(safe-area-inset-bottom))}
+  }
+  .serif{font-family:Georgia,"Times New Roman",serif}
+  button{font-family:inherit;cursor:pointer;border:none}
+  input,select,textarea{font-family:inherit;font-size:14px}
+
+  #gate{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+    background:radial-gradient(120% 120% at 50% 0%,#26305a 0%,var(--ink) 45%,var(--ink2) 100%);z-index:50;padding:24px}
+  .gatecard{width:100%;max-width:380px;text-align:center;color:#f3eedf}
+  .crest{width:62px;height:62px;margin:0 auto 18px;border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center}
+  .crest svg{width:32px;height:32px;fill:var(--gold)}
+  .gatecard h1{font-size:24px;font-weight:600;letter-spacing:.5px;margin-bottom:6px}
+  .gatecard .sub{font-size:12.5px;color:#b9c0d8;margin-bottom:6px;letter-spacing:.4px}
+  .gatecard .sacred{font-size:11.5px;color:#8c95b6;font-style:italic;margin-bottom:26px}
+  .gate-in{width:100%;padding:13px 16px;border-radius:11px;border:1px solid #3a426a;background:#1b2240;color:#fff;font-size:15px;margin-bottom:11px}
+  .gate-in::placeholder{color:#6c7498}
+  .gate-in:focus{outline:none;border-color:var(--gold)}
+  .gatebtn{width:100%;margin-top:4px;padding:13px;border-radius:11px;background:var(--gold);color:#241c08;font-weight:700;font-size:14.5px;letter-spacing:.4px}
+  .gatebtn:active{transform:translateY(1px)}
+  .gatebtn[disabled]{opacity:.6;cursor:default}
+  .gatemsg{min-height:18px;margin-top:14px;font-size:12.5px;color:#e8b9b9}
+  .gatemsg.good{color:#a9d8bf}.gatemsg.info{color:#cdb98a}
+  .forgot{margin-top:14px;font-size:12px;color:#8e97bd;background:none;text-decoration:underline}
+  .spinner{width:34px;height:34px;border:3px solid rgba(255,255,255,.18);border-top-color:var(--gold);border-radius:50%;margin:30px auto 0;animation:spin .8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  #app{display:none;min-height:100vh;flex-direction:column}
+  header.topbar{background:var(--ink);color:#fff;padding:0 16px;position:sticky;top:0;z-index:20;box-shadow:0 2px 12px rgba(0,0,0,.18)}
+  .topinner{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:14px;height:58px}
+  .brand{display:flex;align-items:center;gap:10px;font-family:Georgia,serif;font-size:16px;font-weight:600;letter-spacing:.3px;white-space:nowrap}
+  .brand svg{width:20px;height:20px;fill:var(--gold)}
+  nav.tabs{display:flex;gap:4px;margin-left:8px;flex:1}
+  nav.tabs button{background:transparent;color:#c2c8de;padding:8px 13px;border-radius:8px;font-size:13.5px;font-weight:500;white-space:nowrap}
+  nav.tabs button.active{background:rgba(176,137,58,.18);color:var(--gold)}
+  .lockout{background:rgba(255,255,255,.08);color:#dfe3f0;padding:8px 12px;border-radius:8px;font-size:12.5px}
+
+  main{max-width:1180px;margin:0 auto;width:100%;padding:22px 16px 60px;flex:1}
+  .view{display:none}.view.active{display:block}
+  .vhead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+  .vhead h2{font-family:Georgia,serif;font-size:21px;color:var(--ink);font-weight:600}
+  .vhead .note{font-size:12px;color:var(--muted)}
+  .hintline{font-size:12px;color:var(--muted);margin:-8px 0 16px}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:14px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px;box-shadow:var(--shadow);position:relative;overflow:hidden;cursor:pointer;transition:transform .08s,box-shadow .12s}
+  .stat:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(20,26,48,.16)}
+  .stat:active{transform:translateY(0)}
+  .stat::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold)}
+  .stat.alert::before{background:var(--danger)}.stat.info::before{background:var(--info)}.stat.ok::before{background:var(--ok)}
+  .stat .n{font-family:Georgia,serif;font-size:30px;font-weight:700;color:var(--ink);line-height:1}
+  .stat .l{font-size:11.5px;color:var(--muted);margin-top:7px;letter-spacing:.2px}
+  .sectlabel{font-size:11.5px;font-weight:700;letter-spacing:1.2px;color:var(--gold);text-transform:uppercase;margin:26px 0 12px}
+  .sectlabel:first-child{margin-top:0}
+
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+  .toolbar input[type=text],.toolbar select{padding:9px 12px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--text)}
+  .toolbar input[type=text]{flex:1;min-width:160px}
+  .btn{padding:9px 16px;border-radius:9px;font-weight:600;font-size:13.5px}
+  .btn.primary{background:var(--ink);color:#fff}.btn.gold{background:var(--gold);color:#241c08}
+  .btn.ghost{background:#fff;border:1px solid var(--line);color:var(--text)}
+  .btn.danger{background:#fff;border:1px solid var(--danger);color:var(--danger)}
+  .btn:active{transform:translateY(1px)}
+
+  .tablewrap{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:auto}
+  table{width:100%;border-collapse:collapse;font-size:13px;min-width:880px}
+  thead th{background:#2a3358;color:#e9e3d2;text-align:left;padding:11px 12px;font-weight:600;font-size:11.5px;letter-spacing:.4px;white-space:nowrap;position:sticky;top:0}
+  tbody td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:middle}
+  tbody tr{cursor:pointer}
+  tbody tr:hover{background:#faf7ef}
+  tbody tr:nth-child(even){background:#fcfaf4}
+  tbody tr:nth-child(even):hover{background:#f6f1e6}
+  .nm{font-weight:600;color:var(--ink)}
+  .empty{padding:46px 20px;text-align:center;color:var(--muted);font-size:14px}
+
+  .badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .b-ok{background:#e4f1ea;color:var(--ok)}.b-warn{background:#f7ecd2;color:var(--warn)}
+  .b-danger{background:#f6e1e1;color:var(--danger)}.b-info{background:#e3ebf6;color:var(--info)}
+  .b-gold{background:var(--gold-soft);color:#7a5e1d}.b-grey{background:#edeef1;color:var(--muted)}
+
+  .overlay{position:fixed;inset:0;background:rgba(20,26,48,.55);display:none;align-items:flex-start;justify-content:center;z-index:40;padding:24px 14px;overflow:auto}
+  .overlay.show{display:flex}
+  .modal{background:#fff;border-radius:16px;width:100%;max-width:700px;box-shadow:0 18px 50px rgba(0,0,0,.3);overflow:hidden;margin:auto}
+  .mhead{background:var(--ink);color:#fff;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
+  .mhead h3{font-family:Georgia,serif;font-size:18px;font-weight:600}
+  .mhead .x{background:rgba(255,255,255,.12);color:#fff;width:30px;height:30px;border-radius:8px;font-size:18px}
+  .mbody{padding:20px;display:block;max-height:70vh;overflow:auto}
+
+  .wzsec{margin-top:18px;border-top:1px solid var(--line);padding-top:15px}
+  .wzsec:first-child{margin-top:0;border-top:none;padding-top:0}
+  .wzsec h4{font-size:11.5px;font-weight:700;letter-spacing:1px;color:var(--gold);text-transform:uppercase;margin-bottom:3px}
+  .wzsec .hint{font-size:11.5px;color:var(--muted);font-style:italic;margin-bottom:11px}
+  .secgrid{display:grid;grid-template-columns:1fr 1fr;gap:13px 16px}
+  .cond{grid-column:1/-1}.cond.hidden{display:none}
+  .fld{display:flex;flex-direction:column;gap:5px}
+  .fld.full{grid-column:1/-1}
+  .fld label{font-size:11.5px;font-weight:700;color:var(--muted);letter-spacing:.3px;text-transform:uppercase}
+  .fld input,.fld select,.fld textarea{padding:9px 11px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--text)}
+  .fld textarea{resize:vertical;min-height:54px}
+  .fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--gold)}
+  .stepnote{grid-column:1/-1;background:#eef3fb;border:1px solid #d4e0f2;border-radius:9px;padding:9px 12px;font-size:12px;color:var(--info)}
+
+  .flagpanel{background:#fbf7ee;border:1px solid var(--gold-line);border-radius:11px;padding:13px 15px;margin-top:18px}
+  .flagpanel .ttl{font-size:11px;font-weight:700;letter-spacing:.6px;color:#7a5e1d;text-transform:uppercase;margin-bottom:9px}
+  .flagpanel .none{font-size:12.5px;color:var(--ok)}
+  .flagchips{display:flex;flex-wrap:wrap;gap:7px}
+
+  .mfoot{padding:14px 20px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:10px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:var(--shadow);max-width:560px;margin-bottom:16px}
+  .panel h3{font-family:Georgia,serif;font-size:16px;color:var(--ink);margin-bottom:6px}
+  .panel p{font-size:12.5px;color:var(--muted);margin-bottom:14px}
+  .panel .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .smsg{font-size:12.5px;margin-top:10px;min-height:16px}
+  .smsg.ok{color:var(--ok)}.smsg.err{color:var(--danger)}
+  .who{font-size:13px;color:var(--text)}.who b{color:var(--ink)}
+  .privacy{background:#fbf7ee;border:1px solid var(--gold-line);border-radius:12px;padding:14px 16px;font-size:12.5px;color:#6a5a32;max-width:560px;margin-bottom:20px;line-height:1.6}
+  .privacy b{color:#5a4a22}
+
+  /* review / group cards */
+  .rv-printhead{font-size:13px;color:var(--muted);margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+  .rv-printhead b{color:var(--ink);font-family:Georgia,serif;font-size:16px}
+  .rv-toolbar{display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
+  .rv-toolbar select{padding:9px 12px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--text)}
+  .rv-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:22px}
+  .rv-stat{border:1px solid var(--line);border-radius:11px;padding:13px 15px;background:#fff}
+  .rv-stat .n{font-family:Georgia,serif;font-size:26px;font-weight:700;color:var(--ink);line-height:1}
+  .rv-stat .l{font-size:11.5px;color:var(--muted);margin-top:5px}
+  .rv-stat.prep{border-left:4px solid var(--info)}
+  .rv-stat.tmp{border-left:4px solid var(--gold)}
+  .rv-stat.fh{border-left:4px solid var(--ok)}
+  .rv-stat.out{border-left:4px solid var(--danger)}
+  .charts{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:24px}
+  .chartwrap{border:1px solid var(--line);border-radius:11px;padding:14px;background:#fff}
+  .chtitle{font-size:12px;font-weight:700;letter-spacing:.5px;color:var(--gold);text-transform:uppercase;margin-bottom:11px}
+  .chrow{display:flex;align-items:center;gap:8px;margin:5px 0}
+  .chlabel{flex:0 0 140px;font-size:11.5px;color:var(--text);text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .chbar{flex:1;background:#eceae3;border-radius:5px;height:14px;overflow:hidden}
+  .chbar-fill{height:100%;border-radius:5px;min-width:2px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .chval{flex:0 0 26px;font-size:12px;font-weight:700;color:var(--ink);text-align:left}
+  .rv-group{margin-bottom:26px}
+  .rv-group>h3{font-family:Georgia,serif;font-size:16px;color:var(--ink);border-bottom:2px solid var(--gold);padding-bottom:6px;margin-bottom:14px}
+  .rv-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:12px;box-shadow:var(--shadow)}
+  .rv-card[data-id]{cursor:pointer}
+  .rv-card.flag{border-left:4px solid var(--danger)}
+  .rv-name{font-weight:700;color:var(--ink);font-size:15px;margin-bottom:4px}
+  .rv-text{font-size:13.5px;color:var(--text);line-height:1.55}
+  .rv-actions{list-style:none;margin-top:9px;padding:0}
+  .rv-actions li{font-size:13px;color:#7a3a3a;margin:3px 0;padding-left:22px;position:relative}
+  .rv-actions li::before{content:"\2610";position:absolute;left:0;top:-1px;font-size:16px;color:#9d3b3b}
+  .rv-empty{color:var(--muted);font-size:14px}
+  .rv-act{font-size:12.5px;color:var(--info);margin-top:8px}
+  .rv-act b{color:var(--ink)}
+  .extlink{display:inline-block;margin-top:12px;margin-right:10px;font-size:13px;font-weight:600;color:#7a5e1d;text-decoration:none;border:1px solid var(--gold-line);border-radius:9px;padding:7px 13px;background:#fbf7ee}
+  .extlink:hover{background:var(--gold-soft)}
+  .logdel{float:right;background:#f6e1e1;color:#9d3b3b;border-radius:7px;width:26px;height:26px;font-size:16px;line-height:1;margin-left:8px}
+  .panel .row select,.panel .row input[type=date]{padding:9px 12px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--text)}
+  .cohorthead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .cohorthead .meta{font-size:12px;color:var(--muted)}
+
+  @media print{
+    #gate,.overlay,.topbar,.no-print{display:none !important}
+    #app{display:block !important}
+    main{padding:0 !important;max-width:none !important}
+    .view:not(.active){display:none !important}
+    .view.active{display:block !important}
+    body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .rv-card,.chartwrap,.rv-stat{box-shadow:none;border:1px solid #ccc;break-inside:avoid;page-break-inside:avoid}
+    .charts{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:640px){
+    .secgrid{grid-template-columns:1fr}
+    .charts{grid-template-columns:1fr}
+    .topinner{height:auto;padding:10px 0;flex-wrap:wrap}
+    nav.tabs{order:3;width:100%;margin-left:0;overflow-x:auto}nav.tabs button{flex:0 0 auto;padding:8px 11px}
+  }
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <div class="gatecard">
+    <div class="crest"><svg viewBox="0 0 24 24"><path d="M12 1.6c-2 2.7-4 4-6 4 .3 4.8 2.4 11 6 14.8 3.6-3.8 5.7-10 6-14.8-2 0-4-1.3-6-4zM12 6.4l1 2.2 2.4.3-1.8 1.6.5 2.4-2.1-1.2-2.1 1.2.5-2.4-1.8-1.6 2.4-.3 1-2.2z"/></svg></div>
+    <h1 class="serif">Temple &amp; Family History</h1>
+    <div class="sub">Ward Temple &amp; Family History Leadership</div>
+    <div class="sacred">Held in confidence — authorized members only</div>
+    <div id="gateLoading"><div class="spinner"></div></div>
+    <div id="gateLogin" style="display:none">
+      <input id="email" class="gate-in" type="email" placeholder="Email" autocomplete="username">
+      <input id="password" class="gate-in" type="password" placeholder="Password" autocomplete="current-password">
+      <button class="gatebtn" id="signinBtn">Sign In</button>
+      <div class="gatemsg" id="gateMsg"></div>
+      <button class="forgot" id="forgotBtn">Forgot password?</button>
+    </div>
+  </div>
+</div>
+
+<div id="app">
+  <header class="topbar">
+    <div class="topinner">
+      <div class="brand serif"><svg viewBox="0 0 24 24"><path d="M12 1.6c-2 2.7-4 4-6 4 .3 4.8 2.4 11 6 14.8 3.6-3.8 5.7-10 6-14.8-2 0-4-1.3-6-4z"/></svg> Temple &amp; Family History</div>
+      <nav class="tabs">
+        <button data-view="dash" class="active">Dashboard</button>
+        <button data-view="members">Members</button>
+        <button data-view="classes">Classes</button>
+        <button data-view="fh">Family History</button>
+        <button data-view="review">Council Report</button>
+        <button data-view="history">History</button>
+        <button data-view="settings">Settings</button>
+      </nav>
+      <button class="lockout" id="signoutBtn">Sign Out</button>
+    </div>
+  </header>
+  <main>
+
+    <section class="view active" id="view-dash">
+      <div class="vhead"><h2 class="serif">Temple &amp; Family History Overview</h2><span class="note" id="updatedNote"></span></div>
+      <div class="hintline">Tap any card to open the matching list of members.</div>
+      <div class="sectlabel">Temple Preparation</div><div class="grid" id="cardsPrep"></div>
+      <div class="sectlabel">Endowment &amp; Ordinances</div><div class="grid" id="cardsTemple"></div>
+      <div class="sectlabel">Family History</div><div class="grid" id="cardsFH"></div>
+      <div class="sectlabel">Rotation Groups &amp; Follow-Up</div><div class="grid" id="cardsFlags"></div>
+      <div>
+        <a class="extlink" href="https://filipefa1998-sudo.github.io/focus5-tracker/" target="_blank" rel="noopener">Open the Focus 5 Tracker ↗</a>
+      </div>
+    </section>
+
+    <section class="view" id="view-members">
+      <div class="vhead"><h2 class="serif">Members</h2><button class="btn gold" id="addBtn">+ Add Member</button></div>
+      <div class="toolbar">
+        <input type="text" id="search" placeholder="Search by name or household…">
+        <select id="filter">
+          <option value="all">All members</option>
+          <option value="flagged">Has follow-up flag</option>
+          <option value="prepNow">Currently in prep class</option>
+          <option value="prepNext">Next class — upcoming</option>
+          <option value="prepDone">Completed prep class</option>
+          <option value="prepLapsed">Prep class lapsed — reach out</option>
+          <option value="endowSet">Endowment date set</option>
+          <option value="endowed">Endowed</option>
+          <option value="endowNeed">Prep done — endowment not set</option>
+          <option value="submitting">Actively submitting names</option>
+          <option value="indexing">Actively indexing</option>
+          <option value="gen6">Family at 6+ generations</option>
+          <option value="genNeed">Under 6 generations</option>
+          <option value="rotNow">Currently rotating (FH group)</option>
+          <option value="rotNext">Upcoming rotation</option>
+          <option value="consultant">Temple &amp; FH consultants / leaders</option>
+        </select>
+      </div>
+      <div class="tablewrap">
+        <table>
+          <thead><tr>
+            <th>Name</th><th>Household</th><th>Prep Class</th><th>Completed</th>
+            <th>Endowment</th><th>Submitting</th><th>Indexing</th>
+            <th>Generations</th><th>FH Group</th><th>Action</th>
+          </tr></thead>
+          <tbody id="membersBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="view" id="view-classes">
+      <div class="vhead"><h2 class="serif">Temple Preparation Classes</h2><button class="btn primary no-print" id="printClassesBtn">Print / Save as PDF</button></div>
+      <div class="hintline no-print">Grouped by cohort. Tap any name to edit. Shows who is in class now, who is lined up next, completion dates, and scheduled endowments.</div>
+      <div id="classesHeader" class="rv-printhead"></div>
+      <div id="classesBody"></div>
+    </section>
+
+    <section class="view" id="view-fh">
+      <div class="vhead"><h2 class="serif">Family History &amp; Indexing</h2><button class="btn primary no-print" id="printFhBtn">Print / Save as PDF</button></div>
+      <div class="hintline no-print">Participation, pedigree depth, and the rotation-group board. Tap any name to edit.</div>
+      <div id="fhHeader" class="rv-printhead"></div>
+      <div id="fhBody"></div>
+    </section>
+
+    <section class="view" id="view-review">
+      <div class="vhead">
+        <h2 class="serif">Council Report</h2>
+        <button class="btn primary no-print" id="printBtn">Print / Save as PDF</button>
+      </div>
+      <div class="rv-toolbar no-print">
+        <select id="reviewFilter">
+          <option value="all">Full report (stats + everyone)</option>
+          <option value="priorities">Priorities + follow-up only</option>
+        </select>
+        <span class="note">Tap any name to edit. Use Print for a ward-council copy.</span>
+      </div>
+      <div id="reviewHeader" class="rv-printhead"></div>
+      <div id="reviewBody"></div>
+    </section>
+
+    <section class="view" id="view-history">
+      <div class="vhead"><h2 class="serif">History &amp; Trends</h2><button class="btn primary no-print" id="printHistBtn">Print / Save as PDF</button></div>
+      <div class="panel no-print" style="max-width:none">
+        <h3>Log a Milestone</h3>
+        <p>Each entry is stamped with its date so quarter-over-quarter trends build over time. Marking a prep class “Completed,” an endowment “Endowed,” or a Quarter Plan goal “Completed” also records here automatically.</p>
+        <div class="row">
+          <select id="logMember"></select>
+          <select id="logMilestone"></select>
+          <input type="date" id="logDate">
+          <button class="btn gold" id="addLogBtn">Add to history</button>
+        </div>
+        <div class="smsg" id="logMsg"></div>
+      </div>
+      <div id="historyHeader" class="rv-printhead"></div>
+      <div id="historyBody"></div>
+    </section>
+
+    <section class="view" id="view-settings">
+      <div class="vhead"><h2 class="serif">Settings</h2></div>
+      <div class="privacy"><b>Where your data lives:</b> Member records are stored in this tracker's own private Firebase project and synced live across leadership. Access requires a signed-in, authorized account, enforced by Firestore security rules. The session signs out automatically after 30 minutes of inactivity.</div>
+      <div class="panel">
+        <h3>Signed In</h3><p>You are signed in to the temple &amp; family history record.</p>
+        <div class="who">Account: <b id="meEmail">—</b></div>
+        <div class="row" style="margin-top:14px"><button class="btn ghost" id="resetPwBtn">Send password reset email</button></div>
+        <div class="smsg" id="pwMsg"></div>
+      </div>
+      <div class="panel">
+        <h3>Backup &amp; Migration</h3><p>Export a JSON backup of all members, or import records into the cloud.</p>
+        <div class="row">
+          <button class="btn gold" id="exportBtn">Export backup</button>
+          <button class="btn ghost" id="importBtn">Import into cloud</button>
+          <input type="file" id="importFile" accept="application/json" style="display:none">
+        </div>
+        <div class="smsg" id="ioMsg"></div>
+      </div>
+      <div class="panel">
+        <h3>Related Tools</h3><p>Open the other ward trackers.</p>
+        <div class="row">
+          <a class="extlink" style="margin-top:0" href="https://filipefa1998-sudo.github.io/focus5-tracker/" target="_blank" rel="noopener">Focus 5 Tracker ↗</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <div class="mhead"><h3 class="serif" id="modalTitle">Add Member</h3><button class="x" id="closeModal">&times;</button></div>
+    <div class="mbody" id="modalBody"></div>
+    <div class="mfoot">
+      <button class="btn danger" id="deleteBtn" style="visibility:hidden">Delete</button>
+      <div style="display:flex;gap:10px">
+        <button class="btn ghost" id="cancelBtn">Cancel</button>
+        <button class="btn primary" id="saveBtn">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, collection, onSnapshot, doc, setDoc, deleteDoc }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+/* Dedicated Firebase project for the Temple & Family History record. */
+const firebaseConfig = {
+  apiKey: "AIzaSyDO3n2x7XJmzWnoVpZcLAVkOwbjFWIByd0",
+  authDomain: "temple-family-history-tracker.firebaseapp.com",
+  projectId: "temple-family-history-tracker",
+  storageBucket: "temple-family-history-tracker.firebasestorage.app",
+  messagingSenderId: "615799054242",
+  appId: "1:615799054242:web:969d28d465aecf09ce9cfb"
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const COL = "members";
+const LEDGER = "ledger";
+const STALE_DAYS = 21;
+const GEN_GOAL = 6;
+const MILESTONES = ["Enrolled in Temple Prep","Completed Temple Prep Class","Limited-Use Recommend (Baptisms)","Temple Recommend (Full)","Endowment","Sealing — Spouse","Sealing — Family","Reached 6 Generations","Names Submitted to Temple","Completed FH Rotation","Other"];
+
+const OPTS = {
+  prepStatus:["Not Enrolled","Upcoming — Next Class","Currently Enrolled","Attending","Completed","Did Not Complete"],
+  endowmentStatus:["Not Endowed","Recommend in Progress","Date Set","Endowed"],
+  participation:["No","Occasionally","Active"],
+  rotationStatus:["Not Scheduled","Upcoming","Currently Rotating","Completed"],
+  consultant:["No","Temple & FH Consultant","FH Group Leader"],
+  planStatus:["Not started","In progress","Completed"]
+};
+
+let data=[], editingId=null, unsub=null;
+let ledger=[], unsubL=null;
+const $=function(id){ return document.getElementById(id); };
+function esc(s){ return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+function daysSince(d){ const x=new Date(d); return isNaN(x)?null:(Date.now()-x)/86400000; }
+function genNum(p){ const n=parseInt(p.generations,10); return isNaN(n)?0:n; }
+function inPrepNow(p){ return p.prepStatus==="Currently Enrolled"||p.prepStatus==="Attending"; }
+function prepDone(p){ return p.prepStatus==="Completed"; }
+function curQuarter(){ const n=new Date(); return n.getFullYear()+" Q"+(Math.floor(n.getMonth()/3)+1); }
+function quarterOf(s){ const d=new Date(s); if(isNaN(d)) return null; return d.getFullYear()+" Q"+(Math.floor(d.getMonth()/3)+1); }
+function qIdx(q){ if(!q||q==="Unset") return null; const m=/^(\d{4}) Q([1-4])$/.exec(q); return m?(+m[1])*4+(+m[2]):null; }
+function quarterOptions(){ const n=new Date(); let y=n.getFullYear(), q=Math.floor(n.getMonth()/3)+1; const a=["Unset"]; for(let i=0;i<5;i++){ a.push(y+" Q"+q); q++; if(q>4){q=1;y++;} } return a; }
+
+/* ===================== IDLE TIMEOUT (30 min) ===================== */
+let idleTimer=null; const IDLE_MS=30*60*1000;
+function clearIdle(){ if(idleTimer){ clearTimeout(idleTimer); idleTimer=null; } }
+function armIdle(){ if(!auth.currentUser) return; clearIdle(); idleTimer=setTimeout(function(){ try{ sessionStorage.setItem("tfh_idle","1"); }catch(e){} signOut(auth); }, IDLE_MS); }
+["mousemove","keydown","click","touchstart","scroll"].forEach(function(ev){ document.addEventListener(ev,function(){ if(auth.currentUser) armIdle(); },{passive:true}); });
+
+/* ===================== AUTH ===================== */
+const gate=$("gate"), appEl=$("app"), gateLoading=$("gateLoading"), gateLogin=$("gateLogin"), gateMsg=$("gateMsg");
+onAuthStateChanged(auth, function(user){
+  if(user){
+    gate.style.display="none"; appEl.style.display="flex";
+    $("meEmail").textContent=user.email||"(unknown)"; armIdle(); startSync();
+  }else{
+    clearIdle(); if(unsub){ unsub(); unsub=null; } if(unsubL){ unsubL(); unsubL=null; }
+    appEl.style.display="none"; gate.style.display="flex";
+    gateLoading.style.display="none"; gateLogin.style.display="block";
+    let idledOut=false; try{ idledOut=sessionStorage.getItem("tfh_idle")==="1"; sessionStorage.removeItem("tfh_idle"); }catch(e){}
+    if(idledOut){ gateMsg.className="gatemsg info"; gateMsg.textContent="Signed out after 30 minutes of inactivity."; }
+    $("email").focus();
+  }
+});
+function authError(code){
+  const map={"auth/invalid-email":"That email address isn't valid.","auth/invalid-credential":"Email or password is incorrect.",
+    "auth/wrong-password":"Email or password is incorrect.","auth/user-not-found":"No account found for that email.",
+    "auth/too-many-requests":"Too many attempts. Please wait a moment and try again.","auth/network-request-failed":"Network error. Check your connection."};
+  return map[code]||"Sign-in failed. Please try again.";
+}
+$("signinBtn").addEventListener("click", doSignin);
+$("password").addEventListener("keydown", function(e){ if(e.key==="Enter") doSignin(); });
+$("email").addEventListener("keydown", function(e){ if(e.key==="Enter") $("password").focus(); });
+function doSignin(){
+  const em=$("email").value.trim(), pw=$("password").value;
+  if(!em||!pw){ gateMsg.className="gatemsg"; gateMsg.textContent="Enter your email and password."; return; }
+  $("signinBtn").disabled=true; gateMsg.textContent="";
+  signInWithEmailAndPassword(auth,em,pw).then(function(){ $("password").value=""; })
+    .catch(function(err){ gateMsg.className="gatemsg"; gateMsg.textContent=authError(err.code); })
+    .finally(function(){ $("signinBtn").disabled=false; });
+}
+$("forgotBtn").addEventListener("click", function(){
+  const em=$("email").value.trim();
+  if(!em){ gateMsg.className="gatemsg"; gateMsg.textContent="Enter your email above first, then tap Forgot password."; return; }
+  sendPasswordResetEmail(auth,em).then(function(){ gateMsg.className="gatemsg good"; gateMsg.textContent="Reset email sent — check your inbox."; })
+    .catch(function(err){ gateMsg.className="gatemsg"; gateMsg.textContent=authError(err.code); });
+});
+$("signoutBtn").addEventListener("click", function(){ signOut(auth); });
+
+/* ===================== FIRESTORE ===================== */
+function startSync(){
+  if(!unsub){
+    unsub=onSnapshot(collection(db,COL), function(snap){
+      data=[]; snap.forEach(function(d){ const o=d.data(); o.id=d.id; data.push(o); });
+      data.sort(function(a,b){ return (a.name||"").localeCompare(b.name||""); });
+      renderAll();
+    }, function(err){
+      $("membersBody").innerHTML='<tr><td colspan="10" class="empty">Could not load records: '+esc(err.code||err.message)+'. Check Firestore rules / authorization.</td></tr>';
+    });
+  }
+  if(!unsubL){
+    unsubL=onSnapshot(collection(db,LEDGER), function(snap){
+      ledger=[]; snap.forEach(function(d){ const o=d.data(); o.id=d.id; ledger.push(o); });
+      renderHistory();
+    }, function(err){ /* ledger empty or rules not yet published */ });
+  }
+}
+function writeMember(rec){ return setDoc(doc(db,COL,rec.id),rec,{merge:true}); }
+function removeMember(id){ return deleteDoc(doc(db,COL,id)); }
+function writeLedger(e){ e.id=e.id||("l"+Date.now()+Math.floor(Math.random()*1000)); return setDoc(doc(db,LEDGER,e.id),e,{merge:true}); }
+function removeLedger(id){ return deleteDoc(doc(db,LEDGER,id)); }
+
+/* ===================== NAV ===================== */
+function gotoView(v){
+  document.querySelectorAll("nav.tabs button").forEach(function(x){ x.classList.toggle("active", x.dataset.view===v); });
+  document.querySelectorAll(".view").forEach(function(s){ s.classList.remove("active"); });
+  $("view-"+v).classList.add("active");
+  window.scrollTo(0,0);
+}
+document.querySelectorAll("nav.tabs button").forEach(function(b){ b.addEventListener("click", function(){ gotoView(b.dataset.view); }); });
+
+/* ===================== FLAGS ===================== */
+function computeFlags(p){
+  const f=[];
+  if(inPrepNow(p)){
+    if(!p.lastAttended) f.push({t:"Confirm class attendance",c:"b-warn"});
+    else{ const ds=daysSince(p.lastAttended); if(ds!==null && ds>STALE_DAYS) f.push({t:"Reach out — class lapsed",c:"b-danger"}); }
+  }
+  if(prepDone(p) && p.endowmentStatus!=="Endowed" && p.endowmentStatus!=="Date Set" && p.endowmentStatus!=="Recommend in Progress"){
+    f.push({t:"Prep done — start endowment path",c:"b-warn"});
+  }
+  if(p.endowmentStatus==="Date Set" && !p.endowmentDate) f.push({t:"Record the endowment date",c:"b-warn"});
+  if(p.rotationStatus==="Currently Rotating" && p.rotationEnd){
+    const ds=daysSince(p.rotationEnd); if(ds!==null && ds>0) f.push({t:"Rotation ended — rotate next group",c:"b-info"});
+  }
+  return f;
+}
+
+/* ===================== DASHBOARD ===================== */
+function cnt(fn){ return data.filter(fn).length; }
+function sum(fn){ return data.reduce(function(a,p){ return a+(fn(p)||0); },0); }
+function prepLapsed(p){ if(!inPrepNow(p)) return false; if(!p.lastAttended) return true; const ds=daysSince(p.lastAttended); return ds!==null&&ds>STALE_DAYS; }
+function renderDash(){
+  const prep=[
+    ["Members Tracked",data.length,"","all"],
+    ["Currently in Prep Class",cnt(inPrepNow),"info","prepNow"],
+    ["Next Class — Upcoming",cnt(function(p){return p.prepStatus==="Upcoming — Next Class";}),"","prepNext"],
+    ["Completed Prep Class",cnt(prepDone),"ok","prepDone"]
+  ];
+  const temple=[
+    ["Endowment Date Set",cnt(function(p){return p.endowmentStatus==="Date Set";}),"info","endowSet"],
+    ["Endowed",cnt(function(p){return p.endowmentStatus==="Endowed";}),"ok","endowed"],
+    ["Recommend in Progress",cnt(function(p){return p.endowmentStatus==="Recommend in Progress";}),"","endowNeed"],
+    ["Prep Done — No Endowment Set",cnt(function(p){return prepDone(p)&&p.endowmentStatus!=="Endowed"&&p.endowmentStatus!=="Date Set";}),"alert","endowNeed"]
+  ];
+  const fh=[
+    ["Actively Submitting Names",cnt(function(p){return p.submitting==="Active";}),"ok","submitting"],
+    ["Actively Indexing",cnt(function(p){return p.indexing==="Active";}),"ok","indexing"],
+    ["Families at "+GEN_GOAL+"+ Generations",cnt(function(p){return genNum(p)>=GEN_GOAL;}),"info","gen6"],
+    ["Names Reserved for Temple",sum(function(p){return parseInt(p.namesReserved,10)||0;}),"","all"]
+  ];
+  const flags=[
+    ["Currently Rotating (FH)",cnt(function(p){return p.rotationStatus==="Currently Rotating";}),"info","rotNow"],
+    ["Upcoming Rotation",cnt(function(p){return p.rotationStatus==="Upcoming";}),"","rotNext"],
+    ["Prep Class Lapsed",cnt(prepLapsed),"alert","prepLapsed"],
+    ["Members Flagged",cnt(function(p){return computeFlags(p).length>0;}),"alert","flagged"]
+  ];
+  function fill(id,arr){ $(id).innerHTML=arr.map(function(c){ return '<div class="stat '+c[2]+'" data-filter="'+c[3]+'"><div class="n">'+c[1]+'</div><div class="l">'+c[0]+'</div></div>'; }).join(""); }
+  fill("cardsPrep",prep); fill("cardsTemple",temple); fill("cardsFH",fh); fill("cardsFlags",flags);
+  $("updatedNote").textContent=data.length?(data.length+" members on record"):"No members entered yet";
+}
+$("view-dash").addEventListener("click", function(e){
+  const card=e.target.closest(".stat[data-filter]");
+  if(card){ gotoView("members"); $("filter").value=card.dataset.filter; renderMembers(); }
+});
+
+/* ===================== MEMBERS ROSTER ===================== */
+function badge(val,map){ return '<span class="badge '+(map[val]||"b-grey")+'">'+(esc(val)||"—")+'</span>'; }
+const prepMap={"Completed":"b-ok","Attending":"b-info","Currently Enrolled":"b-info","Upcoming — Next Class":"b-gold","Did Not Complete":"b-warn","Not Enrolled":"b-grey"};
+const endMap={"Endowed":"b-ok","Date Set":"b-gold","Recommend in Progress":"b-info","Not Endowed":"b-grey"};
+const partMap={"Active":"b-ok","Occasionally":"b-warn","No":"b-grey"};
+
+function passesFilter(p,f){
+  switch(f){
+    case "flagged": return computeFlags(p).length>0;
+    case "prepNow": return inPrepNow(p);
+    case "prepNext": return p.prepStatus==="Upcoming — Next Class";
+    case "prepDone": return prepDone(p);
+    case "prepLapsed": return prepLapsed(p);
+    case "endowSet": return p.endowmentStatus==="Date Set";
+    case "endowed": return p.endowmentStatus==="Endowed";
+    case "endowNeed": return prepDone(p)&&p.endowmentStatus!=="Endowed";
+    case "submitting": return p.submitting==="Active";
+    case "indexing": return p.indexing==="Active";
+    case "gen6": return genNum(p)>=GEN_GOAL;
+    case "genNeed": return genNum(p)<GEN_GOAL;
+    case "rotNow": return p.rotationStatus==="Currently Rotating";
+    case "rotNext": return p.rotationStatus==="Upcoming";
+    case "consultant": return p.consultant&&p.consultant!=="No";
+    default: return true;
+  }
+}
+function genBadge(p){
+  const n=genNum(p);
+  if(n>=GEN_GOAL) return '<span class="badge b-gold">'+n+' · goal</span>';
+  if(n>0) return '<span class="badge b-info">'+n+'</span>';
+  return '<span class="badge b-grey">—</span>';
+}
+function renderMembers(){
+  const q=$("search").value.toLowerCase(), f=$("filter").value;
+  const rows=data.filter(function(p){ return passesFilter(p,f)&&(!q||((p.name||"").toLowerCase().indexOf(q)>=0)||((p.household||"").toLowerCase().indexOf(q)>=0)); });
+  const body=$("membersBody");
+  if(!rows.length){ body.innerHTML='<tr><td colspan="10" class="empty">No members match. Use “+ Add Member” to begin.</td></tr>'; return; }
+  body.innerHTML=rows.map(function(p){
+    const fl=computeFlags(p);
+    const action=fl.length?'<span class="badge b-danger" title="'+esc(fl.map(function(x){return x.t;}).join(" • "))+'">&#9873; '+fl.length+'</span>':'<span class="badge b-grey">—</span>';
+    const comp=p.prepCompleted?'<span class="badge b-ok">'+esc(fmtDate(p.prepCompleted))+'</span>':'<span class="badge b-grey">—</span>';
+    return '<tr data-id="'+esc(p.id)+'"><td class="nm">'+esc(p.name||"—")+'</td>'+
+      '<td>'+esc(p.household||"—")+'</td>'+
+      '<td>'+badge(p.prepStatus,prepMap)+'</td>'+
+      '<td>'+comp+'</td>'+
+      '<td>'+badge(p.endowmentStatus,endMap)+'</td>'+
+      '<td>'+badge(p.submitting,partMap)+'</td>'+
+      '<td>'+badge(p.indexing,partMap)+'</td>'+
+      '<td>'+genBadge(p)+'</td>'+
+      '<td>'+(p.fhGroup?'<span class="badge b-info">'+esc(p.fhGroup)+'</span>':'<span class="badge b-grey">—</span>')+'</td>'+
+      '<td>'+action+'</td></tr>';
+  }).join("");
+  body.querySelectorAll("tr").forEach(function(tr){ tr.addEventListener("click", function(){ openModal(tr.dataset.id); }); });
+}
+$("search").addEventListener("input", renderMembers);
+$("filter").addEventListener("change", renderMembers);
+
+/* ===================== SHARED HELPERS ===================== */
+function fmtDate(s){ const d=new Date(s); if(isNaN(d)) return s; return d.toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"}); }
+function statusBadge(s){ const m={"Completed":"b-ok","In progress":"b-info","Not started":"b-grey"}; return '<span class="badge '+(m[s]||"b-grey")+'">'+(esc(s)||"—")+'</span>'; }
+function barChart(title,rows){
+  const max=Math.max(1,Math.max.apply(null,rows.map(function(r){return r.value;})));
+  let h='<div class="chartwrap"><div class="chtitle">'+title+'</div>';
+  rows.forEach(function(r){
+    const pct=Math.round(r.value/max*100);
+    h+='<div class="chrow"><div class="chlabel">'+esc(r.label)+'</div><div class="chbar"><div class="chbar-fill" style="width:'+pct+'%;background:'+r.color+'"></div></div><div class="chval">'+r.value+'</div></div>';
+  });
+  return h+'</div>';
+}
+const C={ink:"#1c2541",gold:"#b0893a",info:"#365a8c",ok:"#3f7d5a",warn:"#b07d1a",danger:"#9d3b3b",grey:"#9aa0ad"};
+
+/* ===================== CLASSES VIEW ===================== */
+function classCard(p){
+  const bits=[];
+  if(p.lastAttended) bits.push("last attended "+fmtDate(p.lastAttended));
+  if(p.prepStart) bits.push("started "+fmtDate(p.prepStart));
+  const fl=computeFlags(p);
+  const endow=(p.endowmentStatus&&p.endowmentStatus!=="Not Endowed")
+    ? '<div class="rv-act"><b>Endowment:</b> '+esc(p.endowmentStatus)+(p.endowmentDate?' — '+esc(fmtDate(p.endowmentDate)):'')+(p.endowmentTemple?' · '+esc(p.endowmentTemple):'')+'</div>' : '';
+  return '<div class="rv-card'+(fl.length?' flag':'')+'" data-id="'+esc(p.id)+'">'+
+    '<div class="rv-name">'+esc(p.name||"—")+(p.phone?' &nbsp;<span style="font-weight:400;color:#6d7180">'+esc(p.phone)+'</span>':'')+'</div>'+
+    (bits.length?'<div class="rv-text">'+esc(bits.join(" · "))+'</div>':'')+
+    (p.prepCompleted?'<div class="rv-act"><b>Completed:</b> '+esc(fmtDate(p.prepCompleted))+'</div>':'')+
+    endow+
+    (fl.length?'<ul class="rv-actions">'+fl.map(function(x){return '<li>'+esc(x.t)+'</li>';}).join("")+'</ul>':'')+
+  '</div>';
+}
+function cohortGroup(title,arr,meta){
+  if(!arr.length) return '<div class="rv-group"><h3>'+title+' (0)</h3><div class="rv-empty">None right now.</div></div>';
+  return '<div class="rv-group"><h3 class="cohorthead"><span>'+title+' ('+arr.length+')</span>'+(meta?'<span class="meta">'+meta+'</span>':'')+'</h3>'+arr.map(classCard).join("")+'</div>';
+}
+function renderClasses(){
+  if(!data.length){ $("classesHeader").innerHTML=""; $("classesBody").innerHTML='<div class="rv-empty">No members entered yet.</div>'; return; }
+  const now=data.filter(inPrepNow);
+  const next=data.filter(function(p){ return p.prepStatus==="Upcoming — Next Class"; });
+  const done=data.filter(prepDone).sort(function(a,b){ return (b.prepCompleted||"").localeCompare(a.prepCompleted||""); });
+  const dnc=data.filter(function(p){ return p.prepStatus==="Did Not Complete"; });
+  const endowSet=data.filter(function(p){ return p.endowmentStatus==="Date Set"; }).sort(function(a,b){ return (a.endowmentDate||"").localeCompare(b.endowmentDate||""); });
+
+  $("classesHeader").innerHTML='<b>Temple Preparation — Class Overview</b><br>Generated '+fmtDate(new Date().toISOString())+
+    ' · '+now.length+' in class now · '+next.length+' lined up for the next class · '+done.length+' completed.';
+
+  // group "now" by cohort label
+  const byCohort={};
+  now.forEach(function(p){ const k=p.cohort||"Current Class"; (byCohort[k]=byCohort[k]||[]).push(p); });
+  let html='<div class="rv-stats">'+
+    '<div class="rv-stat prep"><div class="n">'+now.length+'</div><div class="l">Currently in prep class</div></div>'+
+    '<div class="rv-stat"><div class="n">'+next.length+'</div><div class="l">Upcoming — next class</div></div>'+
+    '<div class="rv-stat fh"><div class="n">'+done.length+'</div><div class="l">Completed the class</div></div>'+
+    '<div class="rv-stat tmp"><div class="n">'+endowSet.length+'</div><div class="l">Endowment date set</div></div>'+
+  '</div>';
+
+  html+='<div class="sectlabel">In Class Now</div>';
+  const cohKeys=Object.keys(byCohort).sort();
+  if(cohKeys.length) cohKeys.forEach(function(k){ html+=cohortGroup(k,byCohort[k]); });
+  else html+='<div class="rv-empty" style="margin-bottom:20px">No one is currently enrolled.</div>';
+
+  html+='<div class="sectlabel">Next Class — Lined Up</div>'+cohortGroup("Upcoming — Next Class",next);
+
+  if(endowSet.length){
+    html+='<div class="sectlabel">Scheduled Endowments</div><div class="rv-group">'+endowSet.map(function(p){
+      return '<div class="rv-card" data-id="'+esc(p.id)+'"><div class="rv-name">'+esc(p.name||"—")+'</div>'+
+        '<div class="rv-text">'+(p.endowmentDate?'<b>'+esc(fmtDate(p.endowmentDate))+'</b>':'date not set')+(p.endowmentTemple?' · '+esc(p.endowmentTemple):'')+'</div></div>';
+    }).join("")+'</div>';
+  }
+
+  html+='<div class="sectlabel">Completed</div>'+cohortGroup("Completed Prep Class",done,"most recent first");
+  if(dnc.length) html+=cohortGroup("Did Not Complete",dnc);
+
+  $("classesBody").innerHTML=html;
+}
+$("printClassesBtn").addEventListener("click", function(){ window.print(); });
+$("view-classes").addEventListener("click", function(e){ const card=e.target.closest(".rv-card[data-id]"); if(card) openModal(card.dataset.id); });
+
+/* ===================== FAMILY HISTORY VIEW ===================== */
+function fhPersonCard(p,detail){
+  return '<div class="rv-card" data-id="'+esc(p.id)+'"><div class="rv-name">'+esc(p.name||"—")+(p.household?' <span style="font-weight:400;color:#6d7180">· '+esc(p.household)+'</span>':'')+'</div>'+
+    (detail?'<div class="rv-text">'+esc(detail)+'</div>':'')+'</div>';
+}
+function renderFh(){
+  if(!data.length){ $("fhHeader").innerHTML=""; $("fhBody").innerHTML='<div class="rv-empty">No members entered yet.</div>'; return; }
+  const subActive=cnt(function(p){return p.submitting==="Active";});
+  const subOcc=cnt(function(p){return p.submitting==="Occasionally";});
+  const idxActive=cnt(function(p){return p.indexing==="Active";});
+  const idxOcc=cnt(function(p){return p.indexing==="Occasionally";});
+  const gen6=cnt(function(p){return genNum(p)>=GEN_GOAL;});
+  const namesTot=sum(function(p){return parseInt(p.namesReserved,10)||0;});
+
+  $("fhHeader").innerHTML='<b>Family History &amp; Indexing — Overview</b><br>Generated '+fmtDate(new Date().toISOString())+
+    ' · '+subActive+' actively submitting names · '+idxActive+' actively indexing · '+gen6+' families at '+GEN_GOAL+'+ generations.';
+
+  let html='<div class="rv-stats">'+
+    '<div class="rv-stat fh"><div class="n">'+subActive+'</div><div class="l">Actively submitting names</div></div>'+
+    '<div class="rv-stat fh"><div class="n">'+idxActive+'</div><div class="l">Actively indexing</div></div>'+
+    '<div class="rv-stat tmp"><div class="n">'+gen6+'</div><div class="l">Families at '+GEN_GOAL+'+ generations</div></div>'+
+    '<div class="rv-stat prep"><div class="n">'+namesTot+'</div><div class="l">Names reserved for temple</div></div>'+
+  '</div>';
+
+  // charts
+  const subRows=[
+    {label:"Active",value:subActive,color:C.ok},
+    {label:"Occasionally",value:subOcc,color:C.warn},
+    {label:"Not yet",value:cnt(function(p){return !p.submitting||p.submitting==="No";}),color:C.grey}
+  ];
+  const idxRows=[
+    {label:"Active",value:idxActive,color:C.ok},
+    {label:"Occasionally",value:idxOcc,color:C.warn},
+    {label:"Not yet",value:cnt(function(p){return !p.indexing||p.indexing==="No";}),color:C.grey}
+  ];
+  const genRows=[
+    {label:GEN_GOAL+"+ (goal)",value:gen6,color:C.gold},
+    {label:"3–"+(GEN_GOAL-1),value:cnt(function(p){const n=genNum(p);return n>=3&&n<GEN_GOAL;}),color:C.info},
+    {label:"1–2",value:cnt(function(p){const n=genNum(p);return n>=1&&n<3;}),color:C.warn},
+    {label:"None / unknown",value:cnt(function(p){return genNum(p)===0;}),color:C.grey}
+  ];
+  html+='<div class="charts">'+barChart("Submitting Names",subRows)+barChart("Indexing",idxRows)+'</div>';
+  html+='<div class="charts">'+barChart("Pedigree Depth (generations documented)",genRows)+
+    barChart("Family History Rotation",[
+      {label:"Currently rotating",value:cnt(function(p){return p.rotationStatus==="Currently Rotating";}),color:C.ok},
+      {label:"Upcoming",value:cnt(function(p){return p.rotationStatus==="Upcoming";}),color:C.info},
+      {label:"Completed",value:cnt(function(p){return p.rotationStatus==="Completed";}),color:C.gold},
+      {label:"Not scheduled",value:cnt(function(p){return !p.rotationStatus||p.rotationStatus==="Not Scheduled";}),color:C.grey}
+    ])+'</div>';
+
+  // rotation board grouped by FH group
+  html+='<div class="sectlabel">Rotation Groups</div>';
+  const grouped={};
+  data.forEach(function(p){ if(p.fhGroup){ (grouped[p.fhGroup]=grouped[p.fhGroup]||[]).push(p); } });
+  const gKeys=Object.keys(grouped).sort();
+  if(gKeys.length){
+    gKeys.forEach(function(g){
+      const members=grouped[g];
+      const statuses=members.map(function(m){return m.rotationStatus;}).filter(Boolean);
+      const lead=members.find(function(m){return m.consultant==="FH Group Leader";});
+      const anyRot=members.find(function(m){return m.rotationStatus==="Currently Rotating";});
+      const meta=anyRot?("rotating now"+(anyRot.rotationEnd?" · through "+fmtDate(anyRot.rotationEnd):"")):(statuses.indexOf("Upcoming")>=0?"upcoming":"");
+      html+='<div class="rv-group"><h3 class="cohorthead"><span>'+esc(g)+' ('+members.length+')</span>'+
+        (lead?'<span class="meta">led by '+esc(lead.name||"—")+'</span>':'')+(meta?'<span class="meta">· '+meta+'</span>':'')+'</h3>'+
+        members.map(function(p){
+          const det=[];
+          if(p.rotationStatus&&p.rotationStatus!=="Not Scheduled") det.push(p.rotationStatus);
+          if(p.rotationStart) det.push("from "+fmtDate(p.rotationStart));
+          if(p.rotationEnd) det.push("to "+fmtDate(p.rotationEnd));
+          if(genNum(p)) det.push(genNum(p)+" generations");
+          return fhPersonCard(p,det.join(" · "));
+        }).join("")+'</div>';
+    });
+  } else {
+    html+='<div class="rv-empty" style="margin-bottom:20px">No rotation groups assigned yet. Add a “FH Group” to members (e.g., “Group 1”) and set their rotation status to start scheduling small groups through family history.</div>';
+  }
+
+  // unassigned but worth inviting
+  const noGroup=data.filter(function(p){ return !p.fhGroup; });
+  if(noGroup.length){
+    html+='<div class="sectlabel">Not Yet in a Rotation Group</div><div class="rv-group">'+
+      noGroup.slice(0,200).map(function(p){ return fhPersonCard(p, (genNum(p)?genNum(p)+" generations · ":"")+"submitting: "+(p.submitting||"No")+" · indexing: "+(p.indexing||"No")); }).join("")+'</div>';
+  }
+
+  $("fhBody").innerHTML=html;
+}
+$("printFhBtn").addEventListener("click", function(){ window.print(); });
+$("view-fh").addEventListener("click", function(e){ const card=e.target.closest(".rv-card[data-id]"); if(card) openModal(card.dataset.id); });
+
+/* ===================== COUNCIL REPORT ===================== */
+function narrate(p){
+  const name=p.name||"This member"; const s=[];
+  let subj=name;
+  if(p.prepStatus && p.prepStatus!=="Not Enrolled"){
+    if(inPrepNow(p)){ let t=subj+" is currently in the temple preparation class"; if(p.cohort) t+=" ("+p.cohort+")"; if(p.lastAttended) t+=", last attended "+fmtDate(p.lastAttended); s.push(t+"."); }
+    else if(p.prepStatus==="Upcoming — Next Class") s.push(subj+" is lined up for the next temple preparation class.");
+    else if(prepDone(p)) s.push(subj+" completed the temple preparation class"+(p.prepCompleted?" on "+fmtDate(p.prepCompleted):"")+".");
+    else if(p.prepStatus==="Did Not Complete") s.push(subj+" started but did not complete the temple preparation class.");
+    subj="They";
+  }
+  if(p.endowmentStatus && p.endowmentStatus!=="Not Endowed"){
+    if(p.endowmentStatus==="Endowed") s.push(subj+" has received the endowment.");
+    else if(p.endowmentStatus==="Date Set") s.push(subj+" has an endowment date set"+(p.endowmentDate?" for "+fmtDate(p.endowmentDate):"")+(p.endowmentTemple?" at the "+p.endowmentTemple+" temple":"")+".");
+    else if(p.endowmentStatus==="Recommend in Progress") s.push(subj+" is working toward a temple recommend for the endowment.");
+    subj="They";
+  }
+  const fhbits=[];
+  if(p.submitting && p.submitting!=="No") fhbits.push((p.submitting==="Active"?"actively":"occasionally")+" submitting family names");
+  if(p.indexing && p.indexing!=="No") fhbits.push((p.indexing==="Active"?"actively":"occasionally")+" indexing");
+  if(genNum(p)) fhbits.push("pedigree documented "+genNum(p)+" generations back");
+  if((parseInt(p.namesReserved,10)||0)>0) fhbits.push((parseInt(p.namesReserved,10)||0)+" names reserved for the temple");
+  if(fhbits.length) s.push(subj+" is "+fhbits.join(", ")+".");
+  if(p.fhGroup){ let t="Assigned to family history "+p.fhGroup; if(p.rotationStatus&&p.rotationStatus!=="Not Scheduled") t+=" ("+p.rotationStatus.toLowerCase()+")"; s.push(t+"."); }
+  if(p.consultant && p.consultant!=="No") s.push("Serves as a "+p.consultant+".");
+  if(p.helper) s.push("Supported by: "+p.helper+".");
+  if(p.notes) s.push("Notes: "+p.notes);
+  return s.length?s.join(" "):(name+" — no temple or family history activity recorded yet.");
+}
+function reviewCard(p){
+  const fl=computeFlags(p);
+  const actions=fl.length?'<ul class="rv-actions">'+fl.map(function(x){return '<li>'+esc(x.t)+'</li>';}).join("")+'</ul>':"";
+  return '<div class="rv-card'+(fl.length?' flag':'')+'" data-id="'+esc(p.id)+'">'+
+    '<div class="rv-name">'+esc(p.name||"—")+(p.phone?' &nbsp;<span style="font-weight:400;color:#6d7180">'+esc(p.phone)+'</span>':'')+'</div>'+
+    '<div class="rv-text">'+esc(narrate(p))+'</div>'+actions+'</div>';
+}
+function priorityGroup(title,arr,detailFn){
+  if(!arr.length) return '<div class="rv-group"><h3>'+title+' (0)</h3><div class="rv-empty">None.</div></div>';
+  return '<div class="rv-group"><h3>'+title+' ('+arr.length+')</h3>'+arr.map(function(p){
+    return '<div class="rv-card" data-id="'+esc(p.id)+'"><div class="rv-name">'+esc(p.name||"—")+'</div><div class="rv-text">'+esc(detailFn(p))+'</div></div>';
+  }).join("")+'</div>';
+}
+function renderReview(){
+  const mode=($("reviewFilter")||{}).value||"all";
+  const flagged=data.filter(function(p){ return computeFlags(p).length>0; });
+  const onTrack=data.filter(function(p){ return computeFlags(p).length===0; });
+  const nowArr=data.filter(inPrepNow), nextArr=data.filter(function(p){return p.prepStatus==="Upcoming — Next Class";});
+  const endowNeed=data.filter(function(p){ return prepDone(p)&&p.endowmentStatus!=="Endowed"&&p.endowmentStatus!=="Date Set"; });
+
+  $("reviewHeader").innerHTML='<b>Temple &amp; Family History — Ward Council Review</b><br>Generated '+fmtDate(new Date().toISOString())+
+    ' · '+data.length+' members on record · '+flagged.length+' needing follow-up.';
+
+  if(!data.length){ $("reviewBody").innerHTML='<div class="rv-empty">No members entered yet.</div>'; return; }
+
+  let html='<div class="rv-stats">'+
+    '<div class="rv-stat prep"><div class="n">'+nowArr.length+'</div><div class="l">In prep class now</div></div>'+
+    '<div class="rv-stat tmp"><div class="n">'+cnt(function(p){return p.endowmentStatus==="Date Set";})+'</div><div class="l">Endowment date set</div></div>'+
+    '<div class="rv-stat fh"><div class="n">'+cnt(function(p){return p.submitting==="Active";})+'</div><div class="l">Actively submitting names</div></div>'+
+    '<div class="rv-stat out"><div class="n">'+flagged.length+'</div><div class="l">Members with a follow-up flag</div></div>'+
+  '</div>';
+
+  // charts
+  const prepRows=OPTS.prepStatus.map(function(o){ const col=o==="Completed"?C.ok:(o==="Did Not Complete"?C.warn:(o==="Not Enrolled"?C.grey:C.info)); return {label:o,value:cnt(function(p){return p.prepStatus===o;}),color:col}; }).filter(function(r){return r.value>0;});
+  const endRows=OPTS.endowmentStatus.map(function(o){ const col=o==="Endowed"?C.ok:(o==="Date Set"?C.gold:(o==="Not Endowed"?C.grey:C.info)); return {label:o,value:cnt(function(p){return p.endowmentStatus===o;}),color:col}; }).filter(function(r){return r.value>0;});
+  html+='<div class="charts">'+
+    barChart("Temple Prep Status", prepRows.length?prepRows:[{label:"—",value:0,color:C.grey}])+
+    barChart("Endowment Status", endRows.length?endRows:[{label:"—",value:0,color:C.grey}])+
+  '</div>';
+
+  // quarterly plan
+  const cq=curQuarter(), ci=qIdx(cq);
+  const planned=data.filter(function(p){ return p.planQuarter && p.planQuarter!=="Unset"; });
+  const thisQ=planned.filter(function(p){ return p.planQuarter===cq; });
+  const inProg=planned.filter(function(p){ return p.planStatus==="In progress"; });
+  const doneThisQ=data.filter(function(p){ return p.planStatus==="Completed" && quarterOf(p.planDone)===cq; });
+  const overdue=planned.filter(function(p){ const i=qIdx(p.planQuarter); return p.planStatus!=="Completed" && i!==null && ci!==null && i<ci; });
+  html+='<div class="sectlabel">This Quarter — '+cq+'</div><div class="rv-stats">'+
+    '<div class="rv-stat prep"><div class="n">'+thisQ.length+'</div><div class="l">Goals set this quarter</div></div>'+
+    '<div class="rv-stat"><div class="n">'+inProg.length+'</div><div class="l">In progress</div></div>'+
+    '<div class="rv-stat" style="border-left:4px solid var(--ok)"><div class="n">'+doneThisQ.length+'</div><div class="l">Completed this quarter</div></div>'+
+    '<div class="rv-stat out"><div class="n">'+overdue.length+'</div><div class="l">Overdue (past quarters)</div></div>'+
+  '</div>';
+  if(planned.length){
+    const pc=planned.slice().sort(function(a,b){ const d=(qIdx(a.planQuarter)||0)-(qIdx(b.planQuarter)||0); return d||(a.name||"").localeCompare(b.name||""); })
+      .map(function(p){ return '<div class="rv-card" data-id="'+esc(p.id)+'"><div class="rv-name">'+esc(p.name||"—")+' <span style="font-weight:400;color:#6d7180">· '+esc(p.planQuarter)+'</span></div><div class="rv-text">'+esc(p.planGoal||"(no goal set)")+'</div><div style="margin-top:7px">'+statusBadge(p.planStatus)+(p.planStatus==="Completed"&&p.planDone?' <span class="badge b-grey">'+esc(fmtDate(p.planDone))+'</span>':'')+'</div></div>'; });
+    html+='<div class="rv-group"><h3>Quarter Plan ('+planned.length+')</h3>'+pc.join("")+'</div>';
+  }
+
+  // priority groups
+  html+=priorityGroup("In the Temple Prep Class Now", nowArr, function(p){ return (p.cohort?p.cohort+" · ":"")+"Status: "+(p.prepStatus||"—")+(p.lastAttended?" · last attended "+fmtDate(p.lastAttended):""); });
+  html+=priorityGroup("Lined Up for the Next Class", nextArr, function(p){ return "Invite and confirm enrollment for the upcoming cohort."; });
+  html+=priorityGroup("Prep Done — Move Toward Endowment", endowNeed, function(p){ return "Completed prep"+(p.prepCompleted?" "+fmtDate(p.prepCompleted):"")+". Begin recommend interviews toward the endowment."; });
+
+  if(flagged.length) html+='<div class="rv-group"><h3>Needs Follow-Up ('+flagged.length+')</h3>'+flagged.map(reviewCard).join("")+'</div>';
+  else html+='<div class="rv-group"><h3>Needs Follow-Up (0)</h3><div class="rv-empty">No outstanding follow-ups. Everyone is accounted for.</div></div>';
+  if(mode==="all") html+='<div class="rv-group"><h3>On Track ('+onTrack.length+')</h3>'+(onTrack.length?onTrack.map(reviewCard).join(""):'<div class="rv-empty">None.</div>')+'</div>';
+
+  $("reviewBody").innerHTML=html;
+}
+$("reviewFilter").addEventListener("change", renderReview);
+$("printBtn").addEventListener("click", function(){ window.print(); });
+$("view-review").addEventListener("click", function(e){ const card=e.target.closest(".rv-card[data-id]"); if(card) openModal(card.dataset.id); });
+
+/* ===================== GUIDED MODAL ===================== */
+const overlay=$("overlay"), modalBody=$("modalBody");
+function optTags(list,v){ const extra=(v && list.indexOf(v)<0)?'<option selected>'+esc(v)+'</option>':''; return '<option value=""></option>'+extra+list.map(function(o){return '<option'+(o===v?' selected':'')+'>'+o+'</option>';}).join(""); }
+function sel(key,list,v){ return '<select id="m_'+key+'" data-k="'+key+'">'+optTags(list,v||"")+'</select>'; }
+function txt(key,v){ return '<input type="text" id="m_'+key+'" data-k="'+key+'" value="'+esc(v||"")+'">'; }
+function num(key,v){ return '<input type="number" min="0" id="m_'+key+'" data-k="'+key+'" value="'+esc(v||"")+'">'; }
+function dat(key,v){ return '<input type="date" id="m_'+key+'" data-k="'+key+'" value="'+esc(v||"")+'">'; }
+function area(key,v){ return '<textarea id="m_'+key+'" data-k="'+key+'">'+esc(v||"")+'</textarea>'; }
+function fld(label,inner,full){ return '<div class="fld'+(full?' full':'')+'"><label>'+label+'</label>'+inner+'</div>'; }
+function buildModal(p){
+  modalBody.innerHTML=
+    '<div class="wzsec"><div class="secgrid">'+
+      fld("Full Name",txt("name",p.name))+fld("Phone",txt("phone",p.phone))+
+      fld("Household / Family",txt("household",p.household))+
+      fld("Temple & FH Role",sel("consultant",OPTS.consultant,p.consultant))+
+    '</div></div>'+
+
+    '<div class="wzsec"><h4>1 · Temple Preparation Class</h4><div class="hint">Where they are in the prep class.</div><div class="secgrid">'+
+      fld("Prep Class Status", sel("prepStatus",OPTS.prepStatus,p.prepStatus))+
+      fld("Cohort / Class Name", txt("cohort",p.cohort))+
+      '<div class="cond hidden" id="condClassDates"><div class="secgrid">'+
+        fld("Class Start Date", dat("prepStart",p.prepStart))+
+        fld("Last Attended", dat("lastAttended",p.lastAttended))+
+        '<div class="stepnote">If more than '+STALE_DAYS+' days since the last class, this member is flagged to reach out.</div>'+
+      '</div></div>'+
+      '<div class="cond hidden" id="condCompleted"><div class="secgrid">'+
+        fld("Completion Date", dat("prepCompleted",p.prepCompleted))+
+        '<div class="stepnote">Saving with a completion date logs it to History automatically.</div>'+
+      '</div></div>'+
+    '</div></div>'+
+
+    '<div class="wzsec"><h4>2 · Endowment</h4><div class="hint">Recommend and endowment scheduling.</div><div class="secgrid">'+
+      fld("Endowment Status", sel("endowmentStatus",OPTS.endowmentStatus,p.endowmentStatus))+
+      '<div class="cond hidden" id="condEndow"><div class="secgrid">'+
+        fld("Endowment Date", dat("endowmentDate",p.endowmentDate))+
+        fld("Temple", txt("endowmentTemple",p.endowmentTemple))+
+      '</div></div>'+
+    '</div></div>'+
+
+    '<div class="wzsec"><h4>3 · Family History &amp; Indexing</h4><div class="hint">Participation and pedigree depth.</div><div class="secgrid">'+
+      fld("Submitting Family Names", sel("submitting",OPTS.participation,p.submitting))+
+      fld("Indexing", sel("indexing",OPTS.participation,p.indexing))+
+      fld("Generations Documented", num("generations",p.generations))+
+      fld("Names Reserved for Temple", num("namesReserved",p.namesReserved))+
+      '<div class="stepnote">Goal: '+GEN_GOAL+' generations documented. Members at '+GEN_GOAL+'+ are counted toward the family-history goal.</div>'+
+    '</div></div>'+
+
+    '<div class="wzsec"><h4>4 · Family History Rotation Group</h4><div class="hint">Small groups rotating through family history work.</div><div class="secgrid">'+
+      fld("FH Group", txt("fhGroup",p.fhGroup))+
+      fld("Rotation Status", sel("rotationStatus",OPTS.rotationStatus,p.rotationStatus))+
+      '<div class="cond hidden" id="condRotation"><div class="secgrid">'+
+        fld("Rotation Start", dat("rotationStart",p.rotationStart))+
+        fld("Rotation End", dat("rotationEnd",p.rotationEnd))+
+      '</div></div>'+
+      fld("Supported By (consultant)", txt("helper",p.helper), true)+
+    '</div></div>'+
+
+    '<div class="wzsec"><h4>5 · Quarter Plan (90-day goal)</h4><div class="hint">Set one focus goal and the quarter you are aiming to reach it.</div><div class="secgrid">'+
+      fld("Quarter Goal", txt("planGoal",p.planGoal), true)+
+      fld("Target Quarter", sel("planQuarter",quarterOptions(),p.planQuarter))+
+      fld("Status", sel("planStatus",OPTS.planStatus,p.planStatus))+
+      '<div class="cond hidden" id="condDone"><div class="secgrid">'+fld("Date Completed", dat("planDone",p.planDone))+'</div></div>'+
+    '</div></div>'+
+
+    '<div class="wzsec"><div class="secgrid">'+fld("Notes", area("notes",p.notes), true)+'</div></div>'+
+
+    '<div class="flagpanel"><div class="ttl">Action Items &amp; Flags</div><div id="flagPanel"></div></div>';
+  ["m_prepStatus","m_endowmentStatus","m_rotationStatus","m_planStatus"].forEach(function(id){ const el=$(id); if(el) el.addEventListener("change", updateConditionals); });
+  modalBody.addEventListener("input", updateFlagsLive);
+  updateConditionals();
+}
+function show(id,on){ const el=$(id); if(el) el.classList.toggle("hidden",!on); }
+function mval(id){ const el=$(id); return el?el.value.trim():""; }
+function updateConditionals(){
+  const ps=mval("m_prepStatus");
+  show("condClassDates", ps==="Currently Enrolled"||ps==="Attending");
+  show("condCompleted", ps==="Completed");
+  const es=mval("m_endowmentStatus"); show("condEndow", es==="Date Set"||es==="Endowed");
+  const rs=mval("m_rotationStatus"); show("condRotation", rs==="Currently Rotating"||rs==="Upcoming"||rs==="Completed");
+  const pls=mval("m_planStatus"); show("condDone", pls==="Completed");
+  updateFlagsLive();
+}
+function collectModal(){
+  const rec={};
+  modalBody.querySelectorAll("[data-k]").forEach(function(el){ const block=el.closest(".cond"); if(block&&block.classList.contains("hidden")) return; rec[el.dataset.k]=el.value.trim(); });
+  return rec;
+}
+function updateFlagsLive(){
+  const f=computeFlags(collectModal()); const panel=$("flagPanel"); if(!panel) return;
+  panel.innerHTML=f.length?'<div class="flagchips">'+f.map(function(x){return '<span class="badge '+x.c+'">&#9873; '+esc(x.t)+'</span>';}).join("")+'</div>':'<div class="none">No follow-up flags — this member is fully accounted for.</div>';
+}
+function openModal(id){
+  const p=id?data.find(function(x){return x.id===id;}):{};
+  editingId=id||null; $("modalTitle").textContent=id?"Edit Member":"Add Member";
+  $("deleteBtn").style.visibility=id?"visible":"hidden"; buildModal(p||{}); overlay.classList.add("show");
+}
+function closeModal(){ overlay.classList.remove("show"); editingId=null; }
+$("addBtn").addEventListener("click", function(){ openModal(null); });
+$("closeModal").addEventListener("click", closeModal);
+$("cancelBtn").addEventListener("click", closeModal);
+overlay.addEventListener("click", function(e){ if(e.target===overlay) closeModal(); });
+$("saveBtn").addEventListener("click", function(){
+  const rec=collectModal();
+  if(!rec.name){ alert("Please enter a name."); return; }
+  rec.updated=new Date().toISOString().slice(0,10);
+  rec.id=editingId||("m"+Date.now()+Math.floor(Math.random()*1000));
+  $("saveBtn").disabled=true;
+  writeMember(rec).then(function(){
+    // auto-log milestones
+    function logOnce(milestone,date){
+      if(!date) return; const dup=ledger.some(function(e){ return e.memberId===rec.id && e.date===date && (e.milestone||"")===milestone; });
+      if(!dup) writeLedger({memberId:rec.id,name:rec.name,milestone:milestone,date:date,by:(auth.currentUser&&auth.currentUser.email)||"",ts:Date.now()});
+    }
+    if(rec.prepStatus==="Completed" && rec.prepCompleted) logOnce("Completed Temple Prep Class",rec.prepCompleted);
+    if(rec.endowmentStatus==="Endowed" && rec.endowmentDate) logOnce("Endowment",rec.endowmentDate);
+    if(rec.planStatus==="Completed" && rec.planDone && rec.planGoal){
+      const dup=ledger.some(function(e){ return e.memberId===rec.id && e.date===rec.planDone && (e.milestone||"")===rec.planGoal; });
+      if(!dup) writeLedger({memberId:rec.id,name:rec.name,milestone:rec.planGoal,date:rec.planDone,by:(auth.currentUser&&auth.currentUser.email)||"",ts:Date.now()});
+    }
+    closeModal();
+  }).catch(function(e){ alert("Save failed: "+(e.code||e.message)); }).finally(function(){ $("saveBtn").disabled=false; });
+});
+$("deleteBtn").addEventListener("click", function(){
+  if(!editingId) return;
+  if(confirm("Remove this member from the record?")) removeMember(editingId).then(closeModal).catch(function(e){ alert("Delete failed: "+(e.code||e.message)); });
+});
+
+/* ===================== SETTINGS ===================== */
+$("resetPwBtn").addEventListener("click", function(){
+  const m=$("pwMsg"), user=auth.currentUser;
+  if(!user||!user.email){ m.className="smsg err"; m.textContent="No account email on file."; return; }
+  sendPasswordResetEmail(auth,user.email).then(function(){ m.className="smsg ok"; m.textContent="Reset email sent to "+user.email+"."; }).catch(function(e){ m.className="smsg err"; m.textContent="Could not send reset: "+(e.code||e.message); });
+});
+$("exportBtn").addEventListener("click", function(){
+  const blob=new Blob([JSON.stringify({exported:new Date().toISOString(),members:data,ledger:ledger},null,2)],{type:"application/json"});
+  const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="temple-fh-backup-"+new Date().toISOString().slice(0,10)+".json"; a.click(); URL.revokeObjectURL(a.href);
+  const m=$("ioMsg"); m.className="smsg ok"; m.textContent="Backup downloaded.";
+});
+$("importBtn").addEventListener("click", function(){ $("importFile").click(); });
+$("importFile").addEventListener("change", function(e){
+  const file=e.target.files[0]; if(!file) return; const r=new FileReader();
+  r.onload=function(){
+    try{
+      const obj=JSON.parse(r.result); const arr=Array.isArray(obj)?obj:obj.members; if(!Array.isArray(arr)) throw new Error("bad");
+      const m=$("ioMsg"); m.className="smsg"; m.textContent="Importing "+arr.length+"…";
+      const jobs=arr.map(function(p){ if(!p.id) p.id="m"+Date.now()+Math.floor(Math.random()*100000); return writeMember(p); });
+      Promise.all(jobs).then(function(){ m.className="smsg ok"; m.textContent="Imported "+arr.length+" members into the cloud."; }).catch(function(err){ m.className="smsg err"; m.textContent="Some records failed: "+(err.code||err.message); });
+    }catch(err){ const m2=$("ioMsg"); m2.className="smsg err"; m2.textContent="Could not read that file."; }
+  };
+  r.readAsText(file); e.target.value="";
+});
+
+/* ===================== HISTORY & TRENDS ===================== */
+function renderHistory(){
+  const lb=$("logMember");
+  if(lb){ const cur=lb.value; lb.innerHTML='<option value="">— choose member —</option>'+data.map(function(p){return '<option value="'+esc(p.id)+'">'+esc(p.name||"(unnamed)")+'</option>';}).join(""); if(cur) lb.value=cur; }
+  const lm=$("logMilestone");
+  if(lm && !lm.dataset.filled){ lm.innerHTML='<option value="">— milestone —</option>'+MILESTONES.map(function(m){return '<option>'+m+'</option>';}).join(""); lm.dataset.filled="1"; }
+  const ld=$("logDate"); if(ld && !ld.value) ld.value=new Date().toISOString().slice(0,10);
+
+  $("historyHeader").innerHTML='<b>Temple &amp; Family History — Milestone History</b><br>'+ledger.length+' milestone'+(ledger.length===1?'':'s')+' recorded.';
+  if(!ledger.length){ $("historyBody").innerHTML='<div class="rv-empty">No history yet. Log a milestone above, or mark a prep class “Completed,” an endowment “Endowed,” or a Quarter Plan goal “Completed” and it records here automatically.</div>'; return; }
+
+  const byQ={}; ledger.forEach(function(e){ const q=quarterOf(e.date); if(q) byQ[q]=(byQ[q]||0)+1; });
+  const qRows=Object.keys(byQ).sort(function(a,b){return qIdx(a)-qIdx(b);}).slice(-8).map(function(q){return {label:q,value:byQ[q],color:C.gold};});
+  const byT={}; ledger.forEach(function(e){ const m=e.milestone||"Other"; byT[m]=(byT[m]||0)+1; });
+  const tRows=Object.keys(byT).sort(function(a,b){return byT[b]-byT[a];}).map(function(m){return {label:m,value:byT[m],color:C.info};});
+
+  let html='<div class="charts">'+barChart("Milestones by Quarter", qRows.length?qRows:[{label:"—",value:0,color:C.gold}])+barChart("By Milestone Type", tRows.length?tRows:[{label:"—",value:0,color:C.info}])+'</div>';
+  const entries=ledger.slice().sort(function(a,b){ return (b.date||"").localeCompare(a.date||""); });
+  html+='<div class="rv-group"><h3>Logged Milestones ('+ledger.length+')</h3>'+entries.map(function(e){
+    return '<div class="rv-card"><button class="logdel no-print" data-del="'+esc(e.id)+'" title="Remove">&times;</button>'+
+      '<div class="rv-name">'+esc(e.name||"—")+' <span style="font-weight:400;color:#6d7180">· '+esc(fmtDate(e.date))+'</span></div>'+
+      '<div class="rv-text">'+esc(e.milestone||"")+(e.by?'  ·  logged by '+esc(e.by):'')+'</div></div>';
+  }).join("")+'</div>';
+  $("historyBody").innerHTML=html;
+}
+$("addLogBtn").addEventListener("click", function(){
+  const bid=$("logMember").value, ms=$("logMilestone").value, dt=$("logDate").value, m=$("logMsg");
+  const b=data.find(function(x){return x.id===bid;});
+  if(!b||!ms||!dt){ m.className="smsg err"; m.textContent="Choose a member, a milestone, and a date."; return; }
+  writeLedger({memberId:bid,name:b.name,milestone:ms,date:dt,by:(auth.currentUser&&auth.currentUser.email)||"",ts:Date.now()})
+    .then(function(){ m.className="smsg ok"; m.textContent="Recorded "+ms+" for "+b.name+"."; })
+    .catch(function(e){ m.className="smsg err"; m.textContent="Could not record: "+(e.code||e.message); });
+});
+$("historyBody").addEventListener("click", function(e){ const x=e.target.closest("[data-del]"); if(x && confirm("Remove this history entry?")) removeLedger(x.dataset.del).catch(function(err){ alert("Delete failed: "+(err.code||err.message)); }); });
+$("printHistBtn").addEventListener("click", function(){ window.print(); });
+
+function renderAll(){ renderDash(); renderMembers(); renderClasses(); renderFh(); renderReview(); renderHistory(); }
+</script>
+</body>
+</html>
