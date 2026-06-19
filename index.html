@@ -3,972 +3,610 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#20406a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Temple & FH Record">
+<meta name="apple-mobile-web-app-title" content="Endowed from on High">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" href="icon-192.png">
-<title>Temple & Family History Record</title>
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Endowed from on High — Temple Preparation</title>
 <style>
-  :root{
-    --ink:#20406a; --ink2:#152942; --celest:#7fa8d4;
-    --ground:#f5f3ec; --card:#ffffff;
-    --gold:#be9648; --gold-soft:#efe6d0; --gold-line:#e0d2ad;
-    --text:#2a3340; --muted:#6f7686; --line:#e9e2d2;
-    --danger:#9d3b3b; --ok:#3f7d5a; --warn:#b07d1a; --info:#3f6aa3;
-    --shadow:0 6px 24px rgba(31,58,95,.10);
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    color:var(--text);line-height:1.45;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%;
-    background:radial-gradient(150% 70% at 50% -25%, #ffffff 0%, rgba(255,255,255,0) 60%), var(--ground);
-    background-attachment:fixed}
-  header.topbar{padding-top:env(safe-area-inset-top)}
-  @supports(padding:max(0px)){
-    header.topbar{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
-    main{padding-bottom:max(60px,env(safe-area-inset-bottom))}
-  }
-  .serif{font-family:Georgia,"Times New Roman",serif}
-  button{font-family:inherit;cursor:pointer;border:none}
-  input,select,textarea{font-family:inherit;font-size:14px}
+:root{
+  --ink:#20406a; --ink2:#152942; --celest:#7fa8d4;
+  --ground:#f5f3ec; --card:#ffffff;
+  --gold:#be9648; --gold-soft:#efe6d0; --gold-line:#e0d2ad;
+  --text:#2a3340; --muted:#6f7686; --line:#e9e2d2;
+  --read:#22303f; --hl:#fdf3d6; --hl-bar:#be9648;
+  --ok:#3f7d5a; --shadow:0 8px 30px rgba(31,58,95,.12);
+  --serif:Georgia,"Times New Roman",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --fs:1; /* reading font scale */
+}
+html[data-theme="dark"]{
+  --ink:#0f2138; --ink2:#0a1626; --celest:#8fb4dd;
+  --ground:#10151c; --card:#161d27;
+  --gold:#cbA85d; --gold-soft:#2a2415; --gold-line:#473a1f;
+  --text:#dde3ec; --muted:#93a0b2; --line:#26303d;
+  --read:#dfe6ef; --hl:#23314a; --hl-bar:#cbA85d;
+  --shadow:0 8px 30px rgba(0,0,0,.45);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);color:var(--text);line-height:1.5;-webkit-font-smoothing:antialiased;
+  -webkit-text-size-adjust:100%;background:
+   radial-gradient(140% 60% at 50% -20%, rgba(127,168,212,.10) 0%, rgba(127,168,212,0) 55%),
+   var(--ground);background-attachment:fixed;min-height:100vh}
+.serif{font-family:var(--serif)}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+img{max-width:100%}
 
-  #app{display:flex;min-height:100vh;flex-direction:column}
-  header.topbar{background:linear-gradient(180deg,#2a4d78 0%,var(--ink) 58%,var(--ink2) 100%);
-    color:#fff;padding:0 16px;position:sticky;top:0;z-index:20;border-bottom:2px solid var(--gold);box-shadow:0 2px 16px rgba(21,41,66,.28)}
-  .topinner{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:14px;height:60px}
-  .brand{display:flex;align-items:center;gap:11px;font-family:Georgia,serif;font-size:16.5px;font-weight:600;letter-spacing:.3px;white-space:nowrap}
-  .brand svg{width:22px;height:22px;fill:var(--gold);filter:drop-shadow(0 1px 1px rgba(0,0,0,.25))}
-  nav.tabs{display:flex;gap:4px;margin-left:8px;flex:1}
-  nav.tabs button{background:transparent;color:#cdd6e6;padding:8px 13px;border-radius:8px;font-size:13.5px;font-weight:500;white-space:nowrap}
-  nav.tabs button.active{background:rgba(190,150,72,.22);color:#f0d9a4}
+/* ---------- top bar ---------- */
+header.top{position:sticky;top:0;z-index:30;background:linear-gradient(180deg,#2a4d78,var(--ink) 60%,var(--ink2));
+  color:#fff;border-bottom:2px solid var(--gold);box-shadow:0 2px 16px rgba(21,41,66,.30);
+  padding-top:env(safe-area-inset-top)}
+html[data-theme="dark"] header.top{background:linear-gradient(180deg,#16304f,var(--ink) 60%,var(--ink2))}
+.topin{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:12px;height:56px;padding:0 14px}
+.topin .back{width:34px;height:34px;border-radius:9px;background:rgba(255,255,255,.12);display:none;
+  align-items:center;justify-content:center;flex:0 0 auto}
+.topin .back svg{width:18px;height:18px;fill:#fff}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:600;font-size:16px;
+  letter-spacing:.2px;line-height:1.15;min-width:0}
+.brand .glyph{width:24px;height:24px;flex:0 0 auto;fill:var(--gold);filter:drop-shadow(0 1px 1px rgba(0,0,0,.3))}
+.brand .t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand .sub{font-family:var(--sans);font-size:11px;font-weight:500;color:#cdd6e6;letter-spacing:.4px}
+.spacer{flex:1}
+.iconbtn{width:34px;height:34px;border-radius:9px;background:rgba(255,255,255,.12);display:flex;
+  align-items:center;justify-content:center;flex:0 0 auto}
+.iconbtn svg{width:18px;height:18px;fill:#fff}
 
-  main{max-width:1180px;margin:0 auto;width:100%;padding:24px 16px 60px;flex:1}
-  .view{display:none}.view.active{display:block}
-  .vhead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;flex-wrap:wrap}
-  .vhead h2{font-family:Georgia,serif;font-size:22px;color:var(--ink);font-weight:600}
-  .vhead .note{font-size:12px;color:var(--muted)}
-  .hintline{font-size:12px;color:var(--muted);margin:-8px 0 16px}
+main{max-width:760px;margin:0 auto;width:100%;padding:20px 16px 120px;
+  padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+.view{display:none;animation:fade .25s ease}
+.view.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:14px}
-  .stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px;box-shadow:var(--shadow);position:relative;overflow:hidden;cursor:pointer;transition:transform .08s,box-shadow .12s}
-  .stat:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(31,58,95,.16)}
-  .stat:active{transform:translateY(0)}
-  .stat::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold)}
-  .stat.alert::before{background:var(--danger)}.stat.info::before{background:var(--info)}.stat.ok::before{background:var(--ok)}
-  .stat .n{font-family:Georgia,serif;font-size:30px;font-weight:700;color:var(--ink);line-height:1}
-  .stat .l{font-size:11.5px;color:var(--muted);margin-top:7px;letter-spacing:.2px}
-  .sectlabel{font-size:11.5px;font-weight:700;letter-spacing:1.2px;color:var(--gold);text-transform:uppercase;margin:26px 0 12px;display:flex;align-items:center;gap:9px}
-  .sectlabel:first-child{margin-top:0}
-  .sectlabel::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--gold-line),transparent)}
+/* ---------- home ---------- */
+.hero{text-align:center;padding:14px 6px 22px}
+.hero .spire{width:62px;height:62px;margin:0 auto 12px;fill:var(--gold);
+  filter:drop-shadow(0 3px 6px rgba(31,58,95,.18))}
+.hero h1{font-family:var(--serif);font-size:27px;line-height:1.18;color:var(--ink);font-weight:600;letter-spacing:.2px}
+html[data-theme="dark"] .hero h1{color:#eaf0f8}
+.hero .eyebrow{font-size:11.5px;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.hero p{color:var(--muted);font-size:14px;max-width:460px;margin:12px auto 0}
+.progwrap{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:18px;
+  font-size:12.5px;color:var(--muted)}
+.ptrack{width:160px;height:7px;border-radius:6px;background:var(--gold-soft);overflow:hidden}
+.pfill{height:100%;background:linear-gradient(90deg,var(--gold),#d8b56a);width:0;transition:width .5s ease}
 
-  .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
-  .toolbar input[type=text],.toolbar select{padding:9px 12px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--text)}
-  .toolbar input[type=text]{flex:1;min-width:160px}
-  .btn{padding:9px 16px;border-radius:9px;font-weight:600;font-size:13.5px}
-  .btn.primary{background:var(--ink);color:#fff}.btn.gold{background:var(--gold);color:#2a1f08}
-  .btn.ghost{background:#fff;border:1px solid var(--line);color:var(--text)}
-  .btn.danger{background:#fff;border:1px solid var(--danger);color:var(--danger)}
-  .btn:active{transform:translateY(1px)}
+.rule{display:flex;align-items:center;gap:10px;margin:24px 2px 14px;
+  font-size:11.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold)}
+.rule::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--gold-line),transparent)}
 
-  .tablewrap{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:auto}
-  table{width:100%;border-collapse:collapse;font-size:13px;min-width:880px}
-  thead th{background:linear-gradient(180deg,#2a4d78,#22426b);color:#f1ead7;text-align:left;padding:11px 12px;font-weight:600;font-size:11.5px;letter-spacing:.4px;white-space:nowrap;position:sticky;top:0}
-  tbody td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:middle}
-  tbody tr{cursor:pointer}
-  tbody tr:hover{background:#faf7ef}
-  tbody tr:nth-child(even){background:#fcfaf4}
-  tbody tr:nth-child(even):hover{background:#f6f1e6}
-  .nm{font-weight:600;color:var(--ink)}
-  .empty{padding:46px 20px;text-align:center;color:var(--muted);font-size:14px}
+.cards{display:flex;flex-direction:column;gap:13px}
+.lcard{position:relative;display:flex;gap:14px;background:var(--card);border:1px solid var(--line);
+  border-radius:16px;padding:16px 16px 15px;box-shadow:var(--shadow);cursor:pointer;
+  transition:transform .1s,box-shadow .14s,border-color .14s;overflow:hidden}
+.lcard:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(31,58,95,.16);border-color:var(--gold-line)}
+.lcard:active{transform:translateY(0)}
+.lcard .num{flex:0 0 auto;width:42px;height:42px;border-radius:11px;display:flex;align-items:center;
+  justify-content:center;font-family:var(--serif);font-size:20px;font-weight:700;color:#fff;
+  background:linear-gradient(160deg,#2a4d78,var(--ink));box-shadow:inset 0 0 0 1.5px rgba(190,150,72,.55)}
+.lcard.done .num{background:linear-gradient(160deg,#3f7d5a,#2f6045)}
+.lcard .body{min-width:0;flex:1}
+.lcard h3{font-family:var(--serif);font-size:16.5px;color:var(--ink);font-weight:600;line-height:1.25}
+html[data-theme="dark"] .lcard h3{color:#e7eef7}
+.lcard .scrip{font-size:12.5px;color:var(--muted);font-style:italic;margin-top:5px;line-height:1.4;
+  font-family:var(--serif)}
+.lcard .meta{display:flex;align-items:center;gap:10px;margin-top:11px;font-size:11.5px;color:var(--muted)}
+.lcard .lp{flex:1;height:5px;border-radius:5px;background:var(--gold-soft);overflow:hidden;max-width:150px}
+.lcard .lp i{display:block;height:100%;background:var(--gold);width:0}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600}
+.chip.todo{background:var(--gold-soft);color:#7a5e1d}
+.chip.prog{background:#e6eef8;color:#3f6aa3}
+.chip.done{background:#e4f1ea;color:var(--ok)}
+html[data-theme="dark"] .chip.prog{background:#1c2c44;color:#8fb4dd}
+html[data-theme="dark"] .chip.done{background:#16301f;color:#7fc79b}
 
-  .badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .b-ok{background:#e4f1ea;color:var(--ok)}.b-warn{background:#f7ecd2;color:var(--warn)}
-  .b-danger{background:#f6e1e1;color:var(--danger)}.b-info{background:#e6eef8;color:var(--info)}
-  .b-gold{background:var(--gold-soft);color:#7a5e1d}.b-grey{background:#edeef1;color:var(--muted)}
+/* ---------- reader ---------- */
+.rhead{text-align:center;margin:4px 0 6px}
+.rhead .ln{font-size:11.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold)}
+.rhead h2{font-family:var(--serif);font-size:23px;color:var(--ink);font-weight:600;line-height:1.2;margin-top:4px}
+html[data-theme="dark"] .rhead h2{color:#eaf0f8}
+.epigraph{font-family:var(--serif);font-style:italic;color:var(--muted);font-size:14px;max-width:520px;
+  margin:14px auto 0;text-align:center;line-height:1.5}
+.epigraph .ref{display:block;font-style:normal;font-size:11.5px;letter-spacing:.4px;color:var(--gold);
+  margin-top:6px;text-transform:uppercase;font-family:var(--sans);font-weight:600}
 
-  .overlay{position:fixed;inset:0;background:rgba(21,41,66,.55);display:none;align-items:flex-start;justify-content:center;z-index:40;padding:24px 14px;overflow:auto}
-  .overlay.show{display:flex}
-  .modal{background:#fff;border-radius:16px;width:100%;max-width:700px;box-shadow:0 18px 50px rgba(0,0,0,.3);overflow:hidden;margin:auto}
-  .mhead{background:linear-gradient(180deg,#2a4d78,var(--ink));color:#fff;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
-  .mhead h3{font-family:Georgia,serif;font-size:18px;font-weight:600}
-  .mhead .x{background:rgba(255,255,255,.14);color:#fff;width:30px;height:30px;border-radius:8px;font-size:18px}
-  .mbody{padding:20px;display:block;max-height:70vh;overflow:auto}
+/* mode toggle */
+.modebar{position:sticky;top:56px;z-index:20;display:flex;justify-content:center;
+  padding:12px 0 14px;margin:14px 0 4px;background:linear-gradient(180deg,var(--ground) 70%,rgba(245,243,236,0))}
+html[data-theme="dark"] .modebar{background:linear-gradient(180deg,var(--ground) 70%,rgba(16,21,28,0))}
+.seg{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:4px;
+  box-shadow:var(--shadow);gap:2px}
+.seg button{padding:8px 16px;border-radius:9px;font-size:13.5px;font-weight:600;color:var(--muted);
+  display:flex;align-items:center;gap:7px;transition:.12s}
+.seg button svg{width:15px;height:15px;fill:currentColor}
+.seg button.on{background:var(--ink);color:#fff}
+html[data-theme="dark"] .seg button.on{background:var(--gold);color:#1a1408}
 
-  .wzsec{margin-top:18px;border-top:1px solid var(--line);padding-top:15px}
-  .wzsec:first-child{margin-top:0;border-top:none;padding-top:0}
-  .wzsec h4{font-size:11.5px;font-weight:700;letter-spacing:1px;color:var(--gold);text-transform:uppercase;margin-bottom:3px}
-  .wzsec .hint{font-size:11.5px;color:var(--muted);font-style:italic;margin-bottom:11px}
-  .secgrid{display:grid;grid-template-columns:1fr 1fr;gap:13px 16px}
-  .cond{grid-column:1/-1}.cond.hidden{display:none}
-  .fld{display:flex;flex-direction:column;gap:5px}
-  .fld.full{grid-column:1/-1}
-  .fld label{font-size:11.5px;font-weight:700;color:var(--muted);letter-spacing:.3px;text-transform:uppercase}
-  .fld input,.fld select,.fld textarea{padding:9px 11px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--text)}
-  .fld textarea{resize:vertical;min-height:54px}
-  .fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--gold)}
-  .stepnote{grid-column:1/-1;background:#eef3fb;border:1px solid #d4e0f2;border-radius:9px;padding:9px 12px;font-size:12px;color:var(--info)}
+/* reading column */
+.reading{font-family:var(--serif);color:var(--read);font-size:calc(17.5px * var(--fs));line-height:1.72}
+.reading .sec{margin-top:26px}
+.reading .sec:first-child{margin-top:6px}
+.reading h4{font-family:var(--serif);font-size:calc(13px * var(--fs));font-weight:700;letter-spacing:1.3px;
+  text-transform:uppercase;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:9px}
+.reading h4::before{content:"";width:16px;height:2px;background:var(--gold);flex:0 0 auto}
+.reading h5{font-family:var(--serif);font-size:calc(17px * var(--fs));font-weight:700;color:var(--ink);
+  margin:18px 0 4px;font-style:italic}
+html[data-theme="dark"] .reading h5{color:#cdd9e8}
+.reading p{margin:12px 0}
+.reading .q{margin:14px 0;padding:11px 14px 11px 16px;background:var(--gold-soft);border-left:3px solid var(--gold);
+  border-radius:0 10px 10px 0;font-size:calc(16px * var(--fs));font-style:italic;color:var(--ink)}
+html[data-theme="dark"] .reading .q{color:#e7d9b6}
+.reading .q::before{content:"Consider";display:block;font-style:normal;font-size:10px;letter-spacing:1.6px;
+  text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:3px;font-family:var(--sans)}
+.reading .callout{margin:18px 0;padding:16px 18px;border:1px solid var(--gold-line);border-radius:13px;
+  background:linear-gradient(180deg,rgba(190,150,72,.06),transparent);text-align:center}
+.reading .callout .ct{font-style:italic;font-size:calc(16px * var(--fs))}
+.reading .callout .cr{font-style:normal;font-family:var(--sans);font-size:11.5px;font-weight:700;
+  letter-spacing:.5px;text-transform:uppercase;color:var(--gold);margin-top:8px}
 
-  .flagpanel{background:#fbf7ee;border:1px solid var(--gold-line);border-radius:11px;padding:13px 15px;margin-top:18px}
-  .flagpanel .ttl{font-size:11px;font-weight:700;letter-spacing:.6px;color:#7a5e1d;text-transform:uppercase;margin-bottom:9px}
-  .flagpanel .none{font-size:12.5px;color:var(--ok)}
-  .flagchips{display:flex;flex-wrap:wrap;gap:7px}
+/* read-along highlight */
+.ru{border-radius:4px;transition:background .25s,color .25s;padding:0 1px}
+.ru.active{background:var(--hl);box-shadow:-3px 0 0 var(--hl-bar);}
+html[data-theme="dark"] .ru.active{box-shadow:-3px 0 0 var(--hl-bar)}
+.q.uactive,.callout.uactive{outline:2px solid var(--gold);outline-offset:2px}
+body.both .ru{cursor:pointer}
 
-  .mfoot{padding:14px 20px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:10px}
-  .panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:var(--shadow);max-width:560px;margin-bottom:16px}
-  .panel h3{font-family:Georgia,serif;font-size:16px;color:var(--ink);margin-bottom:6px}
-  .panel p{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-  .panel .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-  .smsg{font-size:12.5px;margin-top:10px;min-height:16px}
-  .smsg.ok{color:var(--ok)}.smsg.err{color:var(--danger)}
-  .privacy{background:#fbf7ee;border:1px solid var(--gold-line);border-radius:12px;padding:14px 16px;font-size:12.5px;color:#6a5a32;max-width:560px;margin-bottom:20px;line-height:1.6}
-  .privacy b{color:#5a4a22}
+/* listen mode passage */
+.listen{display:none;text-align:center;padding:30px 6px 10px;min-height:46vh}
+body.listen-mode .listen{display:block}
+body.listen-mode .reading{display:none}
+.listen .lead{font-family:var(--serif);font-size:calc(23px * var(--fs));line-height:1.5;color:var(--read);
+  transition:opacity .3s;min-height:3em}
+.listen .ctx{font-family:var(--serif);font-size:15px;color:var(--muted);opacity:.6;margin-top:18px;font-style:italic}
+.listen .nowsec{font-size:11.5px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold);margin-bottom:22px}
 
-  /* review / group cards */
-  .rv-printhead{font-size:13px;color:var(--muted);margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--line)}
-  .rv-printhead b{color:var(--ink);font-family:Georgia,serif;font-size:16px}
-  .rv-toolbar{display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
-  .rv-toolbar select{padding:9px 12px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--text)}
-  .rv-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:22px}
-  .rv-stat{border:1px solid var(--line);border-radius:11px;padding:13px 15px;background:#fff;box-shadow:var(--shadow)}
-  .rv-stat .n{font-family:Georgia,serif;font-size:26px;font-weight:700;color:var(--ink);line-height:1}
-  .rv-stat .l{font-size:11.5px;color:var(--muted);margin-top:5px}
-  .rv-stat.prep{border-left:4px solid var(--info)}
-  .rv-stat.tmp{border-left:4px solid var(--gold)}
-  .rv-stat.fh{border-left:4px solid var(--ok)}
-  .rv-stat.out{border-left:4px solid var(--danger)}
-  .charts{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:24px}
-  .chartwrap{border:1px solid var(--line);border-radius:11px;padding:14px;background:#fff;box-shadow:var(--shadow)}
-  .chtitle{font-size:12px;font-weight:700;letter-spacing:.5px;color:var(--gold);text-transform:uppercase;margin-bottom:11px}
-  .chrow{display:flex;align-items:center;gap:8px;margin:5px 0}
-  .chlabel{flex:0 0 140px;font-size:11.5px;color:var(--text);text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .chbar{flex:1;background:#eceae3;border-radius:5px;height:14px;overflow:hidden}
-  .chbar-fill{height:100%;border-radius:5px;min-width:2px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .chval{flex:0 0 26px;font-size:12px;font-weight:700;color:var(--ink);text-align:left}
-  .rv-group{margin-bottom:26px}
-  .rv-group>h3{font-family:Georgia,serif;font-size:16px;color:var(--ink);border-bottom:2px solid var(--gold);padding-bottom:6px;margin-bottom:14px}
-  .rv-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:12px;box-shadow:var(--shadow)}
-  .rv-card[data-id]{cursor:pointer}
-  .rv-card.flag{border-left:4px solid var(--danger)}
-  .rv-name{font-weight:700;color:var(--ink);font-size:15px;margin-bottom:4px}
-  .rv-text{font-size:13.5px;color:var(--text);line-height:1.55}
-  .rv-actions{list-style:none;margin-top:9px;padding:0}
-  .rv-actions li{font-size:13px;color:#7a3a3a;margin:3px 0;padding-left:22px;position:relative}
-  .rv-actions li::before{content:"\2610";position:absolute;left:0;top:-1px;font-size:16px;color:#9d3b3b}
-  .rv-empty{color:var(--muted);font-size:14px}
-  .rv-act{font-size:12.5px;color:var(--info);margin-top:8px}
-  .rv-act b{color:var(--ink)}
-  .extlink{display:inline-block;margin-top:12px;margin-right:10px;font-size:13px;font-weight:600;color:#7a5e1d;text-decoration:none;border:1px solid var(--gold-line);border-radius:9px;padding:7px 13px;background:#fbf7ee}
-  .extlink:hover{background:var(--gold-soft)}
-  .logdel{float:right;background:#f6e1e1;color:#9d3b3b;border-radius:7px;width:26px;height:26px;font-size:16px;line-height:1;margin-left:8px}
-  .panel .row select,.panel .row input[type=date]{padding:9px 12px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--text)}
-  .cohorthead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-  .cohorthead .meta{font-size:12px;color:var(--muted)}
+.donerow{display:flex;justify-content:center;margin:34px 0 4px}
+.btn{padding:11px 20px;border-radius:11px;font-weight:600;font-size:14px;transition:.12s}
+.btn.gold{background:var(--gold);color:#241a06;box-shadow:var(--shadow)}
+.btn.ghost{background:var(--card);border:1px solid var(--line);color:var(--text)}
+.btn.done{background:#e4f1ea;color:var(--ok);border:1px solid #bfe0cd}
+.btn:active{transform:translateY(1px)}
 
-  @media print{
-    .overlay,.topbar,.no-print{display:none !important}
-    #app{display:block !important}
-    main{padding:0 !important;max-width:none !important}
-    .view:not(.active){display:none !important}
-    .view.active{display:block !important}
-    body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-    .rv-card,.chartwrap,.rv-stat{box-shadow:none;border:1px solid #ccc;break-inside:avoid;page-break-inside:avoid}
-    .charts{grid-template-columns:1fr 1fr}
-  }
-  @media(max-width:640px){
-    .secgrid{grid-template-columns:1fr}
-    .charts{grid-template-columns:1fr}
-    .topinner{height:auto;padding:10px 0;flex-wrap:wrap}
-    nav.tabs{order:3;width:100%;margin-left:0;overflow-x:auto}nav.tabs button{flex:0 0 auto;padding:8px 11px}
-  }
+/* ---------- audio bar ---------- */
+.player{position:fixed;left:0;right:0;bottom:0;z-index:35;background:var(--card);
+  border-top:1px solid var(--line);box-shadow:0 -6px 24px rgba(21,41,66,.14);
+  transform:translateY(140%);transition:transform .28s cubic-bezier(.2,.7,.3,1);
+  padding-bottom:env(safe-area-inset-bottom)}
+.player.show{transform:translateY(0)}
+.pin{max-width:760px;margin:0 auto;padding:10px 16px 12px}
+.scrub{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+.scrub input[type=range]{flex:1;-webkit-appearance:none;appearance:none;height:5px;border-radius:5px;
+  background:var(--gold-soft);outline:none}
+.scrub input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;
+  background:var(--gold);box-shadow:0 1px 4px rgba(0,0,0,.25);cursor:pointer}
+.scrub input[type=range]::-moz-range-thumb{width:15px;height:15px;border:none;border-radius:50%;background:var(--gold);cursor:pointer}
+.ctrls{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:9px}
+.ctrls .pbtn{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:var(--card);border:1px solid var(--line)}
+.ctrls .pbtn svg{width:20px;height:20px;fill:var(--ink)}
+html[data-theme="dark"] .ctrls .pbtn svg{fill:var(--celest)}
+.ctrls .play{width:54px;height:54px;background:var(--ink);border:none}
+.ctrls .play svg{width:24px;height:24px;fill:#fff}
+html[data-theme="dark"] .ctrls .play{background:var(--gold)} html[data-theme="dark"] .ctrls .play svg{fill:#1a1408}
+.ctrls .lbl{font-size:11px;color:var(--muted);font-weight:600;width:48px;text-align:center}
+.rate{min-width:46px;height:34px;border-radius:9px;border:1px solid var(--line);background:var(--card);
+  font-size:12.5px;font-weight:700;color:var(--ink);padding:0 6px}
+html[data-theme="dark"] .rate{color:var(--celest)}
+.followtog{display:flex;align-items:center;gap:7px;justify-content:center;margin-top:8px;font-size:11.5px;color:var(--muted)}
+.sw{width:34px;height:19px;border-radius:20px;background:var(--line);position:relative;transition:.18s;flex:0 0 auto}
+.sw i{position:absolute;top:2px;left:2px;width:15px;height:15px;border-radius:50%;background:#fff;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.3)}
+.sw.on{background:var(--gold)} .sw.on i{left:17px}
+
+/* settings sheet */
+.sheet{position:fixed;inset:0;z-index:50;background:rgba(21,41,66,.5);display:none;align-items:flex-end;justify-content:center}
+.sheet.show{display:flex}
+.sheetin{background:var(--card);width:100%;max-width:760px;border-radius:18px 18px 0 0;padding:20px 18px;
+  box-shadow:0 -10px 40px rgba(0,0,0,.3);padding-bottom:max(20px,env(safe-area-inset-bottom))}
+.sheetin h3{font-family:var(--serif);font-size:18px;color:var(--ink);margin-bottom:4px}
+html[data-theme="dark"] .sheetin h3{color:#eaf0f8}
+.srow{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-top:1px solid var(--line)}
+.srow:first-of-type{border-top:none}
+.srow .k{font-size:14px;font-weight:600}
+.srow .d{font-size:12px;color:var(--muted);margin-top:2px}
+.fontctl{display:flex;gap:6px}
+.fontctl button{width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:var(--card);
+  font-weight:700;color:var(--ink)}
+html[data-theme="dark"] .fontctl button{color:var(--celest)}
+.linkbtn{font-size:13px;color:var(--gold);font-weight:600}
+.foot{text-align:center;font-size:11px;color:var(--muted);margin-top:30px;line-height:1.6}
+@media(max-width:520px){ .hero h1{font-size:23px} .brand .t{max-width:40vw} }
 </style>
 </head>
 <body>
-
-<div id="app">
-  <header class="topbar">
-    <div class="topinner">
-      <div class="brand serif">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="2.1" r=".95"/><path d="M12 3.3l1 7.2h-2z"/><path d="M8 6.6l.8 3.9H7.2z"/><path d="M16 6.6l.8 3.9h-1.6z"/><path d="M5.7 10.5h12.6v1.9H5.7z"/><path d="M6.8 12.4h10.4V21H6.8z"/></svg>
-        Temple &amp; Family History
+<header class="top">
+  <div class="topin">
+    <button class="back" id="backBtn" aria-label="Back to lessons">
+      <svg viewBox="0 0 24 24"><path d="M15.5 4l-8 8 8 8 1.4-1.4L10.3 12l6.6-6.6z"/></svg>
+    </button>
+    <div class="brand">
+      <svg class="glyph" viewBox="0 0 24 24"><path d="M12 1l1.2 2.2L12 4.4l-1.2-1.2L12 1zm-.9 4.2h1.8v2.1h2.2v2H9V7.3h2.1V5.2zM5 9.3h3v1.8H5V9.3zm11 0h3v1.8h-3V9.3zM4 12h16v2H4v-2zm1 3h2.4v6H5v-6zm5.8 0h2.4v6h-2.4v-6zm6.8 0H20v6h-2.4v-6zM9 15h1.2v3.4H9V15zm4.8 0H15v3.4h-1.2V15zM3 21h18v2H3v-2z"/></svg>
+      <div style="min-width:0">
+        <div class="t">Endowed from on High</div>
+        <div class="sub" id="brandSub">Temple Preparation</div>
       </div>
-      <nav class="tabs">
-        <button data-view="dash" class="active">Dashboard</button>
-        <button data-view="members">Members</button>
-        <button data-view="classes">Classes</button>
-        <button data-view="fh">Family History</button>
-        <button data-view="review">Council Report</button>
-        <button data-view="history">History</button>
-        <button data-view="settings">Settings</button>
-      </nav>
     </div>
-  </header>
-  <main>
+    <div class="spacer"></div>
+    <button class="iconbtn" id="setBtn" aria-label="Settings">
+      <svg viewBox="0 0 24 24"><path d="M12 8a4 4 0 100 8 4 4 0 000-8zm9 4a7 7 0 00-.1-1.2l2-1.6-2-3.4-2.4 1a7 7 0 00-2-1.2L16 2H8l-.5 2.6a7 7 0 00-2 1.2l-2.4-1-2 3.4 2 1.6A7 7 0 003 12c0 .4 0 .8.1 1.2l-2 1.6 2 3.4 2.4-1c.6.5 1.3.9 2 1.2L8 22h8l.5-2.6c.7-.3 1.4-.7 2-1.2l2.4 1 2-3.4-2-1.6c.1-.4.1-.8.1-1.2z"/></svg>
+    </button>
+  </div>
+</header>
 
-    <section class="view active" id="view-dash">
-      <div class="vhead"><h2 class="serif">Temple &amp; Family History Overview</h2><span class="note" id="updatedNote"></span></div>
-      <div class="hintline">Tap any card to open the matching list of members.</div>
-      <div class="sectlabel">Temple Preparation</div><div class="grid" id="cardsPrep"></div>
-      <div class="sectlabel">Endowment &amp; Ordinances</div><div class="grid" id="cardsTemple"></div>
-      <div class="sectlabel">Family History</div><div class="grid" id="cardsFH"></div>
-      <div class="sectlabel">Rotation Groups &amp; Follow-Up</div><div class="grid" id="cardsFlags"></div>
-      <div>
-        <a class="extlink" href="https://filipefa1998-sudo.github.io/focus5-tracker/" target="_blank" rel="noopener">Open the Focus 5 Tracker ↗</a>
+<main>
+  <!-- HOME -->
+  <section class="view active" id="home">
+    <div class="hero">
+      <svg class="spire" viewBox="0 0 24 24"><path d="M12 1l1.2 2.2L12 4.4l-1.2-1.2L12 1zm-.9 4.2h1.8v2.1h2.2v2H9V7.3h2.1V5.2zM5 9.3h3v1.8H5V9.3zm11 0h3v1.8h-3V9.3zM4 12h16v2H4v-2zm1 3h2.4v6H5v-6zm5.8 0h2.4v6h-2.4v-6zm6.8 0H20v6h-2.4v-6zM9 15h1.2v3.4H9V15zm4.8 0H15v3.4h-1.2V15zM3 21h18v2H3v-2z"/></svg>
+      <div class="eyebrow">Temple Preparation Seminar</div>
+      <h1>Endowed from on High</h1>
+      <p>Seven lessons to prepare for the temple. Read them, listen to them, or follow along with both — at your own pace.</p>
+      <div class="progwrap">
+        <div class="ptrack"><div class="pfill" id="overPfill"></div></div>
+        <span id="overPct">0 of 7 complete</span>
       </div>
-    </section>
+    </div>
+    <div class="rule">The Lessons</div>
+    <div class="cards" id="cards"></div>
+    <div class="foot">
+      Audio and lesson text adapted from <em>Endowed from on High: Temple Preparation Seminar</em>,<br>
+      © Intellectual Reserve, Inc. For personal and ward study.
+    </div>
+  </section>
 
-    <section class="view" id="view-members">
-      <div class="vhead"><h2 class="serif">Members</h2><button class="btn gold" id="addBtn">+ Add Member</button></div>
-      <div class="toolbar">
-        <input type="text" id="search" placeholder="Search by name or household…">
-        <select id="filter">
-          <option value="all">All members</option>
-          <option value="flagged">Has follow-up flag</option>
-          <option value="prepNow">Currently in prep class</option>
-          <option value="prepNext">Next class — upcoming</option>
-          <option value="prepDone">Completed prep class</option>
-          <option value="prepLapsed">Prep class lapsed — reach out</option>
-          <option value="endowSet">Endowment date set</option>
-          <option value="endowed">Endowed</option>
-          <option value="endowNeed">Prep done — endowment not set</option>
-          <option value="submitting">Actively submitting names</option>
-          <option value="indexing">Actively indexing</option>
-          <option value="gen6">Family at 6+ generations</option>
-          <option value="genNeed">Under 6 generations</option>
-          <option value="rotNow">Currently rotating (FH group)</option>
-          <option value="rotNext">Upcoming rotation</option>
-          <option value="consultant">Temple &amp; FH consultants / leaders</option>
-        </select>
-      </div>
-      <div class="tablewrap">
-        <table>
-          <thead><tr>
-            <th>Name</th><th>Household</th><th>Prep Class</th><th>Completed</th>
-            <th>Endowment</th><th>Submitting</th><th>Indexing</th>
-            <th>Generations</th><th>FH Group</th><th>Action</th>
-          </tr></thead>
-          <tbody id="membersBody"></tbody>
-        </table>
-      </div>
-    </section>
+  <!-- READER -->
+  <section class="view" id="reader">
+    <div class="rhead">
+      <div class="ln" id="rLn">Lesson 1</div>
+      <h2 id="rTitle"></h2>
+    </div>
+    <div class="epigraph" id="rEpi"></div>
 
-    <section class="view" id="view-classes">
-      <div class="vhead"><h2 class="serif">Temple Preparation Classes</h2><button class="btn primary no-print" id="printClassesBtn">Print / Save as PDF</button></div>
-      <div class="hintline no-print">Grouped by cohort. Tap any name to edit. Shows who is in class now, who is lined up next, completion dates, and scheduled endowments.</div>
-      <div id="classesHeader" class="rv-printhead"></div>
-      <div id="classesBody"></div>
-    </section>
+    <div class="modebar">
+      <div class="seg" id="seg">
+        <button data-mode="read"><svg viewBox="0 0 24 24"><path d="M4 4h16v2H4zm0 5h16v2H4zm0 5h11v2H4z"/></svg>Read</button>
+        <button data-mode="listen"><svg viewBox="0 0 24 24"><path d="M12 3a5 5 0 00-5 5v3a5 5 0 0010 0V8a5 5 0 00-5-5zm-7 8a7 7 0 0014 0h-2a5 5 0 01-10 0H5zm6 8h2v2h-2z"/></svg>Listen</button>
+        <button data-mode="both"><svg viewBox="0 0 24 24"><path d="M3 5h12v2H3zm0 4h12v2H3zm0 4h8v2H3zm14-7a3 3 0 100 6 3 3 0 000-6zm0 2a1 1 0 110 2 1 1 0 010-2z"/></svg>Both</button>
+      </div>
+    </div>
 
-    <section class="view" id="view-fh">
-      <div class="vhead"><h2 class="serif">Family History &amp; Indexing</h2><button class="btn primary no-print" id="printFhBtn">Print / Save as PDF</button></div>
-      <div class="hintline no-print">Participation, pedigree depth, and the rotation-group board. Tap any name to edit.</div>
-      <div id="fhHeader" class="rv-printhead"></div>
-      <div id="fhBody"></div>
-    </section>
+    <div class="listen" id="listenPane">
+      <div class="nowsec" id="listenSec"></div>
+      <div class="lead" id="listenLead">Press play to begin.</div>
+      <div class="ctx" id="listenCtx"></div>
+    </div>
 
-    <section class="view" id="view-review">
-      <div class="vhead">
-        <h2 class="serif">Council Report</h2>
-        <button class="btn primary no-print" id="printBtn">Print / Save as PDF</button>
-      </div>
-      <div class="rv-toolbar no-print">
-        <select id="reviewFilter">
-          <option value="all">Full report (stats + everyone)</option>
-          <option value="priorities">Priorities + follow-up only</option>
-        </select>
-        <span class="note">Tap any name to edit. Use Print for a ward-council copy.</span>
-      </div>
-      <div id="reviewHeader" class="rv-printhead"></div>
-      <div id="reviewBody"></div>
-    </section>
+    <div class="reading" id="reading"></div>
 
-    <section class="view" id="view-history">
-      <div class="vhead"><h2 class="serif">History &amp; Trends</h2><button class="btn primary no-print" id="printHistBtn">Print / Save as PDF</button></div>
-      <div class="panel no-print" style="max-width:none">
-        <h3>Log a Milestone</h3>
-        <p>Each entry is stamped with its date so quarter-over-quarter trends build over time. Marking a prep class “Completed,” an endowment “Endowed,” or a Quarter Plan goal “Completed” also records here automatically.</p>
-        <div class="row">
-          <select id="logMember"></select>
-          <select id="logMilestone"></select>
-          <input type="date" id="logDate">
-          <button class="btn gold" id="addLogBtn">Add to history</button>
-        </div>
-        <div class="smsg" id="logMsg"></div>
-      </div>
-      <div id="historyHeader" class="rv-printhead"></div>
-      <div id="historyBody"></div>
-    </section>
+    <div class="donerow">
+      <button class="btn gold" id="doneBtn">Mark lesson complete</button>
+    </div>
+  </section>
+</main>
 
-    <section class="view" id="view-settings">
-      <div class="vhead"><h2 class="serif">Settings</h2></div>
-      <div class="privacy"><b>Where your data lives:</b> Member records are stored in this tracker's private Firebase project and synced live across everyone who has the link — there is no separate sign-in, so keep the link within your temple &amp; family history leadership. Treat names and details as confidential.</div>
-      <div class="panel">
-        <h3>Backup &amp; Migration</h3><p>Export a JSON backup of all members, or import records into the cloud.</p>
-        <div class="row">
-          <button class="btn gold" id="exportBtn">Export backup</button>
-          <button class="btn ghost" id="importBtn">Import into cloud</button>
-          <input type="file" id="importFile" accept="application/json" style="display:none">
-        </div>
-        <div class="smsg" id="ioMsg"></div>
-      </div>
-      <div class="panel">
-        <h3>Related Tools</h3><p>Open the other ward trackers.</p>
-        <div class="row">
-          <a class="extlink" style="margin-top:0" href="https://filipefa1998-sudo.github.io/focus5-tracker/" target="_blank" rel="noopener">Focus 5 Tracker ↗</a>
-        </div>
-      </div>
-    </section>
-  </main>
-</div>
-
-<div class="overlay" id="overlay">
-  <div class="modal">
-    <div class="mhead"><h3 class="serif" id="modalTitle">Add Member</h3><button class="x" id="closeModal">&times;</button></div>
-    <div class="mbody" id="modalBody"></div>
-    <div class="mfoot">
-      <button class="btn danger" id="deleteBtn" style="visibility:hidden">Delete</button>
-      <div style="display:flex;gap:10px">
-        <button class="btn ghost" id="cancelBtn">Cancel</button>
-        <button class="btn primary" id="saveBtn">Save</button>
-      </div>
+<!-- AUDIO PLAYER -->
+<div class="player" id="player">
+  <div class="pin">
+    <div class="scrub">
+      <span id="cur">0:00</span>
+      <input type="range" id="seek" min="0" max="1000" value="0" step="1" aria-label="Seek">
+      <span id="dur">0:00</span>
+    </div>
+    <div class="ctrls">
+      <select class="rate" id="rate" aria-label="Playback speed">
+        <option value="0.75">0.75×</option>
+        <option value="1" selected>1×</option>
+        <option value="1.25">1.25×</option>
+        <option value="1.5">1.5×</option>
+        <option value="2">2×</option>
+      </select>
+      <button class="pbtn" id="back15" aria-label="Back 15 seconds">
+        <svg viewBox="0 0 24 24"><path d="M12 5V2L7 6l5 4V7a5 5 0 11-5 5H5a7 7 0 107-7z"/><text x="12" y="15" font-size="7" font-family="Arial" font-weight="bold" text-anchor="middle" fill="currentColor">15</text></svg>
+      </button>
+      <button class="pbtn play" id="play" aria-label="Play">
+        <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <button class="pbtn" id="fwd15" aria-label="Forward 15 seconds">
+        <svg viewBox="0 0 24 24"><path d="M12 5V2l5 4-5 4V7a5 5 0 105 5h2a7 7 0 11-7-7z"/><text x="12" y="15" font-size="7" font-family="Arial" font-weight="bold" text-anchor="middle" fill="currentColor">15</text></svg>
+      </button>
+      <span class="lbl" id="missing" style="display:none;color:var(--gold)">No audio file</span>
+    </div>
+    <div class="followtog" id="followRow">
+      <span>Follow along — highlight &amp; scroll with the audio</span>
+      <div class="sw on" id="followSw"><i></i></div>
     </div>
   </div>
 </div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, onSnapshot, doc, setDoc, deleteDoc }
-  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+<!-- SETTINGS -->
+<div class="sheet" id="sheet">
+  <div class="sheetin">
+    <h3>Settings</h3>
+    <div class="srow">
+      <div><div class="k">Dark mode</div><div class="d">Easier reading at night</div></div>
+      <div class="sw" id="darkSw"><i></i></div>
+    </div>
+    <div class="srow">
+      <div><div class="k">Reading text size</div><div class="d">Adjust the lesson text</div></div>
+      <div class="fontctl"><button id="fMinus">A−</button><button id="fPlus">A＋</button></div>
+    </div>
+    <div class="srow">
+      <div><div class="k">Reset my progress</div><div class="d">Clear completed lessons &amp; saved spots</div></div>
+      <button class="linkbtn" id="resetBtn">Reset</button>
+    </div>
+    <div class="foot" style="margin-top:18px;text-align:left">
+      Tip: tap any sentence in <strong>Both</strong> mode to jump the audio to that spot.
+    </div>
+    <div class="donerow" style="margin-top:8px"><button class="btn ghost" id="closeSet">Close</button></div>
+  </div>
+</div>
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDO3n2x7XJmzWnoVpZcLAVkOwbjFWIByd0",
-  authDomain: "temple-family-history-tracker.firebaseapp.com",
-  projectId: "temple-family-history-tracker",
-  storageBucket: "temple-family-history-tracker.firebasestorage.app",
-  messagingSenderId: "615799054242",
-  appId: "1:615799054242:web:969d28d465aecf09ce9cfb"
+<audio id="audio" preload="metadata"></audio>
+
+<script>
+const LESSONS = [{"id":1,"num":1,"title":"The Temple Teaches about the Great Plan of Salvation","scripture":{"text":"And this is life eternal, that they might know thee the only true God, and Jesus Christ, whom thou hast sent","ref":"John 17:3"},"audio":"2011-01-04-lesson-1-the-temple-teaches-about-the-great-plan-of-salvation-64k-eng.mp3","sections":[{"heading":"Objective","blocks":[{"type":"p","text":"To help class members understand that the plan of salvation is taught in the temple."}],"callouts":[]},{"heading":"Preparation","blocks":[{"type":"p","text":"1. Before class begins, prepare a chalkboard or poster illustration of the incomplete diagram showing the plan of salvation (see page 3). (You may wish to make a similar incomplete diagram on a piece of paper for each class member to complete during class discussion.) 2. Make sure that each class member has access to a copy of the scriptures. Also provide a copy of the booklet Preparing to Enter the Holy Temple for each class member. These should have been ordered as part of the class materials. 3. You may want to assign several class members to help you with the second section of the lesson. You could give the scripture references mentioned under each part of the plan of salvation (premortal life, the Fall, etc.) to a class member and ask him or her to come to class prepared to summarize what these scriptures teach about the plan of salvation. 4. If the Come unto Me videocassette (53146) is available, you may want to show “Man’s Search for Happiness,” a 13-minute segment."}],"callouts":[]},{"heading":"The Temple Is a Spiritual School","blocks":[{"type":"p","text":"Invite someone to give an opening prayer. Explain that the scriptures will be used in each lesson. Encourage class members to bring the scriptures to each class. Distribute a copy of Preparing to Enter the Holy Temple to each class member. Explain that this is the student supplement for the course. Material from the booklet will be discussed throughout the lessons, and each class member should read the booklet during the weeks the course is taught."},{"type":"p","text":"Begin the lesson by explaining that the temple is a spiritual school that helps us learn more about the purpose of life and the plan of salvation. Have class members read the following quotations, which explain some of what we learn in the temple: President Gordon B. Hinckley said that the temple “becomes a school of instruction in the sweet and sacred things of God. Here we have outlined the plan of a loving Father in behalf of His sons and daughters of all generations. Here we have sketched before us the odyssey of man’s eternal journey from premortal existence through this life to the life beyond. Great fundamental and basic truths are taught with clarity and simplicity well within the understanding of all who hear” (“The Salt Lake Temple,” Ensign, Mar. 1993, 5–6). President Brigham Young taught that the temple ordinance called the endowment gives us instruction necessary for eternal life: “Your endowment is, to receive all those ordinances in the house of the Lord, which are necessary for you, after you have departed this life, to enable you to walk back to the presence of the Father” (Discourses of Brigham Young, sel. John A. Widtsoe [1954], 416). Have class members read John 17:3."},{"type":"q","text":"What does this scripture teach about the most important knowledge we can obtain?"},{"type":"p","text":"Explain that in the temple, we learn more about Heavenly Father and Jesus Christ, and we are able to grow closer to Them. We learn about Their plan for us, which is referred to in the scriptures by various titles, such as the plan of redemption or plan of salvation."},{"type":"q","text":"What has helped you learn about the plan of salvation thus far in your life?"},{"type":"q","text":"How has your understanding of the plan of salvation blessed your life?"}],"callouts":[{"text":"We will prove them herewith, to see if they will do all things whatsoever the Lord their God shall command them","ref":"Abraham 3:25"}]},{"heading":"In the Temple We Are Taught the Plan of Salvation","blocks":[{"type":"p","text":"Explain that as part of the temple endowment, the plan of salvation is taught. This section of the lesson will help the class members prepare to understand these teachings in the temple. Refer to the incomplete chalkboard illustration and review the following information, using the scriptures to help the class members understand the ideas. As the scriptures are discussed, write them on the appropriate lines on the chart (see the completed chart on page 5). If the class members have their own copies of the chart, have them add the scripture references to their charts."},{"type":"p","text":"If you have assigned class members to help you, ask them to present their information on the plan of salvation. Explain that this discussion will focus on the following questions: Where did we come from? Why are we here on earth? Where are we going after this life?"},{"type":"sub","text":"Premortal Life"},{"type":"p","text":"1. We are spirit children of God, our Heavenly Father, and we lived with Him before coming to earth (see Romans 8:16–17). 2. Heavenly Father called a great council in heaven (see Abraham 3:22–23). He presented a plan for our eternal development and happiness, which is called the plan of salvation. We chose to follow His plan. 3. In harmony with the plan, Jesus Christ, the Firstborn Son of Heavenly Father, volunteered to be our Savior (see Moses 4:2; Abraham 3:27). 4. Lucifer, another son of God, rebelled against Heavenly Father’s plan and “sought to destroy the agency of man.” He and his followers were cast out of heaven and were denied the privileges of receiving a physical body and experiencing mortality. Throughout the ages, Satan, as Lucifer is now called, has tried to make all mankind miserable like himself by tempting them to be wicked (see Moses 4:1, 3–4; 2 Nephi 2:17–18)."},{"type":"sub","text":"The Fall"},{"type":"p","text":"1. Adam and Eve were chosen to be the first of Heavenly Father’s children to come to earth and were placed in the Garden of Eden. At that time, their bodies were not mortal (see Moses 3:7–8, 21–23). 2. Adam and Eve chose to eat the fruit that God had forbidden them to eat. As a result, they were separated from God’s presence. This separation is called spiritual death. They became mortal, which means that their physical bodies would eventually die. They also"},{"type":"p","text":"became able to have children. The change to the mortal condition is called the Fall (see 2 Nephi 2:19–25; D&C 29:40–41)."},{"type":"sub","text":"Mortal Life"},{"type":"p","text":"1. All those who chose in the premortal life to follow Heavenly Father’s plan gain a physical body by being born on this earth. During our mortal life, we are tested to see whether we are willing to live by faith and obey Heavenly Father’s commandments when we are not in His physical presence (see Alma 34:32; Abraham 3:24–26). 2. In mortality, each person is free to choose whether he or she will follow God or follow Satan (see 2 Nephi 2:27)."},{"type":"sub","text":"Death and Resurrection"},{"type":"p","text":"1. When we die, our spirits enter the spirit world, and our bodies remain on earth. This period of separation continues until the time of our resurrection. The spirits of the righteous are received into a state of peace and happiness, which is called paradise. The spirits of the wicked are placed in a state of darkness, which is sometimes referred to as a prison (see Alma 40:9–14; see also 1 Peter 3:19)."},{"type":"p","text":"2. The Atonement and Resurrection of Jesus Christ provide the way for all mankind to overcome physical death by being resurrected. Resurrection means that our spirits and perfected bodies will be reunited for eternity (see 1 Corinthians 15:22; 2 Nephi 9:10–13; Alma 11:42–44). 3. The Atonement of Jesus Christ also provides the way for us to be forgiven and cleansed from sin so we can dwell in the presence of God. The Savior suffered for the sins of all mankind in the Garden of Gethsemane and on the cross. As a result of His Atonement, we can repent of our sins and receive forgiveness. As we live the gospel, we can qualify to receive the gift of eternal life and become like Him (see Mosiah 3:5–12)."},{"type":"sub","text":"Kingdoms of Glory"},{"type":"p","text":"At the time of resurrection, each person will be assigned to a kingdom of glory. Those who are righteous will inherit greater joy and blessings than those who do not obey God’s commandments (see 1 Corinthians 15:35, 40–42). 1. The telestial glory is for those who do not receive the gospel of Jesus Christ or the testimony of Jesus or the prophets of God, and who live sinful lives (see D&C 76:81–88, 98–103). 2. The terrestrial glory is for the honorable people of the earth who are deceived and for those who are not valiant in the testimony of Jesus Christ (see D&C 76:71–79)."},{"type":"p","text":"3. The celestial glory is reserved for those who obey the commandments and receive the ordinances, overcome all things by faith in Jesus Christ, and become pure in heart (see D&C 76:50–70). Ask class members to respond to the following questions:"},{"type":"q","text":"What did you learn about the plan of salvation that you did not know before?"},{"type":"q","text":"How do you feel when you think about Jesus Christ’s part in this great plan?"},{"type":"q","text":"How can we show Heavenly Father and Jesus Christ that we are grateful for Their plan?"},{"type":"p","text":"To emphasize the great importance of the Savior’s Atonement in the plan of salvation, write the third article of faith below the completed chart as shown."}],"callouts":[{"text":"We believe that through the Atonement of Christ, all mankind may be saved, by obedience to the laws and ordinances of the Gospel","ref":"Articles of Faith 1:3"}]},{"heading":"Conclusion","blocks":[{"type":"p","text":"Emphasize that the temple provides us with knowledge about this plan, knowledge that brings great blessings into our lives. Bear your testimony about the blessings you have received because you understand the plan of salvation and live the principles of the gospel. You may want to conclude by showing “Man’s Search for Happiness.” Invite someone to give a closing prayer."}],"callouts":[{"text":"We believe that through the Atonement of Christ, all mankind may be saved, by obedience to the laws and ordinances of the Gospel","ref":"Articles of Faith 1:3"}]}]},{"id":2,"num":2,"title":"We Must Be Worthy to Enter the Temple","scripture":{"text":"It would be the deepest desire of my heart to have every member of the Church be temple worthy.","ref":"President Howard W. Hunter"},"audio":"2011-01-05-lesson-2-we-must-be-worthy-to-enter-the-temple-64k-eng.mp3","sections":[{"heading":"Objective","blocks":[{"type":"p","text":"To help class members understand that they must be worthy to enter the temple."}],"callouts":[]},{"heading":"Preparation","blocks":[{"type":"p","text":"1. Well in advance of this lesson, invite the bishop or branch president to present information about the process of obtaining a temple recommend. Suggested material for this presentation is provided on pages 10–11 in the section “The Process of Obtaining a Temple Recommend Is a Blessing.” If the bishop is not available, you could ask one of his counselors to make the presentation. 2. Write the following quotation on the chalkboard or a poster: “I invite all members of the Church to live with ever more attention to the life and example of the Lord Jesus Christ” (President Howard W. Hunter, in Conference Report, Oct. 1994, 7; or Ensign, Nov. 1994, 8)."}],"callouts":[]},{"heading":"Lesson Presentation","blocks":[{"type":"p","text":"Invite someone to give an opening prayer. Ask class members if they have any questions. Take the time required to answer questions to the best of your ability and as guided by the Lord’s Spirit. Remember that some aspects of temple work must not be discussed outside the temple. Explain that those who enter the temple must show their faith in Heavenly Father and Jesus Christ by living the gospel and keeping the commandments. They must be morally clean, pay a full tithing, obey the Word of Wisdom, keep the Sabbath day holy, and strive to live righteously in all other ways. They must also be interviewed by the bishop or branch president and the stake or mission president and be found worthy to receive a temple recommend. This lesson will review some of the gospel principles and commandments that the class members must be living in order to worthily attend the temple."}],"callouts":[]},{"heading":"Moral Cleanliness","blocks":[{"type":"p","text":"Explain that the Lord and His prophets have repeatedly taught the great importance of being morally clean. President Gordon B. Hinckley"},{"type":"p","text":"taught: “We believe in chastity before marriage and total fidelity after marriage. That sums it up. That is the way to happiness in living. That is the way to satisfaction. It brings peace to the heart and peace to the home” (in Conference Report, Oct. 1996, 68; or Ensign, Nov. 1996, 49). Read together the following scriptures: Doctrine and Covenants 42:22–24 (The Lord has commanded us to love our spouse and not to seek after anyone else; He has commanded us not to commit adultery.) Doctrine and Covenants 121:45 (The Lord has commanded us to “let virtue garnish [our] thoughts unceasingly.”) 1 Timothy 4:12 (We are to be examples of purity.) 1 Nephi 10:21 (No unclean thing can dwell with God.) Articles of Faith 1:13 (We believe in being chaste and virtuous.)"},{"type":"q","text":"Why does the Lord place so much emphasis on moral cleanliness?"},{"type":"q","text":"What are some of the results of immorality that we can see in the world around us? What are some of the blessings of living a morally clean life?"},{"type":"p","text":"Direct class members’ attention to the quotation you have written on the chalkboard or a poster (see the “Preparation” section in this lesson)."},{"type":"q","text":"How can this counsel help us and our children to resist worldly temptations and live morally clean lives?"}],"callouts":[]},{"heading":"Tithing","blocks":[{"type":"p","text":"Ask the class members to read Doctrine and Covenants 119:4. Point out that the First Presidency has given the following explanation of a proper tithe: “The simplest statement we know of is the statement of the Lord himself, namely, that the members of the Church should pay ‘one-tenth of all their interest annually,’ which is understood to mean income” (First Presidency letter, 19 Mar. 1970). Tithing funds are used to build meetinghouses and temples, to sustain missionary work, and to build the kingdom of God on earth. Share the following statement by President James E. Faust: “Tithing is a principle that is fundamental to the personal happiness and well-being of the Church members worldwide, both rich and poor. Tithing is a principle of sacrifice and a key to the opening of the windows of heaven. . . . Members of the Church who do not tithe do not lose their membership; they only lose blessings” (in Conference Report, Oct. 1998, 73–74; or Ensign, Nov. 1998, 58–59)."},{"type":"p","text":"Review with class members the following scriptures: Leviticus 27:30 (Tithing is the Lord’s; it is holy unto the Lord.) Malachi 3:8–11 (We rob God when we withhold our tithes; God will abundantly bless those who pay tithing.)"},{"type":"q","text":"What blessings have you received because you have paid tithing?"},{"type":"q","text":"Why are we robbing God when we withhold our tithing?"},{"type":"p","text":"(See D&C 104:14.) Explain that each year members are asked to meet with their bishop or branch president in tithing settlement and declare to him whether they pay a full tithing. This meeting is an opportunity for members to evaluate how well they are fulfilling this important commandment."}],"callouts":[]},{"heading":"The Word of Wisdom","blocks":[{"type":"p","text":"Explain that before we may enter the temple, the Lord expects us to be free of practices that make our lives unclean and unhealthy, both spiritually and physically. Read parts or all of the following scriptures: 1 Corinthians 3:16–17 (Our bodies are temples of God and should not be defiled.) Doctrine and Covenants 89 (This revelation is known as the Word of Wisdom. Verses 1–9 discuss the things we should not take into our bodies; verses 10–17 discuss the things that are good for our bodies; verses 18–21 describe the Lord’s promises to those who keep His commandments.)"},{"type":"q","text":"What things in the world today influence us to break the commandments given to us in the Word of Wisdom?"},{"type":"q","text":"How can we help ourselves and our children to keep the Lord’s laws of health?"},{"type":"p","text":"Ask the class members to read Doctrine and Covenants 29:34."},{"type":"q","text":"In what ways do you think obedience to the Word of Wisdom can bless us spiritually as well as physically?"},{"type":"q","text":"What are some “great treasures of knowledge” (D&C 89:19) we might receive by keeping these commandments?"},{"type":"p","text":"Share the following statement by President Boyd K. Packer: “What you learn spiritually depends, to a degree, on how you treat your body. That is why the Word of Wisdom is so important."},{"type":"p","text":"“The habit-forming substances prohibited by that revelation—tea, coffee, liquor, tobacco—interfere with the delicate feelings of spiritual communication, just as other addictive drugs will do. “Do not ignore the Word of Wisdom, for that may cost you the ‘great treasures of knowledge, even hidden treasures’ promised to those who keep it. And good health is an added blessing” (in Conference Report, Oct. 1994, 78; or Ensign, Nov. 1994, 61)."}],"callouts":[]},{"heading":"The Sabbath Day","blocks":[{"type":"p","text":"Read together Exodus 20:8–11. Explain that the Lord’s people have always been commanded to keep the Sabbath day holy. The Lord has promised great blessings to those who do so. Ask the class members to read Doctrine and Covenants 59:9–13."},{"type":"q","text":"What are the central reasons given by the Lord for keeping the Sabbath day holy?"},{"type":"q","text":"In what ways can Doctrine and Covenants 59:9–13 guide our observance of the Sabbath day?"},{"type":"q","text":"What are some of the blessings promised to those who properly observe the Sabbath?"},{"type":"p","text":"As part of this discussion, share the following principles, taught by Elder James E. Faust: “Why has God asked us to honor the Sabbath day? The reasons I think are at least threefold. The first has to do with the physical need for rest and renewing. . . . “The second reason is, in my opinion, of far greater significance. It has to do with the need for regeneration and the strengthening of our spiritual being. . . . “The third reason may be the most important of the three. It has to do with obedience to commandments as an expression of our love for God. Blessed are those who need no reasons other than their love for the Savior to keep his commandments” (in Conference Report, Oct. 1991, 46–47; or Ensign, Nov. 1991, 35)."},{"type":"q","text":"What are some blessings that have come into your life because you have kept the Sabbath day holy?"},{"type":"p","text":"Ask the class members to commit themselves to live by the commandments discussed today: moral cleanliness, tithing, the Word of Wisdom, and Sabbath day observance. Then they will be better prepared to attend the temple and will receive the Lord’s blessings more abundantly."}],"callouts":[]},{"heading":"The Process of Obtaining a Temple Recommend Is a Blessing","blocks":[{"type":"p","text":"Explain that before members can go to the temple, they must each be found worthy to receive a temple recommend. As explained in the following statement, the process of obtaining this recommend can bless the life of each person:"},{"type":"p","text":"“The bishop has the responsibility of making inquiries into our personal worthiness. This interview is of great importance to you as a member of the Church, for it is an occasion to explore with an ordained servant of the Lord the pattern of your life. If anything is amiss in your life, the bishop will be able to help you resolve it. Through this procedure, as you counsel with the common judge in Israel, you can declare or can be helped to establish your worthiness to enter the temple with the Lord’s approval” (Preparing to Enter the Holy Temple, 3). Explain that the bishop or branch president and the stake or mission president interview all those seeking a temple recommend for the first time and those planning to be married in the temple. Counselors in the bishopric and the stake presidency may interview those seeking renewal of their temple recommends. At this time, have the bishop or branch president or one of the counselors in the bishopric make his presentation about temple recommends. He should not read the actual interview questions in a group setting, but he can present ideas about what class members can expect when they are interviewed for a temple recommend. The following statements may be used as a guide: Members seeking a temple recommend should have testimonies of Heavenly Father, of the Lord Jesus Christ, and of the Holy Ghost. They should sustain the Lord’s prophet, the other General Authorities, and their local Church leaders. They should not sympathize with or be affiliated with groups or individuals who have apostatized from the Church or whose teachings or practices are contrary to the gospel. Those seeking recommends should be faithfully attending sacrament meetings, priesthood meetings, and other Church meetings. They should be conscientiously carrying out their callings given through priesthood authority. They should be striving to keep all of the Lord’s commandments, including paying a full tithe, being honest in word and deed, and abstaining from the use of tea, coffee, alcohol, tobacco, and other harmful and habit-forming substances. They should be living pure and virtuous lives and should be obeying the Lord’s law of chastity, which prohibits sexual relations with anyone other than the spouse to whom they are lawfully wedded. They should be in harmony with gospel principles in both spiritual and physical relationships with other members of their families. They"},{"type":"p","text":"must not be involved in any spiritual, physical, mental, or emotional abuse of others. They must be willing to confess their sins and forsake them. Serious sins, such as moral transgressions, abuse of family members, affiliation with apostate groups or practices, or serious violations of the laws of the land, must be confessed to the bishop or branch president well in advance of a temple-recommend interview. If a person’s conscience, which is the Light of Christ given to all people, raises a question in the person’s mind about whether something should be discussed with the bishop or branch president, it should probably be discussed. Those who have been divorced may need clearance from the bishop or branch president and the stake or mission president before obtaining a temple recommend. They must always adhere to the agreements of the divorce decree, including being current in making support payments. Members seeking a temple recommend must be interviewed by a member of the stake presidency or by the mission president after being interviewed by a member of the bishopric or by the branch president. Some may wonder why this is necessary. When we seek a temple recommend, we are actually seeking permission from the Lord to enter the temple. We have the privilege of attesting to our worthiness before two witnesses who are the Lord’s authorized servants. It is a blessing to us to affirm before the Lord’s servants our worthiness to enter the holy temple."}],"callouts":[{"text":"I . . . invite the members of the Church to establish the temple of the Lord as the great symbol of their membership and the supernal setting for their most sacred covenants","ref":"President Howard W. Hunter"}]},{"heading":"Conclusion","blocks":[{"type":"p","text":"To emphasize the importance of being worthy to attend the temple and always carrying a current temple recommend, review the following statement by President Howard W. Hunter: “I . . . invite the members of the Church to establish the temple of the Lord as the great symbol of their membership and the supernal setting for their most sacred covenants. It would be the deepest desire of my heart to have every member of the Church be temple worthy. I would hope that every adult member would be worthy of—and carry—a current temple recommend, even if proximity to a temple does not allow immediate or frequent use of it” (quoted in Jay M. Todd, “President Howard W. Hunter,” Ensign, July 1994, 5). Bear testimony of the blessings that have come into your life as you have lived worthy to attend the temple. Invite someone to give a closing prayer."}],"callouts":[]}]},{"id":3,"num":3,"title":"Temple Work Brings Great Blessings into Our Lives","scripture":{"text":"And we ask thee, Holy Father, that thy servants may go forth from this house armed with thy power, and that thy name may be upon them, and thy glory be round about them","ref":"D&C 109:22"},"audio":"2011-01-06-lesson-3-temple-work-brings-great-blessings-into-our-lives-64k-eng.mp3","sections":[{"heading":"Objective","blocks":[{"type":"p","text":"To help class members understand that those who attend the temple worthily will receive great blessings from the Lord."}],"callouts":[]},{"heading":"Preparation","blocks":[{"type":"p","text":"1. Carefully review the scriptures used in this lesson so that you will be prepared to lead the class discussion about them. 2. You may want to prepare to have class members sing a hymn about temple work, such as “We Love Thy House, O God” (Hymns, no. 247), or about the eternal nature of truth, such as “Oh Say, What Is Truth?” (Hymns, no. 272). 3. If Family Home Evening Video Supplement 2 (53277) is available, you may want to show “Temples Are for Eternal Covenants,” a six-minute segment."}],"callouts":[]},{"heading":"Lesson Presentation","blocks":[{"type":"p","text":"Invite someone to give an opening prayer. Ask class members if they have any questions. Take the time required to answer questions to the best of your ability and as guided by the Lord’s Spirit. Remember that some aspects of temple work must not be discussed outside the temple."}],"callouts":[]},{"heading":"Temple Work Has Existed Since Ancient Times","blocks":[{"type":"p","text":"You may want to begin by singing together a hymn about temple work or about the eternal nature of truth. Explain that the Lord has always commanded His people to build temples. He has revealed the work to be done in temples."},{"type":"q","text":"What temples or tabernacles are mentioned in the scriptures?"},{"type":"p","text":"Invite class members to review scripture indexes to find references dealing with temples and tabernacles. You may want to list the class members’ answers on the chalkboard. You may also want to have class members review the following scriptures:"},{"type":"p","text":"Moses’ tabernacle: Exodus 40:1–2, 34–38 Solomon’s temple: 2 Chronicles 3:1–2; 5:1 Herod’s temple: Matthew 21:12–15 Nephite temples: 2 Nephi 5:16; Mosiah 1:18; 3 Nephi 11:1 Explain that because of apostasy, all of these temples eventually lost their true purposes and were destroyed. Temple work in its fulness has been restored in our day through the Prophet Joseph Smith, bringing great blessings into our lives. Elder Bruce R. McConkie said: “The inspired erection and proper use of temples is one of the great evidences of the divinity of the Lord’s work. . . . Where there are temples, with the spirit of revelation resting upon those who administer therein, there the Lord’s people will be found; where these are not, the Church and kingdom and the truth of heaven are not” (Mormon Doctrine, 2nd ed. [1966], 781)."}],"callouts":[]},{"heading":"Great Blessings","blocks":[{"type":"p","text":"The temple, or the house of the Lord, is the place where we go to prepare for exaltation in the celestial kingdom. There we learn more about Heavenly Father and Jesus Christ. We make covenants with Them, and They promise wonderful blessings to us. In the Doctrine and Covenants, the Lord has described some of the blessings that come to those who attend the temple and live worthy of the covenants made there. Some of these blessings are described in section 109, which is the prayer offered at the dedication of the Kirtland Temple. The words of this prayer were given to Joseph Smith by revelation. President Howard W. Hunter said that this prayer “continues to be answered upon us individually, upon us as families, and upon us as a people because of the priesthood power the Lord has given us to use in His holy temples” (“The Great Symbol of Our Membership,” Ensign, Oct. 1994, 4). President Hunter then quoted some of the verses from section 109. Ask the class members to read these verses: Doctrine and Covenants 109:10–12, 22–23, 59, 67, 72, 75. Ask them to look for the blessings mentioned by the Lord. Following the reading, ask the class members to list the blessings they have identified. Write the comments on the chalkboard. The blessings mentioned may include the following:"},{"type":"p","text":"1. The Lord’s glory will be upon His people. 2. The Lord’s servants will leave the temple with the Lord’s power, name, and glory, and angels will have charge over them. 3. The Lord’s servants will take the truth of the gospel from the temple to the ends of the earth. 4. Stakes will be organized so that the Lord’s people may be gathered. 5. All of scattered Israel will learn the truth and rejoice. 6. The families of the Saints and all of their sick and afflicted will be remembered before the Lord. 7. The Lord’s kingdom will fill the whole earth. 8. The Lord’s servants will someday be caught up to meet the Lord and will be with Him forever. “Yea, and my presence shall be [in my house], for I will come into it, and all the pure in heart that shall come into it shall see God” (D&C 97:16)."},{"type":"q","text":"How do you feel when you consider these wonderful blessings promised to those who attend the temple worthily and honor their covenants?"},{"type":"p","text":"President Howard W. Hunter said: “Has there ever been a people with such stirring and wonderful promises! No wonder the Lord desires that His followers point themselves toward His example and toward His temples” (Ensign, Oct. 1994, 5). The Lord also made promises connected with temples in Doctrine and Covenants 97. Ask the class members to read Doctrine and Covenants 97:15–21."},{"type":"q","text":"What do verses 15–17 teach about what the Lord’s people must do to qualify for the Lord’s blessings in His temples?"},{"type":"p","text":"(Be pure in heart and not allow any unclean thing to come into the temples.) Explain that those who are pure in heart are called Zion. Verses 15–21 teach that we can help to build Zion by worthily attending the temple and striving to be pure in heart and undefiled by evil."},{"type":"q","text":"What blessings are promised in these verses to a people worthy to be called Zion?"},{"type":"p","text":"Explain that a city named Zion existed in ancient times. This city was built by the prophet Enoch and his people. It was taken to heaven because of the righteousness of its people (see D&C 38:4; Moses 7:18–21, 69). Zion will also exist in the latter days. In the tenth article of faith, the Lord promises that a city named Zion will be built on the American continent. Ask the class members to read this article of faith. Explain"},{"type":"p","text":"that the scattered people of Israel will gather to this great city (see D&C 103:11–13). Today, the members of the Church are counseled to become worthy to attend the holy temple and to build up Zion wherever they are living in the world. We are to make our homes like temples—places of purity, love, and personal revelation."},{"type":"q","text":"What can we do to become more pure in heart?"},{"type":"q","text":"In what ways does the world sometimes make it hard to remain pure in heart?"},{"type":"q","text":"In what ways could you help your family, branch, or ward to become pure in heart?"},{"type":"p","text":"Explain that those who make and keep temple covenants and strive throughout their lives to become pure in heart are those who can help to build Zion."}],"callouts":[]},{"heading":"Conclusion","blocks":[{"type":"p","text":"Bear testimony that those who worthily attend the temple will receive great blessings from the Lord, including the blessings of being a Zion people. We must do all that we can to become worthy of these blessings and to become pure in heart. You may want to show the video presentation “Temples Are for Eternal Covenants.” Invite someone to give the closing prayer."}],"callouts":[]}]},{"id":4,"num":4,"title":"Receiving Temple Ordinances and Covenants","scripture":{"text":"And without the ordinances thereof, and the authority of the priesthood, the power of godliness is not manifest unto men in the flesh","ref":"D&C 84:21"},"audio":"2011-01-07-lesson-4-receiving-temple-ordinances-and-covenants-64k-eng.mp3","sections":[{"heading":"Objective","blocks":[{"type":"p","text":"To help class members understand the importance of temple ordinances and covenants."}],"callouts":[]},{"heading":"Preparation","blocks":[{"type":"p","text":"1. If it is available in your area, you may want to show the video presentation Together Forever (53411). The presentation lasts approximately 27 minutes. 2. You may want to prepare to have the class members sing “More Holiness Give Me” (Hymns, no. 131)."}],"callouts":[]},{"heading":"Lesson Presentation","blocks":[{"type":"p","text":"Invite someone to give an opening prayer. Ask class members if they have any questions. Take the time required to answer questions to the best of your ability and as guided by the Lord’s Spirit. Remember that some aspects of temple work must not be discussed outside the temple."}],"callouts":[]},{"heading":"In the Temple We Receive Ordinances and Make Covenants","blocks":[{"type":"p","text":"Explain that in the temple we receive the ordinances that will enable us to return to the presence of God. We also make covenants to live the laws of the gospel. The following material will provide information about ordinances and covenants in general, and temple ordinances and covenants in particular."},{"type":"sub","text":"Ordinances"},{"type":"p","text":"Explain that an ordinance is a sacred ceremony that has a spiritual meaning and effect. Ask the class members to name some of the ordinances in the Church. (They may mention naming and blessing of babies, baptism, confirmation, the sacrament, ordination to the priesthood, and temple ordinances.) Explain that ordinances performed by the power of the priesthood are essential to our exaltation. It is through these ordinances that we receive the power of God in our lives."},{"type":"p","text":"Ask the class members to read Doctrine and Covenants 84:19–21."},{"type":"q","text":"What is necessary in order for the power of godliness to be manifest in our lives?"},{"type":"p","text":"(The ordinances of the Melchizedek Priesthood. The “greater priesthood” mentioned in these verses is the Melchizedek Priesthood.) “We covenant to give of our resources in time and money and talent—all we are and all we possess—to the interest of the kingdom of God upon the earth” ( Preparing to Enter the Holy Temple, 35)."},{"type":"p","text":"Have class members turn to page 29 in Preparing to Enter the Holy Temple. Ask a class member to read the following statement aloud: “How important are the ordinances to us as members of the Church? “Can you be happy, can you be redeemed, can you be exalted without them? Answer: They are more than advisable or desirable, or even than necessary. More even than essential or vital. They are crucial to each of us.”"},{"type":"sub","text":"Covenants"},{"type":"p","text":"Explain that a covenant is a sacred agreement between God and a person or group of people. God sets specific conditions, and He promises to bless us as we obey those conditions. When we choose not to keep covenants, we cannot receive the blessings, and in some instances we suffer a penalty as a consequence of our disobedience. The saving ordinances of the priesthood are always accompanied by covenants."},{"type":"q","text":"What covenants have you made with the Lord up to this point in your lives?"},{"type":"p","text":"(Class members may mention the covenant of baptism, which is renewed each time we take the sacrament.)"},{"type":"q","text":"What covenants do we make when we are baptized?"},{"type":"p","text":"(See Mosiah 18:8–10; D&C 20:37.) Emphasize that when we make covenants with God, we express our desire to serve God and our willingness to obey all that is asked of us. In return, God promises us many wonderful blessings. We must make and keep covenants in order to progress toward eternal life."},{"type":"sub","text":"Temple Ordinances and Covenants"},{"type":"p","text":"Explain that the temple ordinances include the endowment and sealings (temple marriage and sealing of parents to children) for both the living and the dead. The ordinance of baptism for the dead is performed in temples, as are other priesthood ordinances. In the temple ordinances, we make solemn covenants to give ourselves to God and to help build His kingdom on earth. Elder James E. Talmage said about the covenants we make in the endowment:"},{"type":"p","text":"“The ordinances of the endowment embody certain obligations on the part of the individual, such as covenant and promise to observe the law of strict virtue and chastity, to be charitable, benevolent, tolerant and pure; to devote both talent and material means to the spread of truth and the uplifting of the race; to maintain devotion to the cause of truth; and to seek in every way to contribute to the great preparation that the earth may be made ready to receive her King,—the Lord Jesus Christ. With the taking of each covenant and the assuming of each obligation a promised blessing is pronounced, contingent upon the faithful observance of the conditions” (The House of the Lord, rev. ed. [1976], 84). You may want to review the covenants just described by writing them on the chalkboard. Emphasize that we make covenants to be righteous and pure, and we also make covenants to give all we have to building the Lord’s kingdom. Read the following statement: “We are a covenant people. We covenant to give of our resources in time and money and talent—all we are and all we possess—to the interest of the kingdom of God upon the earth” (Preparing to Enter the Holy Temple, 35)."},{"type":"q","text":"In what ways can we give “all we are and all we possess” to the kingdom of God?"},{"type":"q","text":"What sometimes hinders members from giving all that they have to the Lord’s kingdom?"},{"type":"p","text":"You may want to share your testimony about the blessings that have come into your life because you have made and kept temple covenants. Or you may want to ask another endowed person to share his or her testimony."}],"callouts":[]},{"heading":"We Must Be Faithful to the Covenants We Make in the Temple","blocks":[{"type":"p","text":"Explain that the Lord said, “Unto whomsoever much is given, of him shall be much required” (Luke 12:48)."},{"type":"q","text":"How do you think this verse applies to the covenants we make in the temple?"},{"type":"p","text":"Explain that the Lord has provided temple ordinances and covenants so that His children can understand the purpose of this life and be prepared for the glorious opportunities of eternal life. When we receive these blessings, we become accountable to live worthy of our increased knowledge and opportunities. Emphasize that we must be faithful to the covenants made in the temple."},{"type":"q","text":"Why is it so important to be faithful to the covenants we make in the temple?"},{"type":"p","text":"Ask the class members to read Doctrine and Covenants 82:10."},{"type":"p","text":"President Joseph Fielding Smith said: “I say unto you the Lord is not bound, unless you keep the covenant. The Lord never breaks his covenant. When he makes a covenant with one of us, he will not break it. If it is going to be broken, we will break it. But when it is broken, he is under no obligation to give us the blessing, and we shall not receive it” (Doctrines of Salvation, comp. Bruce R. McConkie, 3 vols. [1954–56], 2:256–57)."}],"callouts":[{"text":"I, the Lord, am bound when ye do what I say; but when ye do not what I say, ye have no promise","ref":"D&C 82:10"}]},{"heading":"Faithfulness to Our Covenants Will Bring Peace and Safety","blocks":[{"type":"p","text":"Explain that the temple is a place of peace and a sanctuary in a troubled world. As we attend the temple regularly and are faithful to our covenants, we will find peace, safety, and direction in our lives. Elder Neal A. Maxwell said, “If we will keep our covenants, the covenants will keep us spiritually safe” (in Conference Report, Apr. 1987, 87; or Ensign, May 1987, 71)."},{"type":"q","text":"In what ways have the covenants you have made thus far helped to keep you spiritually safe?"},{"type":"p","text":"Point out that in the temple we covenant to live worthy to return to the presence of Heavenly Father and Jesus Christ. Sometimes, in the midst of our daily struggles, we may wonder if such living is possible. Ask the class members to read 1 Nephi 17:3, 13."},{"type":"q","text":"What do these scriptures teach about how the Lord will help as we strive to return to Him? How have you seen these scriptures fulfilled in your life?"},{"type":"p","text":"Elder Boyd K. Packer said: “When you come to the temple and receive your endowment, and kneel at the altar and be sealed, you can live an ordinary life and be an ordinary soul—struggling against temptation, failing and repenting, and failing again and repenting, but always determined to keep your covenants. . . . Then the day will come when you will receive the benediction: ‘Well done, thou good and faithful servant: thou hast been faithful over a few things, I will make thee ruler over many things; enter thou into the joy of thy lord’ (Matthew 25:21)” (Let Not Your Heart Be Troubled [1991], 257). President Howard W. Hunter invited us to go to the temple often “for the personal blessing of temple worship, for the sanctity and safety which is provided within those hallowed and consecrated walls. The temple is a place of beauty, it is a place of revelation, it is a place of peace. It is the house of the Lord. It is holy unto the Lord. It should be holy unto us” (quoted in Jay M. Todd, “President Howard W. Hunter,” Ensign, July 1994, 5)."}],"callouts":[]},{"heading":"Conclusion","blocks":[{"type":"p","text":"Ask class members to share their feelings about the blessings of receiving the temple ordinances and making covenants with Heavenly Father. If time permits and the video presentation Together Forever is available in your area, you may want to show the presentation. You may want to have class members sing “More Holiness Give Me.” Bear testimony about the blessings of receiving the temple ordinances and the privilege of entering into covenants with Heavenly Father. Invite someone to give the closing prayer."}],"callouts":[]}]},{"id":5,"num":5,"title":"Learning from the Lord through Symbols","scripture":{"text":"I will give unto the children of men line upon line, precept upon precept, here a little and there a little; and blessed are those who hearken unto my precepts","ref":"2 Nephi 28:30"},"audio":"2011-01-08-lesson-5-learning-from-the-lord-through-symbols-64k-eng.mp3","sections":[{"heading":"Objective","blocks":[{"type":"p","text":"To help class members understand and appreciate the use of symbols in the temple."}],"callouts":[]},{"heading":"Preparation","blocks":[{"type":"p","text":"1. Bring a flag of your country or a picture of your country’s flag. 2. Ask a class member to summarize the story of how one of the Brethren answered a question about temple garments. The story is found on pages 20–21 and 23 of Preparing to Enter the Holy Temple. Note to teacher: Temple ordinances and covenants are sacred, and discussion about them is primarily limited to within the temple. Therefore, class discussion should be limited to the explanations given in this manual."}],"callouts":[]},{"heading":"Lesson Presentation","blocks":[{"type":"p","text":"Invite someone to give an opening prayer. Ask class members if they have any questions. Take the time required to answer questions to the best of your ability and as guided by the Lord’s Spirit. Remember that some aspects of temple work must not be discussed outside the temple."}],"callouts":[]},{"heading":"Symbols Are Important in Our Daily Lives","blocks":[{"type":"p","text":"Explain that symbols are used constantly in our everyday lives. Draw the following or other appropriate symbols on the chalkboard. Ask the class members to describe what each symbol means."},{"type":"p","text":"Show the class your country’s flag or a picture of the flag and ask them to describe what the flag means to them."},{"type":"q","text":"What are some other objects or some actions that show patriotism?"},{"type":"p","text":"(A song, a uniform, a piece of clothing, a holiday, or a celebration.)"},{"type":"p","text":"Point out that these are symbols that stand for or represent patriotism."},{"type":"q","text":"What are some symbols for love and respect?"},{"type":"p","text":"(A gift or a ring, a kiss or an embrace, a heart shape.)"},{"type":"q","text":"Do symbols convey the same message to all people? Why or why not?"},{"type":"q","text":"Why do we use symbols?"},{"type":"p","text":"Let the class members discuss. They may suggest ideas such as the following: 1. Symbols can help us remember important things. 2. Symbols can teach us abstract truths that might be hard to learn in other ways. 3. Symbols can represent feelings. 4. Symbols can teach different principles according to our personal readiness to learn. Explain that when the symbols are repeated, we learn to understand them better."}],"callouts":[]},{"heading":"Jesus Christ and His Prophets Used Symbols","blocks":[{"type":"p","text":"Explain that the Savior repeatedly used symbols when He taught."},{"type":"q","text":"What are some instances in which the Lord taught by using symbols?"},{"type":"p","text":"The class members may mention such things as lost sheep (see Matthew 18:12–14); a mustard seed (see Matthew 13:31–32); or a pearl of great price (see Matthew 13:45–46)."},{"type":"q","text":"Why do you think the Savior used symbols when He taught?"},{"type":"p","text":"Let the class members discuss. Then review the following statement: “The Lord Himself, the Master Teacher, in His own teaching to His disciples taught constantly in parables, a verbal way to represent symbolically things that might otherwise be difficult to understand. He talked of the common experiences drawn from the lives of His disciples, and He told of hens and chickens, birds, flowers, foxes, trees, burglars, highwaymen, sunsets, the rich and the poor. . . . He talked of the mustard seed, of the pearl. He wanted to teach His hearers, so He talked of simple things in a symbolic sense. None of these things is mysterious or obscure, and all of them are symbolic” (Preparing to Enter the Holy Temple, 8). Explain that the prophets and apostles often used symbols to teach of Jesus Christ and His atoning sacrifice. The Atonement of Jesus Christ is the basis of the gospel and of all the blessings we receive. It makes"},{"type":"p","text":"salvation possible. Therefore, most of the symbols in the scriptures teach us about the Savior and His sacrifice. Ask the class members to read Moses 6:63."},{"type":"q","text":"What things in the earth bear record of the Savior?"},{"type":"p","text":"Ask the class members to read Alma 13:16."},{"type":"q","text":"In what ways do priesthood ordinances bear record of the Savior?"},{"type":"p","text":"Point out that before the Savior carried out the Atonement, His covenant people sacrificed animals as a symbol of His atoning sacrifice (see Moses 5:4–8). That practice ended with the Savior’s death and Resurrection. Now the Lord commands us to “offer for a sacrifice unto [Him] a broken heart and a contrite spirit” (3 Nephi 9:20). And priesthood ordinances continue to help us remember the Savior’s atoning sacrifice. Elder Russell M. Nelson taught: “Essential ordinances of the gospel symbolize the Atonement. Baptism by immersion is symbolic of the death, burial, and Resurrection of the Redeemer. Partaking of the sacrament renews baptismal covenants and also renews our memory of the Savior’s broken flesh and of the blood He shed for us. Ordinances of the temple symbolize our reconciliation with the Lord and seal families together forever” (in Conference Report, Oct. 1996, 47; or Ensign, Nov. 1996, 35)."}],"callouts":[]},{"heading":"Symbols Teach Us Truth If We Are Spiritually Sensitive","blocks":[{"type":"p","text":"Explain that when the Savior lived on earth, His disciples asked Him why He taught with parables. Parables are stories that teach important truths, often using symbolic language. Have the class members read Matthew 13:10–12 to learn what the Savior said."},{"type":"q","text":"What do you think the Savior meant when He said this?"},{"type":"p","text":"Explain that the Lord reveals truth to those who are spiritually ready to understand it. Those who receive truth with faith and obedience continue to receive more truth. Those who are not spiritually prepared and who fail to receive truth or receive it with a doubtful heart will gradually lose the truth they have. Stories with symbols present truth in such a way that those who are spiritually prepared understand the meaning of the symbols. Those who are not prepared do not understand the meaning. Some people in the Savior’s time understood the messages of His parables, but many did not. The same is true today. There are many levels of spiritual understanding among righteous members of the Church."},{"type":"p","text":"Have the class members read 2 Nephi 28:30 and Doctrine and Covenants 42:49–50."},{"type":"q","text":"What do these scriptures teach about how we learn truth from God?"},{"type":"p","text":"Explain that it is possible for all of us to develop spiritually to a level where we can understand the meaning of symbols used in the gospel, in the scriptures, and especially in the temple."}],"callouts":[]},{"heading":"The Most Sacred Symbolic Teachings Are Received in the Temple","blocks":[{"type":"p","text":"Explain that the most sacred symbolic teachings on earth are received in the temple. In a symbolic way, the teachings and rituals of the temple take us on an upward journey toward eternal life, ending with a symbolic entrance into the presence of God. The characters depicted, the physical setting, the clothing worn, the signs given, and all the events covered in the temple are symbolic. When they are understood, they will help each person recognize truth and grow spiritually. Some of the symbols are straightforward, and the meaning is readily apparent. The temple itself is a symbol: “If you have seen one of the temples at night, fully lighted, you know what an impressive sight that can be. The house of the Lord, bathed in light, standing out in the darkness, becomes symbolic of the power and the inspiration of the gospel of Jesus Christ standing as a beacon in a world that sinks ever further into spiritual darkness” (Preparing to Enter the Holy Temple, 10). The temple clothing is also symbolic. When we enter the temple, we change from street clothes into white temple clothing, which is a symbol of purity. President James E. Faust said: “Fundamental to temple worship is the principle that ‘God is no respecter of persons.’ [Acts 10:34.] Within the hallowed walls of the temples, there is no preference of position, wealth, status, race, or education. All dress in white. All receive the same instruction. All make the same covenants and promises. All receive the same transcendent, eternal blessings if they live worthy to claim them. All are equal before their Creator” (in Conference Report, Apr. 1997, 23; or Ensign, May 1997, 20). Explain that members who receive temple ordinances and make covenants with God wear special garments (underclothing) throughout the rest of their lives. Read the following statement: “The garment represents sacred covenants. It fosters modesty and becomes a shield and protection to the wearer. . . . The garment, covering the body, is a visual and tactile reminder of [covenants made in the temple]. For many Church members the garment has"},{"type":"p","text":"formed a barrier of protection when the wearer has been faced with temptation. Among other things it symbolizes our deep respect for the laws of God—among them the moral standard” (Preparing to Enter the Holy Temple, 20, 23). Ask the assigned class member to summarize how one of the Brethren described the purpose of the temple garment (see Preparing to Enter the Holy Temple, 20–21, 23). Explain that almost every aspect of the temple ceremony is symbolic. This means that each person should prepare to be as spiritually sensitive as possible to the symbolic nature of the temple endowment."},{"type":"q","text":"What could keep a person from being spiritually sensitive in the temple?"},{"type":"p","text":"Class members might mention such things as the following: 1. A person may not be worthy. A person who has failed to sincerely repent and has not prepared humbly and prayerfully for the temple will find that the symbols will be lifeless and their meanings will be hidden. 2. A person may lack faith. A person who does not have faith in Jesus Christ and the temple ceremony may not receive the inspiration from the Holy Ghost necessary for understanding the temple endowment. 3. A person may focus so much on the outward motions of the ceremonies that he or she may miss the powerful teachings represented by the symbols."},{"type":"q","text":"How can we prepare to be spiritually sensitive in the temple?"}],"callouts":[{"text":"All things have their likeness, and all things are created and made to bear record of me, both things which are temporal, and things which are spiritual","ref":"Moses 6:63"}]},{"heading":"Conclusion","blocks":[{"type":"p","text":"Point out that those going to the temple for the first time can expect to learn many new things and feel the power of the Lord’s Spirit. Encourage class members to prepare themselves spiritually for their temple experience. Remind them that all of what is presented cannot be understood in a single visit. They should return to the temple as often as possible so they can continue to learn and to renew their spiritual feelings. Invite someone to give a closing prayer."}],"callouts":[]}]},{"id":6,"num":6,"title":"Preparing to Enter the Holy Temple","scripture":{"text":"And inasmuch as my people build a house unto me in the name of the Lord, and do not suffer any unclean thing to come into it, that it be not defiled, my glory shall rest upon it","ref":"D&C 97:15"},"audio":"2011-01-09-lesson-6-preparing-to-enter-the-holy-temple-64k-eng.mp3","sections":[{"heading":"Objective","blocks":[{"type":"p","text":"To prepare the class members to worthily enter the temple."}],"callouts":[]},{"heading":"Lesson Presentation","blocks":[{"type":"p","text":"Invite someone to give an opening prayer. Ask class members if they have any questions. Take the time required to answer questions to the best of your ability and as guided by the Lord’s Spirit. Remember that some aspects of temple work must not be discussed outside the temple."}],"callouts":[]},{"heading":"Each Person Should Prepare for the Temple","blocks":[{"type":"p","text":"Explain that each person is individually responsible for taking the steps that will lead to the full blessings of the temple. Briefly discuss the following five ideas. Each one presents a way in which we should be prepared to enter the temple. You may want to list each point on the chalkboard as you discuss it. 1. Each person should be worthy. Ask the class members to read Doctrine and Covenants 97:15–17."},{"type":"q","text":"What does this passage teach you about the importance of being worthy when you enter the temple?"},{"type":"p","text":"President Howard W. Hunter asked us to consider the “attitudes and righteous behaviors that the Lord pointed us toward in the counsel He gave to the Kirtland Saints through the Prophet Joseph Smith as they were preparing to build a temple.” This counsel is found in Doctrine and Covenants 88:119. Ask the class members to read this passage. Ask the class members also to consider the question posed by President Hunter: “Are these attitudes and behaviors indeed reflective of what each of us desires and seeks to be?” (“The Great Symbol of Our Membership,” Ensign, Oct. 1994, 2)."},{"type":"p","text":"2. Each person should be humble. Each person should enter the temple in humility, with a desire to be taught from on high."},{"type":"q","text":"Why is humility so important as we serve and learn in the temple?"},{"type":"p","text":"Have the class members read Doctrine and Covenants 136:32–33."},{"type":"q","text":"What does this passage teach about the importance of humility?"},{"type":"p","text":"How could you apply this counsel to attending the temple for the first time? “Organize yourselves; prepare every needful thing; and establish a house, even a house of prayer, a house of fasting, a house of faith, a house of learning, a house of glory, a house of order, a house of God” (D&C 88:119)."},{"type":"p","text":"3. Each person should understand that receiving temple ordinances and covenants is essential to gaining eternal life. President Harold B. Lee said: “The temple ceremonies are designed by a wise Heavenly Father who has revealed them to us in these last days as a guide and a protection throughout our lives, that you and I might not fail to merit exaltation in the celestial kingdom where God and Christ dwell” (“Enter a Holy Temple,” Improvement Era, June 1967, 144). President Joseph Fielding Smith said: “These blessings insure to us, through our faithfulness, the pearl of great price the Lord has offered us, for these are the greatest blessings we can receive in this life. It is a wonderful thing to come into the Church, but you cannot receive an exaltation until you have made covenants in the house of the Lord and received the keys and authorities that are there bestowed and which cannot be given in any other place on the earth today” (Doctrines of Salvation, comp. Bruce R. McConkie, 3 vols. [1954–56], 2:253). 4. Each person should understand the importance of wearing the temple garment. Explain that those who have participated in the temple ceremony are privileged to wear the garment of the holy priesthood. In a statement to the Church, the First Presidency said: “Church members who have been clothed with the garment in the temple have made a covenant to wear it throughout their lives. This has been interpreted to mean that it is worn as underclothing both day and night. . . . “The fundamental principle ought to be to wear the garment and not to find occasions to remove it. . . . When the garment must be removed, . . . it should be restored as soon as possible. “The principles of modesty and keeping the body appropriately covered are implicit in the covenant and should govern the nature of all clothing worn. Endowed members of the Church wear the"},{"type":"p","text":"garment as a reminder of the sacred covenants they have made with the Lord and also as a protection against temptation and evil. How it is worn is an outward expression of an inward commitment to follow the Savior” (First Presidency letter, 10 Oct. 1988). 5. Each person should be prepared for personal and sacred worship. In the temple, before, during, and after the ceremonies, there are opportunities for a person to meditate and to draw closer to Heavenly Father and Jesus Christ. Everyone is faced with questions that need answers, with burdens that need lightening, with problems that need to be solved. Many have appreciated the temple as a place to get away from the world and to communicate with Heavenly Father. Many have found answers, peace, and joy in the temple. President Ezra Taft Benson said: “Temples are places of personal revelation. When I have been weighed down by a problem or a difficulty, I have gone to the House of the Lord with a prayer in my heart for answers. These answers have come in clear and unmistakable ways” (“What I Hope You Will Teach Your Children about the Temple,” Ensign, Aug. 1985, 8). Explain that in the temple, we can submit the names of those who have special needs so that those who attend the temple can unite their faith and prayers in behalf of these people."}],"callouts":[]},{"heading":"Special Preparations for the First Temple Visit","blocks":[{"type":"p","text":"The following information will help each person make all necessary preparations for the first temple visit and ensure that this visit is uplifting. Discuss with class members the information that applies to their circumstances. 1. Temple Recommend. Obtain a temple recommend. Be sure to carry your recommend with you to the temple, since only those with valid recommends may enter. As you live worthily, the recommend will allow you to enter any temple of the Church as often as you wish during the next two years. To renew your temple recommend, you must be interviewed by a member of your bishopric or your branch president and a member of your stake presidency or the mission president. 2. Planning and Scheduling the Visit. Before you go to the temple to receive the endowment or the sealing ordinance, call the temple to make an appointment. Find out when you need to arrive at the temple, how long you should plan to stay, and what you should take with you. Ask for translation assistance if necessary. 3. Travel Plans. If you live a long distance from the temple, you should consider the following:"},{"type":"q","text":"Make transportation, lodging, and eating arrangements in advance. It may be to your advantage to travel with a group if possible."},{"type":"q","text":"If necessary, make arrangements to exchange your money into the currency of the country where the temple is located."},{"type":"q","text":"Take sufficient funds to cover all expenses. You may need to purchase additional garments, rent temple clothing, and pay for lodging and travel. (Note that rental clothing is not available in many temples. The First Presidency encourages all members to purchase their own temple clothing.) 4. Dress. Plan to dress as you would when attending Sunday meetings. Women should not wear pants to the temple. 5. Escorts. All who are going to the temple for the first time may have an escort to accompany them. This can be a relative or friend of the same gender who has previously been to the temple, or one of the temple workers may assist. Workers in the temple will offer friendly guidance at all times. 6. Sealing Work. If you plan to do sealing work for your deceased ancestors, you should take completed family group records with you to the temple. If you and your spouse are to be sealed or if you are going to have children sealed to you, you must have your own family group record. If you are going to be married, you will need to comply with all local civil laws and bring a valid marriage license with you. Read carefully the Member’s Guide to Temple and Family History Work (34697) for more detailed information about how to provide temple ordinances for both the living and the dead. You may also contact the temple recorder at the temple you are planning to visit. 7. Care of Children. If children are coming to the temple to participate in a sealing ceremony, they will be cared for in the temple youth center until it is time for them to join you in the sealing room. White clothing for the ceremony will be provided for the children. After the sealing ceremony is completed, they will return to the center to wait for you. No care is provided at the temple for children not involved in a sealing. 8. Temple Garments. You will need to buy one or two pairs of temple garments before you enter the temple. Do not put them on before you go to the temple. After receiving your endowment and when you are satisfied that you have identified the desirable size and fabric, you can purchase additional pairs of garments. Some people like to wash their initial pair of garments to make sure they fit comfortably before purchasing others. Temple garments are"},{"type":"p","text":"manufactured by the Church and may be purchased through Church Distribution Services. 9. Temple Clothing. The First Presidency has encouraged members to purchase and use their own temple clothing. In some temples it is possible to rent temple clothing for a small fee, but it is preferable for members to own and maintain their own temple clothing. The bishop or branch president can provide information about where this clothing may be purchased. Sisters may wear their wedding dresses for their temple wedding, but the dress must be white, have long sleeves, be modest in design and fabric, have no train, and be free from elaborate ornamentation."}],"callouts":[{"text":"The temple ceremonies are designed by a wise Heavenly Father . . . that you and I might not fail to merit exaltation in the celestial kingdom","ref":"President Harold B. Lee"}]},{"heading":"Conclusion","blocks":[{"type":"p","text":"Share your testimony of the sacredness of temple work. Express your happiness in seeing the class members prepare to enter the temple. Invite someone to give a closing prayer. Following this lesson, class participants and instructors should attend the temple together where possible."}],"callouts":[]}]},{"id":7,"num":7,"title":"Continuing to Enjoy the Blessings of Temple Attendance","scripture":{"text":"For behold, I have accepted this house, and my name shall be here; and I will manifest myself to my people in mercy in this house","ref":"D&C 110:7"},"audio":"2011-01-10-lesson-7-continuing-to-enjoy-the-blessings-of-temple-attendance-64k-eng.mp3","sections":[{"heading":"Objective","blocks":[{"type":"p","text":"To follow up on the class members’ first visits to the temple and help them prepare to enjoy the temple throughout their lives."}],"callouts":[]},{"heading":"Preparation","blocks":[{"type":"p","text":"1. Be prepared to make this lesson a time of sharing. Most class members will want to discuss their first visit to the temple. 2. Assign a class member to be prepared to read Doctrine and Covenants 110:1–10 and share his or her feelings about it. 3. Assign a class member to summarize the information about Elijah presented in Preparing to Enter the Holy Temple, pages 23–24. 4. Prepare to answer questions that may have arisen during the first visit to the temple, but do not discuss questions or information that should be reserved for discussion in the temple itself. Where such questions exist, encourage individuals to plan additional visits to the temple."}],"callouts":[]},{"heading":"Lesson Presentation","blocks":[{"type":"p","text":"Invite someone to give an opening prayer. Ask class members if they have any questions. Take the time required to answer questions to the best of your ability and as guided by the Lord’s Spirit. Remember that some aspects of temple work must not be discussed outside the temple."}],"callouts":[]},{"heading":"Maintaining a Love for Temple Service","blocks":[{"type":"q","text":"How did you feel when you were in the temple?"},{"type":"p","text":"Explain that temple service will bring continuing blessings into the lives of those who go often to the temple. Tell the class members that while their experience in the temple is still fresh in their minds, they may want to write their feelings about it in their journals. Remind them that although they may record their feelings, they should not write about some details of temple work, which are not to be discussed outside the temple."},{"type":"q","text":"What can you do to maintain a love for temple service throughout your life?"},{"type":"p","text":"Write the class members’ ideas on the chalkboard. You may also want to present the following ideas: 1. Ponder the temple experience each day. Explain that some people have more opportunities to visit the temple than others. But once we have been to the temple and felt the Spirit there, we should take the opportunity each day to ponder the temple ceremonies and reflect upon the covenants we have made. Doing this will encourage us each day to think and act in more righteous ways. We will not be able to remember everything about the temple, but we should try to remember as much as possible after each visit. We should also study the scriptures and words of the prophets about the temple. Some of these have been presented in this course. You may want to have a class member summarize the following statement, found on page 10 in Preparing to Enter the Holy Temple: “The temple ceremony will not be fully understood at first experience. It will be only partly understood. Return again and again and again. Return to learn. Things that have troubled you or things that have been puzzling or things that have been mysterious will become known to you. . . . “When you have the opportunity to attend an endowment session in the temple or to witness a sealing, ponder the deeper meaning of what you see demonstrated before you. And in the days following your visit keep these things on your mind; quietly and prayerfully review them and you will find that your knowledge will increase. “One of the great values of the temple experience is that it presents the broad, sweeping panorama of God’s purposes relating to this earth. Once we have been through the temple (and we can return and refresh our memories) the events of life fit into the scheme of things. We can see in perspective where we are, and we can quickly see when we are off course.” 2. Remember that the center of all temple worship is the Savior, Jesus Christ. The scriptures teach that an important reason for building temples is so “that the Son of Man might have a place to manifest himself to his people” (D&C 109:5). The symbols and rituals of the temple help to focus our attention on the Savior. Explain that the Savior did manifest Himself in the Kirtland Temple. He appeared to Joseph Smith and Oliver Cowdery to accept the temple as His house. This visit is recorded in Doctrine and Covenants 110:1–10. Ask the assigned class member to read and comment on this passage."},{"type":"q","text":"What blessings did the Savior promise to those who build and attend temples?"}],"callouts":[]},{"heading":"In the Temple, Families Are Sealed Together for Eternity","blocks":[{"type":"p","text":"Ask the class members to read Malachi 4:5–6. Ask the assigned class member to summarize the information about Elijah found in Preparing to Enter the Holy Temple, pages 23–24. Explain that Elijah has returned and restored the priesthood keys that allow families to be sealed together in temples for eternity. Have the class members review Doctrine and Covenants 110:13–16. Then ask a class member to read the following statement, found on page 28 in Preparing to Enter the Holy Temple: “From that very day, April 3, 1836, the hearts of the children began to turn to their fathers. Thereafter ordinances were not tentative, but permanent. The sealing power was with us. No authorization transcends it in value. That power gives substance and eternal permanence to all ordinances performed with proper authority for both the living and the dead.” The Savior described the sealing power when He spoke to His Apostle Peter, as recorded in Matthew 16:19. Have the class members read this verse. Explain that these same keys are held today by the prophet and President of the Church. “That sacred sealing power is with the Church now. Nothing is regarded with more sacred contemplation by those who know the significance of this authority. Nothing is more closely held. There are relatively few men who hold this sealing power upon the earth at any given time—in each temple are brethren who have been given the sealing power. No one can get it except from the prophet, seer, and revelator and President of The Church of Jesus Christ of Latter-day Saints or from those he has delegated to give it to others” (Preparing to Enter the Holy Temple, 24, 26). Explain that the sealing ordinances include the sealing of a husband and wife to each other and the sealing of parents to children. When parents are sealed in the temple, the children born to them are born in the covenant of their parents’ sealing and do not need to be sealed to their parents."},{"type":"q","text":"How do you think being sealed together in the temple might affect the daily thoughts and actions of a family?"},{"type":"q","text":"What blessings do you think would come to a family because of their temple sealing?"},{"type":"p","text":"President Gordon B. Hinckley said: “Was there ever a man who truly loved a woman, or a woman who truly loved a man, who did not pray that their relationship might continue beyond the grave? Has a child ever been buried by parents who did not long for the assurance that their loved one would again be theirs in a world to come? Can anyone believing in eternal life doubt that the God of heaven would grant his sons and daughters that most precious attribute of life, the love that finds its most meaningful expression in family relationships? No, reason demands that the family relationship shall continue after death. The human heart longs for it, and the God of heaven has revealed a way whereby it may be secured. The sacred ordinances of the house of the Lord provide for it” (“Why These Temples?” Temples of The Church of Jesus Christ of Latter-day Saints [1988], 4)."}],"callouts":[]},{"heading":"Temples Give Us Opportunities to Serve Those Who Have Died","blocks":[{"type":"p","text":"Have the class members read Obadiah 1:21. The Prophet Joseph Smith explained how members of the Church can become saviors on Mount Zion:"},{"type":"p","text":"“But how are [the Saints] to become saviors on Mount Zion? By building their temples, erecting their baptismal fonts, and going forth and receiving all the ordinances, baptisms, confirmations, washings, anointings, ordinations and sealing powers upon their heads, in behalf of all their progenitors who are dead, and redeem them that they may come forth in the first resurrection and be exalted to thrones of glory with them; and herein is the chain that binds the hearts of the fathers to the children, and the children to the fathers, which fulfills the mission of Elijah” (History of the Church, 6:184). Explain that as part of His plan of salvation, our Heavenly Father has prepared a way for those who died without receiving the saving ordinances of the gospel to receive these ordinances. The people in the spirit world have the opportunity to hear the gospel. They can accept it there, but they cannot receive the ordinances of the gospel for themselves. The Lord has commanded us to perform these ordinances for them in holy temples. We should make special efforts to do family history work so we can receive ordinances in behalf of our own ancestors. Ordinances for the dead performed in temples include baptisms, confirmations, ordinations to the priesthood, endowments, and sealings of husband to wife and parents to children. We should return to the temple as often as our circumstances permit so that we can serve those who have died by performing ordinances for them. We will bless the lives of those we serve and bless our own"},{"type":"p","text":"lives as well. Information about how to do family history work and perform ordinances for our ancestors is provided in A Member’s Guide to Temple and Family History Work (34697). President Thomas S. Monson said: “An appreciation for the temple endowment and the sealing ordinances will bring the members of our families closer together and there will be quickened within each family member a desire to make available these same blessings to our loved ones who have gone beyond. . . . “This vicarious work performed in our temples must be carried forth in the same spirit of selfless devotion and sacrifice that characterized the life of the Master. When we remember him, it becomes easier for us to do our individual parts in this vital work. Each time we gaze upon one of these holy houses, may we be reminded of the eternal opportunities which are found inside, not only for ourselves, but for our dead” (Pathways to Perfection [1973], 206–7)."}],"callouts":[{"text":"This vicarious work performed in our temples must be carried forth in the same spirit of selfless devotion and sacrifice that characterized the life of the Master","ref":"President Thomas S. Monson"}]},{"heading":"Conclusion","blocks":[{"type":"p","text":"Emphasize that temple attendance allows us to serve others and to continue to gain greater spiritual knowledge. Share the following statement: “No work is more of a protection to this Church than temple work and the genealogical research which supports it. No work is more spiritually refining. No work we do gives us more power. No work requires a higher standard of righteousness. . . . “If we will accept the revelation concerning temple ordinance work, if we will enter into our covenants without reservation or apology, the Lord will protect us. We will receive inspiration sufficient for the challenges of life. . . . “So come to the temple—come and claim your blessings. It is a sacred work” (Preparing to Enter the Holy Temple, 37). End the lesson by sharing testimonies. Encourage the class members to return often to the temple so that they can be taught by the Spirit of the Lord. You may want to mention that the class members may be able to obtain from Church distribution centers and view at home the video presentation Mountain of the Lord (53300). This 73-minute presentation tells the story of the building of the Salt Lake Temple. Invite someone to give the closing prayer."}],"callouts":[]}]}];
+
+/* ---------------- state ---------------- */
+const LS = {
+  get k(){return "efoh.v1"},
+  load(){ try{return JSON.parse(localStorage.getItem(this.k))||{}}catch(e){return{}} },
+  save(s){ try{localStorage.setItem(this.k,JSON.stringify(s))}catch(e){} }
 };
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const COL = "members";
-const LEDGER = "ledger";
-const STALE_DAYS = 21;
-const GEN_GOAL = 6;
-const MILESTONES = ["Enrolled in Temple Prep","Completed Temple Prep Class","Limited-Use Recommend (Baptisms)","Temple Recommend (Full)","Endowment","Sealing — Spouse","Sealing — Family","Reached 6 Generations","Names Submitted to Temple","Completed FH Rotation","Other"];
+let S = Object.assign({theme:"light",mode:"both",fs:1,follow:true,progress:{}}, LS.load());
+function persist(){ LS.save(S); }
 
-const OPTS = {
-  prepStatus:["Not Enrolled","Upcoming — Next Class","Currently Enrolled","Attending","Completed","Did Not Complete"],
-  endowmentStatus:["Not Endowed","Recommend in Progress","Date Set","Endowed"],
-  participation:["No","Occasionally","Active"],
-  rotationStatus:["Not Scheduled","Upcoming","Currently Rotating","Completed"],
-  consultant:["No","Temple & FH Consultant","FH Group Leader"],
-  planStatus:["Not started","In progress","Completed"]
-};
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const audio=$("#audio");
+let curLesson=null, units=[], timing=[], activeIdx=-1, userScrollUntil=0;
 
-let data=[], editingId=null;
-const $=function(id){ return document.getElementById(id); };
-function esc(s){ return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
-function daysSince(d){ const x=new Date(d); return isNaN(x)?null:(Date.now()-x)/86400000; }
-function genNum(p){ const n=parseInt(p.generations,10); return isNaN(n)?0:n; }
-function inPrepNow(p){ return p.prepStatus==="Currently Enrolled"||p.prepStatus==="Attending"; }
-function prepDone(p){ return p.prepStatus==="Completed"; }
-function curQuarter(){ const n=new Date(); return n.getFullYear()+" Q"+(Math.floor(n.getMonth()/3)+1); }
-function quarterOf(s){ const d=new Date(s); if(isNaN(d)) return null; return d.getFullYear()+" Q"+(Math.floor(d.getMonth()/3)+1); }
-function qIdx(q){ if(!q||q==="Unset") return null; const m=/^(\d{4}) Q([1-4])$/.exec(q); return m?(+m[1])*4+(+m[2]):null; }
-function quarterOptions(){ const n=new Date(); let y=n.getFullYear(), q=Math.floor(n.getMonth()/3)+1; const a=["Unset"]; for(let i=0;i<5;i++){ a.push(y+" Q"+q); q++; if(q>4){q=1;y++;} } return a; }
+/* ---------------- helpers ---------------- */
+function fmt(t){ if(!isFinite(t))return"0:00"; t=Math.max(0,Math.floor(t)); const m=Math.floor(t/60),s=t%60; return m+":"+String(s).padStart(2,"0"); }
+function lessonPct(id){ const p=S.progress[id]; return p? (p.done?100:Math.round((p.pct||0))):0; }
 
-/* ===================== FIRESTORE (open access) ===================== */
-function startSync(){
-  onSnapshot(collection(db,COL), function(snap){
-    data=[]; snap.forEach(function(d){ const o=d.data(); o.id=d.id; data.push(o); });
-    data.sort(function(a,b){ return (a.name||"").localeCompare(b.name||""); });
-    renderAll();
-  }, function(err){
-    $("membersBody").innerHTML='<tr><td colspan="10" class="empty">Could not load records: '+esc(err.code||err.message)+'. Check Firestore rules.</td></tr>';
-  });
-  onSnapshot(collection(db,LEDGER), function(snap){
-    ledger=[]; snap.forEach(function(d){ const o=d.data(); o.id=d.id; ledger.push(o); });
-    renderHistory();
-  }, function(err){ /* ledger empty or rules not yet published */ });
+/* split a paragraph into sentence units for read-along */
+function splitSentences(text){
+  // keep references like (D&C 89:19) attached; split on . ? ! followed by space+Capital/quote
+  const parts=[]; let buf="";
+  const re=/([.?!]["'”’)]?)(\s+)(?=[A-Z“"‘(])/g; let last=0,m;
+  while((m=re.exec(text))){ parts.push(text.slice(last,m.index+m[1].length)); last=m.index+m[0].length; }
+  parts.push(text.slice(last));
+  return parts.map(s=>s.trim()).filter(Boolean);
 }
-let ledger=[];
-function writeMember(rec){ return setDoc(doc(db,COL,rec.id),rec,{merge:true}); }
-function removeMember(id){ return deleteDoc(doc(db,COL,id)); }
-function writeLedger(e){ e.id=e.id||("l"+Date.now()+Math.floor(Math.random()*1000)); return setDoc(doc(db,LEDGER,e.id),e,{merge:true}); }
-function removeLedger(id){ return deleteDoc(doc(db,LEDGER,id)); }
 
-/* ===================== NAV ===================== */
-function gotoView(v){
-  document.querySelectorAll("nav.tabs button").forEach(function(x){ x.classList.toggle("active", x.dataset.view===v); });
-  document.querySelectorAll(".view").forEach(function(s){ s.classList.remove("active"); });
-  $("view-"+v).classList.add("active");
+/* ---------------- render home ---------------- */
+function renderHome(){
+  const c=$("#cards"); c.innerHTML="";
+  LESSONS.forEach(L=>{
+    const pct=lessonPct(L.id), done=S.progress[L.id]&&S.progress[L.id].done;
+    const status = done? '<span class="chip done">✓ Complete</span>'
+      : pct>0? '<span class="chip prog">In progress</span>'
+      : '<span class="chip todo">Not started</span>';
+    const el=document.createElement("div");
+    el.className="lcard"+(done?" done":"");
+    el.innerHTML=`
+      <div class="num">${L.num}</div>
+      <div class="body">
+        <h3>${L.title}</h3>
+        <div class="scrip">“${L.scripture.text.length>120?L.scripture.text.slice(0,118)+'…':L.scripture.text}” — ${L.scripture.ref}</div>
+        <div class="meta">
+          ${status}
+          <div class="lp"><i style="width:${pct}%"></i></div>
+        </div>
+      </div>`;
+    el.onclick=()=>openLesson(L.id);
+    c.appendChild(el);
+  });
+  const doneCount=LESSONS.filter(L=>S.progress[L.id]&&S.progress[L.id].done).length;
+  $("#overPct").textContent=`${doneCount} of ${LESSONS.length} complete`;
+  $("#overPfill").style.width=(doneCount/LESSONS.length*100)+"%";
+}
+
+/* ---------------- render reader ---------------- */
+function buildReading(L){
+  const r=$("#reading"); r.innerHTML="";
+  L.sections.forEach(sec=>{
+    const sdiv=document.createElement("div"); sdiv.className="sec";
+    if(sec.heading) sdiv.innerHTML=`<h4>${sec.heading}</h4>`;
+    sec.callouts.forEach(co=>{
+      const d=document.createElement("div"); d.className="callout";
+      d.innerHTML=`<span class="ru ct" data-text="${esc(co.text)}">“${co.text}”</span><div class="cr">${co.ref}</div>`;
+      sdiv.appendChild(d);
+    });
+    sec.blocks.forEach(b=>{
+      if(b.type==="sub"){ const h=document.createElement("h5"); h.textContent=b.text; sdiv.appendChild(h); }
+      else if(b.type==="q"){ const q=document.createElement("div"); q.className="q";
+        q.innerHTML=`<span class="ru" data-text="${esc(b.text)}">${b.text}</span>`; sdiv.appendChild(q); }
+      else { const p=document.createElement("p");
+        p.innerHTML=splitSentences(b.text).map(s=>`<span class="ru" data-text="${esc(s)}">${s}</span>`).join(" ");
+        sdiv.appendChild(p); }
+    });
+    r.appendChild(sdiv);
+  });
+}
+function esc(s){ return s.replace(/"/g,"&quot;"); }
+
+function collectUnits(){
+  units=$$("#reading .ru");
+  units.forEach((u,i)=>{ u.dataset.i=i; u.onclick=()=>{ if(document.body.classList.contains("both")) seekToUnit(i); }; });
+}
+
+function openLesson(id){
+  curLesson=LESSONS.find(L=>L.id===id);
+  $("#rLn").textContent="Lesson "+curLesson.num;
+  $("#rTitle").textContent=curLesson.title;
+  $("#rEpi").innerHTML=`“${curLesson.scripture.text}”<span class="ref">${curLesson.scripture.ref}</span>`;
+  $("#brandSub").textContent="Lesson "+curLesson.num;
+  buildReading(curLesson); collectUnits();
+  activeIdx=-1; timing=[];
+  // audio
+  audio.pause(); setPlayIcon(false);
+  audio.src=curLesson.audio;
+  audio.load();
+  // restore saved position
+  const p=S.progress[id]||{};
+  audio.addEventListener("loadedmetadata", onMeta, {once:true});
+  pendingSeek = p.pos||0;
+  applyMode(S.mode);
+  refreshDoneBtn();
+  showView("reader");
   window.scrollTo(0,0);
 }
-document.querySelectorAll("nav.tabs button").forEach(function(b){ b.addEventListener("click", function(){ gotoView(b.dataset.view); }); });
-
-/* ===================== FLAGS ===================== */
-function computeFlags(p){
-  const f=[];
-  if(inPrepNow(p)){
-    if(!p.lastAttended) f.push({t:"Confirm class attendance",c:"b-warn"});
-    else{ const ds=daysSince(p.lastAttended); if(ds!==null && ds>STALE_DAYS) f.push({t:"Reach out — class lapsed",c:"b-danger"}); }
-  }
-  if(prepDone(p) && p.endowmentStatus!=="Endowed" && p.endowmentStatus!=="Date Set" && p.endowmentStatus!=="Recommend in Progress"){
-    f.push({t:"Prep done — start endowment path",c:"b-warn"});
-  }
-  if(p.endowmentStatus==="Date Set" && !p.endowmentDate) f.push({t:"Record the endowment date",c:"b-warn"});
-  if(p.rotationStatus==="Currently Rotating" && p.rotationEnd){
-    const ds=daysSince(p.rotationEnd); if(ds!==null && ds>0) f.push({t:"Rotation ended — rotate next group",c:"b-info"});
-  }
-  return f;
+let pendingSeek=0;
+function onMeta(){
+  computeTiming();
+  if(pendingSeek>0 && pendingSeek<audio.duration-2){ audio.currentTime=pendingSeek; }
+  $("#dur").textContent=fmt(audio.duration);
+  $("#missing").style.display="none";
 }
 
-/* ===================== DASHBOARD ===================== */
-function cnt(fn){ return data.filter(fn).length; }
-function sum(fn){ return data.reduce(function(a,p){ return a+(fn(p)||0); },0); }
-function prepLapsed(p){ if(!inPrepNow(p)) return false; if(!p.lastAttended) return true; const ds=daysSince(p.lastAttended); return ds!==null&&ds>STALE_DAYS; }
-function renderDash(){
-  const prep=[
-    ["Members Tracked",data.length,"","all"],
-    ["Currently in Prep Class",cnt(inPrepNow),"info","prepNow"],
-    ["Next Class — Upcoming",cnt(function(p){return p.prepStatus==="Upcoming — Next Class";}),"","prepNext"],
-    ["Completed Prep Class",cnt(prepDone),"ok","prepDone"]
-  ];
-  const temple=[
-    ["Endowment Date Set",cnt(function(p){return p.endowmentStatus==="Date Set";}),"info","endowSet"],
-    ["Endowed",cnt(function(p){return p.endowmentStatus==="Endowed";}),"ok","endowed"],
-    ["Recommend in Progress",cnt(function(p){return p.endowmentStatus==="Recommend in Progress";}),"","endowNeed"],
-    ["Prep Done — No Endowment Set",cnt(function(p){return prepDone(p)&&p.endowmentStatus!=="Endowed"&&p.endowmentStatus!=="Date Set";}),"alert","endowNeed"]
-  ];
-  const fh=[
-    ["Actively Submitting Names",cnt(function(p){return p.submitting==="Active";}),"ok","submitting"],
-    ["Actively Indexing",cnt(function(p){return p.indexing==="Active";}),"ok","indexing"],
-    ["Families at "+GEN_GOAL+"+ Generations",cnt(function(p){return genNum(p)>=GEN_GOAL;}),"info","gen6"],
-    ["Names Reserved for Temple",sum(function(p){return parseInt(p.namesReserved,10)||0;}),"","all"]
-  ];
-  const flags=[
-    ["Currently Rotating (FH)",cnt(function(p){return p.rotationStatus==="Currently Rotating";}),"info","rotNow"],
-    ["Upcoming Rotation",cnt(function(p){return p.rotationStatus==="Upcoming";}),"","rotNext"],
-    ["Prep Class Lapsed",cnt(prepLapsed),"alert","prepLapsed"],
-    ["Members Flagged",cnt(function(p){return computeFlags(p).length>0;}),"alert","flagged"]
-  ];
-  function fill(id,arr){ $(id).innerHTML=arr.map(function(c){ return '<div class="stat '+c[2]+'" data-filter="'+c[3]+'"><div class="n">'+c[1]+'</div><div class="l">'+c[0]+'</div></div>'; }).join(""); }
-  fill("cardsPrep",prep); fill("cardsTemple",temple); fill("cardsFH",fh); fill("cardsFlags",flags);
-  $("updatedNote").textContent=data.length?(data.length+" members on record"):"No members entered yet";
+function computeTiming(){
+  if(!units.length||!isFinite(audio.duration)||audio.duration<=0){ timing=[]; return; }
+  const weights=units.map(u=>Math.max(14,(u.dataset.text||u.textContent).length));
+  const total=weights.reduce((a,b)=>a+b,0);
+  let t=0; timing=weights.map(w=>{ const start=t/total*audio.duration; t+=w; return start; });
 }
-$("view-dash").addEventListener("click", function(e){
-  const card=e.target.closest(".stat[data-filter]");
-  if(card){ gotoView("members"); $("filter").value=card.dataset.filter; renderMembers(); }
+
+/* ---------------- mode ---------------- */
+function applyMode(mode){
+  S.mode=mode; persist();
+  $$("#seg button").forEach(b=>b.classList.toggle("on", b.dataset.mode===mode));
+  document.body.classList.toggle("listen-mode", mode==="listen");
+  document.body.classList.toggle("both", mode==="both");
+  const showPlayer = (mode==="listen"||mode==="both");
+  $("#player").classList.toggle("show", showPlayer);
+  $("#followRow").style.display = mode==="both" ? "flex":"none";
+  if(mode==="read"){ audio.pause(); setPlayIcon(false); }
+  if(mode==="listen") updateListen();
+  if(mode!=="both") clearActive();
+}
+
+/* ---------------- playback sync ---------------- */
+function setPlayIcon(playing){
+  $("#playIcon").innerHTML = playing
+    ? '<path d="M6 5h4v14H6zm8 0h4v14h-4z"/>'
+    : '<path d="M8 5v14l11-7z"/>';
+  $("#play").setAttribute("aria-label", playing?"Pause":"Play");
+}
+function clearActive(){ if(activeIdx>=0&&units[activeIdx]) units[activeIdx].classList.remove("active"); activeIdx=-1; }
+
+function highlight(i){
+  if(i===activeIdx) return;
+  if(activeIdx>=0&&units[activeIdx]) units[activeIdx].classList.remove("active");
+  activeIdx=i;
+  const u=units[i]; if(!u) return;
+  u.classList.add("active");
+  if(S.mode==="both" && S.follow && Date.now()>userScrollUntil){
+    const rect=u.getBoundingClientRect();
+    const target=window.scrollY+rect.top-window.innerHeight*0.38;
+    window.scrollTo({top:target,behavior:"smooth"});
+  }
+  if(S.mode==="listen") updateListen();
+}
+function curUnitIndex(){
+  if(!timing.length) return -1;
+  const t=audio.currentTime; let lo=0,hi=timing.length-1,ans=0;
+  while(lo<=hi){ const mid=(lo+hi)>>1; if(timing[mid]<=t){ans=mid;lo=mid+1;}else hi=mid-1; }
+  return ans;
+}
+function updateListen(){
+  const i=activeIdx>=0?activeIdx:0;
+  const u=units[i];
+  $("#listenSec").textContent = curLesson?("Lesson "+curLesson.num):"";
+  $("#listenLead").textContent = u? (u.dataset.text||u.textContent) : "Press play to begin.";
+  const nxt=units[i+1];
+  $("#listenCtx").textContent = nxt? (nxt.dataset.text||nxt.textContent).slice(0,90)+"…" : "";
+}
+
+function seekToUnit(i){ if(timing[i]!=null){ audio.currentTime=timing[i]+0.01; if(audio.paused) audio.play(); } }
+
+audio.addEventListener("timeupdate", ()=>{
+  $("#cur").textContent=fmt(audio.currentTime);
+  if(audio.duration){ $("#seek").value=Math.round(audio.currentTime/audio.duration*1000); }
+  const i=curUnitIndex(); if(i>=0) highlight(i);
+  // save + progress
+  if(curLesson){
+    const id=curLesson.id; const p=S.progress[id]||(S.progress[id]={});
+    p.pos=audio.currentTime;
+    if(audio.duration){ p.pct=Math.max(p.pct||0, audio.currentTime/audio.duration*100); }
+    throttleSave();
+  }
 });
+audio.addEventListener("ended", ()=>{ setPlayIcon(false); markDone(true); });
+audio.addEventListener("play", ()=>setPlayIcon(true));
+audio.addEventListener("pause", ()=>setPlayIcon(false));
+audio.addEventListener("error", ()=>{ if(audio.src){ $("#missing").style.display="inline"; } });
 
-/* ===================== MEMBERS ROSTER ===================== */
-function badge(val,map){ return '<span class="badge '+(map[val]||"b-grey")+'">'+(esc(val)||"—")+'</span>'; }
-const prepMap={"Completed":"b-ok","Attending":"b-info","Currently Enrolled":"b-info","Upcoming — Next Class":"b-gold","Did Not Complete":"b-warn","Not Enrolled":"b-grey"};
-const endMap={"Endowed":"b-ok","Date Set":"b-gold","Recommend in Progress":"b-info","Not Endowed":"b-grey"};
-const partMap={"Active":"b-ok","Occasionally":"b-warn","No":"b-grey"};
+let saveT=0; function throttleSave(){ const n=Date.now(); if(n-saveT>2500){saveT=n;persist();} }
 
-function passesFilter(p,f){
-  switch(f){
-    case "flagged": return computeFlags(p).length>0;
-    case "prepNow": return inPrepNow(p);
-    case "prepNext": return p.prepStatus==="Upcoming — Next Class";
-    case "prepDone": return prepDone(p);
-    case "prepLapsed": return prepLapsed(p);
-    case "endowSet": return p.endowmentStatus==="Date Set";
-    case "endowed": return p.endowmentStatus==="Endowed";
-    case "endowNeed": return prepDone(p)&&p.endowmentStatus!=="Endowed";
-    case "submitting": return p.submitting==="Active";
-    case "indexing": return p.indexing==="Active";
-    case "gen6": return genNum(p)>=GEN_GOAL;
-    case "genNeed": return genNum(p)<GEN_GOAL;
-    case "rotNow": return p.rotationStatus==="Currently Rotating";
-    case "rotNext": return p.rotationStatus==="Upcoming";
-    case "consultant": return p.consultant&&p.consultant!=="No";
-    default: return true;
+/* ---------------- controls ---------------- */
+$("#play").onclick=()=>{ if(audio.paused){ audio.play().catch(()=>{}); } else audio.pause(); };
+$("#back15").onclick=()=>{ audio.currentTime=Math.max(0,audio.currentTime-15); };
+$("#fwd15").onclick=()=>{ audio.currentTime=Math.min(audio.duration||1e9,audio.currentTime+15); };
+$("#seek").oninput=e=>{ if(audio.duration){ audio.currentTime=e.target.value/1000*audio.duration; } };
+$("#rate").onchange=e=>{ audio.playbackRate=parseFloat(e.target.value); };
+$$("#seg button").forEach(b=> b.onclick=()=>applyMode(b.dataset.mode));
+$("#followSw").onclick=function(){ S.follow=!S.follow; this.classList.toggle("on",S.follow); persist(); };
+window.addEventListener("scroll",()=>{ if(S.mode==="both") userScrollUntil=Date.now()+2600; },{passive:true});
+
+/* done button */
+function refreshDoneBtn(){
+  const done=curLesson&&S.progress[curLesson.id]&&S.progress[curLesson.id].done;
+  const b=$("#doneBtn");
+  b.textContent=done?"✓ Completed":"Mark lesson complete";
+  b.className="btn "+(done?"done":"gold");
+}
+$("#doneBtn").onclick=()=>{ const done=S.progress[curLesson.id]&&S.progress[curLesson.id].done; markDone(!done); };
+function markDone(v){
+  if(!curLesson)return; const p=S.progress[curLesson.id]||(S.progress[curLesson.id]={});
+  p.done=v; if(v)p.pct=100; persist(); refreshDoneBtn();
+}
+
+/* ---------------- nav ---------------- */
+function showView(v){
+  $$(".view").forEach(x=>x.classList.toggle("active",x.id===v));
+  const reader = v==="reader";
+  $("#backBtn").style.display = reader?"flex":"none";
+  if(!reader){
+    audio.pause(); $("#player").classList.remove("show");
+    document.body.classList.remove("listen-mode","both");
+    $("#brandSub").textContent="Temple Preparation";
+    persist(); renderHome();
   }
 }
-function genBadge(p){
-  const n=genNum(p);
-  if(n>=GEN_GOAL) return '<span class="badge b-gold">'+n+' · goal</span>';
-  if(n>0) return '<span class="badge b-info">'+n+'</span>';
-  return '<span class="badge b-grey">—</span>';
-}
-function renderMembers(){
-  const q=$("search").value.toLowerCase(), f=$("filter").value;
-  const rows=data.filter(function(p){ return passesFilter(p,f)&&(!q||((p.name||"").toLowerCase().indexOf(q)>=0)||((p.household||"").toLowerCase().indexOf(q)>=0)); });
-  const body=$("membersBody");
-  if(!rows.length){ body.innerHTML='<tr><td colspan="10" class="empty">No members match. Use “+ Add Member” to begin.</td></tr>'; return; }
-  body.innerHTML=rows.map(function(p){
-    const fl=computeFlags(p);
-    const action=fl.length?'<span class="badge b-danger" title="'+esc(fl.map(function(x){return x.t;}).join(" • "))+'">&#9873; '+fl.length+'</span>':'<span class="badge b-grey">—</span>';
-    const comp=p.prepCompleted?'<span class="badge b-ok">'+esc(fmtDate(p.prepCompleted))+'</span>':'<span class="badge b-grey">—</span>';
-    return '<tr data-id="'+esc(p.id)+'"><td class="nm">'+esc(p.name||"—")+'</td>'+
-      '<td>'+esc(p.household||"—")+'</td>'+
-      '<td>'+badge(p.prepStatus,prepMap)+'</td>'+
-      '<td>'+comp+'</td>'+
-      '<td>'+badge(p.endowmentStatus,endMap)+'</td>'+
-      '<td>'+badge(p.submitting,partMap)+'</td>'+
-      '<td>'+badge(p.indexing,partMap)+'</td>'+
-      '<td>'+genBadge(p)+'</td>'+
-      '<td>'+(p.fhGroup?'<span class="badge b-info">'+esc(p.fhGroup)+'</span>':'<span class="badge b-grey">—</span>')+'</td>'+
-      '<td>'+action+'</td></tr>';
-  }).join("");
-  body.querySelectorAll("tr").forEach(function(tr){ tr.addEventListener("click", function(){ openModal(tr.dataset.id); }); });
-}
-$("search").addEventListener("input", renderMembers);
-$("filter").addEventListener("change", renderMembers);
+$("#backBtn").onclick=()=>showView("home");
 
-/* ===================== SHARED HELPERS ===================== */
-function fmtDate(s){ const d=new Date(s); if(isNaN(d)) return s; return d.toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"}); }
-function statusBadge(s){ const m={"Completed":"b-ok","In progress":"b-info","Not started":"b-grey"}; return '<span class="badge '+(m[s]||"b-grey")+'">'+(esc(s)||"—")+'</span>'; }
-function barChart(title,rows){
-  const max=Math.max(1,Math.max.apply(null,rows.map(function(r){return r.value;})));
-  let h='<div class="chartwrap"><div class="chtitle">'+title+'</div>';
-  rows.forEach(function(r){
-    const pct=Math.round(r.value/max*100);
-    h+='<div class="chrow"><div class="chlabel">'+esc(r.label)+'</div><div class="chbar"><div class="chbar-fill" style="width:'+pct+'%;background:'+r.color+'"></div></div><div class="chval">'+r.value+'</div></div>';
-  });
-  return h+'</div>';
-}
-const C={ink:"#20406a",gold:"#be9648",info:"#3f6aa3",ok:"#3f7d5a",warn:"#b07d1a",danger:"#9d3b3b",grey:"#9aa0ad"};
+/* settings */
+$("#setBtn").onclick=()=>$("#sheet").classList.add("show");
+$("#closeSet").onclick=()=>$("#sheet").classList.remove("show");
+$("#sheet").onclick=e=>{ if(e.target.id==="sheet") $("#sheet").classList.remove("show"); };
+$("#darkSw").onclick=function(){ S.theme=S.theme==="dark"?"light":"dark"; applyTheme(); persist(); };
+function applyTheme(){ document.documentElement.dataset.theme=S.theme; $("#darkSw").classList.toggle("on",S.theme==="dark");
+  document.querySelector('meta[name=theme-color]').content = S.theme==="dark"?"#0f2138":"#20406a"; }
+function applyFont(){ document.documentElement.style.setProperty("--fs",S.fs); if(audio&&isFinite(audio.duration))computeTiming(); }
+$("#fPlus").onclick=()=>{ S.fs=Math.min(1.5,+(S.fs+0.1).toFixed(2)); applyFont(); persist(); };
+$("#fMinus").onclick=()=>{ S.fs=Math.max(0.85,+(S.fs-0.1).toFixed(2)); applyFont(); persist(); };
+$("#resetBtn").onclick=()=>{ if(confirm("Clear all progress and saved spots? This can't be undone.")){ S.progress={}; persist(); renderHome(); refreshDoneBtn(); alert("Progress cleared."); } };
 
-/* ===================== CLASSES VIEW ===================== */
-function classCard(p){
-  const bits=[];
-  if(p.lastAttended) bits.push("last attended "+fmtDate(p.lastAttended));
-  if(p.prepStart) bits.push("started "+fmtDate(p.prepStart));
-  const fl=computeFlags(p);
-  const endow=(p.endowmentStatus&&p.endowmentStatus!=="Not Endowed")
-    ? '<div class="rv-act"><b>Endowment:</b> '+esc(p.endowmentStatus)+(p.endowmentDate?' — '+esc(fmtDate(p.endowmentDate)):'')+(p.endowmentTemple?' · '+esc(p.endowmentTemple):'')+'</div>' : '';
-  return '<div class="rv-card'+(fl.length?' flag':'')+'" data-id="'+esc(p.id)+'">'+
-    '<div class="rv-name">'+esc(p.name||"—")+(p.phone?' &nbsp;<span style="font-weight:400;color:#6d7180">'+esc(p.phone)+'</span>':'')+'</div>'+
-    (bits.length?'<div class="rv-text">'+esc(bits.join(" · "))+'</div>':'')+
-    (p.prepCompleted?'<div class="rv-act"><b>Completed:</b> '+esc(fmtDate(p.prepCompleted))+'</div>':'')+
-    endow+
-    (fl.length?'<ul class="rv-actions">'+fl.map(function(x){return '<li>'+esc(x.t)+'</li>';}).join("")+'</ul>':'')+
-  '</div>';
-}
-function cohortGroup(title,arr,meta){
-  if(!arr.length) return '<div class="rv-group"><h3>'+title+' (0)</h3><div class="rv-empty">None right now.</div></div>';
-  return '<div class="rv-group"><h3 class="cohorthead"><span>'+title+' ('+arr.length+')</span>'+(meta?'<span class="meta">'+meta+'</span>':'')+'</h3>'+arr.map(classCard).join("")+'</div>';
-}
-function renderClasses(){
-  if(!data.length){ $("classesHeader").innerHTML=""; $("classesBody").innerHTML='<div class="rv-empty">No members entered yet.</div>'; return; }
-  const now=data.filter(inPrepNow);
-  const next=data.filter(function(p){ return p.prepStatus==="Upcoming — Next Class"; });
-  const done=data.filter(prepDone).sort(function(a,b){ return (b.prepCompleted||"").localeCompare(a.prepCompleted||""); });
-  const dnc=data.filter(function(p){ return p.prepStatus==="Did Not Complete"; });
-  const endowSet=data.filter(function(p){ return p.endowmentStatus==="Date Set"; }).sort(function(a,b){ return (a.endowmentDate||"").localeCompare(b.endowmentDate||""); });
+/* ---------------- init ---------------- */
+applyTheme(); applyFont();
+$("#rate").value="1";
+renderHome();
+window.addEventListener("beforeunload",persist);
 
-  $("classesHeader").innerHTML='<b>Temple Preparation — Class Overview</b><br>Generated '+fmtDate(new Date().toISOString())+
-    ' · '+now.length+' in class now · '+next.length+' lined up for the next class · '+done.length+' completed.';
-
-  const byCohort={};
-  now.forEach(function(p){ const k=p.cohort||"Current Class"; (byCohort[k]=byCohort[k]||[]).push(p); });
-  let html='<div class="rv-stats">'+
-    '<div class="rv-stat prep"><div class="n">'+now.length+'</div><div class="l">Currently in prep class</div></div>'+
-    '<div class="rv-stat"><div class="n">'+next.length+'</div><div class="l">Upcoming — next class</div></div>'+
-    '<div class="rv-stat fh"><div class="n">'+done.length+'</div><div class="l">Completed the class</div></div>'+
-    '<div class="rv-stat tmp"><div class="n">'+endowSet.length+'</div><div class="l">Endowment date set</div></div>'+
-  '</div>';
-
-  html+='<div class="sectlabel">In Class Now</div>';
-  const cohKeys=Object.keys(byCohort).sort();
-  if(cohKeys.length) cohKeys.forEach(function(k){ html+=cohortGroup(k,byCohort[k]); });
-  else html+='<div class="rv-empty" style="margin-bottom:20px">No one is currently enrolled.</div>';
-
-  html+='<div class="sectlabel">Next Class — Lined Up</div>'+cohortGroup("Upcoming — Next Class",next);
-
-  if(endowSet.length){
-    html+='<div class="sectlabel">Scheduled Endowments</div><div class="rv-group">'+endowSet.map(function(p){
-      return '<div class="rv-card" data-id="'+esc(p.id)+'"><div class="rv-name">'+esc(p.name||"—")+'</div>'+
-        '<div class="rv-text">'+(p.endowmentDate?'<b>'+esc(fmtDate(p.endowmentDate))+'</b>':'date not set')+(p.endowmentTemple?' · '+esc(p.endowmentTemple):'')+'</div></div>';
-    }).join("")+'</div>';
-  }
-
-  html+='<div class="sectlabel">Completed</div>'+cohortGroup("Completed Prep Class",done,"most recent first");
-  if(dnc.length) html+=cohortGroup("Did Not Complete",dnc);
-
-  $("classesBody").innerHTML=html;
-}
-$("printClassesBtn").addEventListener("click", function(){ window.print(); });
-$("view-classes").addEventListener("click", function(e){ const card=e.target.closest(".rv-card[data-id]"); if(card) openModal(card.dataset.id); });
-
-/* ===================== FAMILY HISTORY VIEW ===================== */
-function fhPersonCard(p,detail){
-  return '<div class="rv-card" data-id="'+esc(p.id)+'"><div class="rv-name">'+esc(p.name||"—")+(p.household?' <span style="font-weight:400;color:#6d7180">· '+esc(p.household)+'</span>':'')+'</div>'+
-    (detail?'<div class="rv-text">'+esc(detail)+'</div>':'')+'</div>';
-}
-function renderFh(){
-  if(!data.length){ $("fhHeader").innerHTML=""; $("fhBody").innerHTML='<div class="rv-empty">No members entered yet.</div>'; return; }
-  const subActive=cnt(function(p){return p.submitting==="Active";});
-  const subOcc=cnt(function(p){return p.submitting==="Occasionally";});
-  const idxActive=cnt(function(p){return p.indexing==="Active";});
-  const idxOcc=cnt(function(p){return p.indexing==="Occasionally";});
-  const gen6=cnt(function(p){return genNum(p)>=GEN_GOAL;});
-  const namesTot=sum(function(p){return parseInt(p.namesReserved,10)||0;});
-
-  $("fhHeader").innerHTML='<b>Family History &amp; Indexing — Overview</b><br>Generated '+fmtDate(new Date().toISOString())+
-    ' · '+subActive+' actively submitting names · '+idxActive+' actively indexing · '+gen6+' families at '+GEN_GOAL+'+ generations.';
-
-  let html='<div class="rv-stats">'+
-    '<div class="rv-stat fh"><div class="n">'+subActive+'</div><div class="l">Actively submitting names</div></div>'+
-    '<div class="rv-stat fh"><div class="n">'+idxActive+'</div><div class="l">Actively indexing</div></div>'+
-    '<div class="rv-stat tmp"><div class="n">'+gen6+'</div><div class="l">Families at '+GEN_GOAL+'+ generations</div></div>'+
-    '<div class="rv-stat prep"><div class="n">'+namesTot+'</div><div class="l">Names reserved for temple</div></div>'+
-  '</div>';
-
-  const subRows=[
-    {label:"Active",value:subActive,color:C.ok},
-    {label:"Occasionally",value:subOcc,color:C.warn},
-    {label:"Not yet",value:cnt(function(p){return !p.submitting||p.submitting==="No";}),color:C.grey}
-  ];
-  const idxRows=[
-    {label:"Active",value:idxActive,color:C.ok},
-    {label:"Occasionally",value:idxOcc,color:C.warn},
-    {label:"Not yet",value:cnt(function(p){return !p.indexing||p.indexing==="No";}),color:C.grey}
-  ];
-  const genRows=[
-    {label:GEN_GOAL+"+ (goal)",value:gen6,color:C.gold},
-    {label:"3–"+(GEN_GOAL-1),value:cnt(function(p){const n=genNum(p);return n>=3&&n<GEN_GOAL;}),color:C.info},
-    {label:"1–2",value:cnt(function(p){const n=genNum(p);return n>=1&&n<3;}),color:C.warn},
-    {label:"None / unknown",value:cnt(function(p){return genNum(p)===0;}),color:C.grey}
-  ];
-  html+='<div class="charts">'+barChart("Submitting Names",subRows)+barChart("Indexing",idxRows)+'</div>';
-  html+='<div class="charts">'+barChart("Pedigree Depth (generations documented)",genRows)+
-    barChart("Family History Rotation",[
-      {label:"Currently rotating",value:cnt(function(p){return p.rotationStatus==="Currently Rotating";}),color:C.ok},
-      {label:"Upcoming",value:cnt(function(p){return p.rotationStatus==="Upcoming";}),color:C.info},
-      {label:"Completed",value:cnt(function(p){return p.rotationStatus==="Completed";}),color:C.gold},
-      {label:"Not scheduled",value:cnt(function(p){return !p.rotationStatus||p.rotationStatus==="Not Scheduled";}),color:C.grey}
-    ])+'</div>';
-
-  html+='<div class="sectlabel">Rotation Groups</div>';
-  const grouped={};
-  data.forEach(function(p){ if(p.fhGroup){ (grouped[p.fhGroup]=grouped[p.fhGroup]||[]).push(p); } });
-  const gKeys=Object.keys(grouped).sort();
-  if(gKeys.length){
-    gKeys.forEach(function(g){
-      const members=grouped[g];
-      const statuses=members.map(function(m){return m.rotationStatus;}).filter(Boolean);
-      const lead=members.find(function(m){return m.consultant==="FH Group Leader";});
-      const anyRot=members.find(function(m){return m.rotationStatus==="Currently Rotating";});
-      const meta=anyRot?("rotating now"+(anyRot.rotationEnd?" · through "+fmtDate(anyRot.rotationEnd):"")):(statuses.indexOf("Upcoming")>=0?"upcoming":"");
-      html+='<div class="rv-group"><h3 class="cohorthead"><span>'+esc(g)+' ('+members.length+')</span>'+
-        (lead?'<span class="meta">led by '+esc(lead.name||"—")+'</span>':'')+(meta?'<span class="meta">· '+meta+'</span>':'')+'</h3>'+
-        members.map(function(p){
-          const det=[];
-          if(p.rotationStatus&&p.rotationStatus!=="Not Scheduled") det.push(p.rotationStatus);
-          if(p.rotationStart) det.push("from "+fmtDate(p.rotationStart));
-          if(p.rotationEnd) det.push("to "+fmtDate(p.rotationEnd));
-          if(genNum(p)) det.push(genNum(p)+" generations");
-          return fhPersonCard(p,det.join(" · "));
-        }).join("")+'</div>';
-    });
-  } else {
-    html+='<div class="rv-empty" style="margin-bottom:20px">No rotation groups assigned yet. Add a “FH Group” to members (e.g., “Group 1”) and set their rotation status to start scheduling small groups through family history.</div>';
-  }
-
-  const noGroup=data.filter(function(p){ return !p.fhGroup; });
-  if(noGroup.length){
-    html+='<div class="sectlabel">Not Yet in a Rotation Group</div><div class="rv-group">'+
-      noGroup.slice(0,200).map(function(p){ return fhPersonCard(p, (genNum(p)?genNum(p)+" generations · ":"")+"submitting: "+(p.submitting||"No")+" · indexing: "+(p.indexing||"No")); }).join("")+'</div>';
-  }
-
-  $("fhBody").innerHTML=html;
-}
-$("printFhBtn").addEventListener("click", function(){ window.print(); });
-$("view-fh").addEventListener("click", function(e){ const card=e.target.closest(".rv-card[data-id]"); if(card) openModal(card.dataset.id); });
-
-/* ===================== COUNCIL REPORT ===================== */
-function narrate(p){
-  const name=p.name||"This member"; const s=[];
-  let subj=name;
-  if(p.prepStatus && p.prepStatus!=="Not Enrolled"){
-    if(inPrepNow(p)){ let t=subj+" is currently in the temple preparation class"; if(p.cohort) t+=" ("+p.cohort+")"; if(p.lastAttended) t+=", last attended "+fmtDate(p.lastAttended); s.push(t+"."); }
-    else if(p.prepStatus==="Upcoming — Next Class") s.push(subj+" is lined up for the next temple preparation class.");
-    else if(prepDone(p)) s.push(subj+" completed the temple preparation class"+(p.prepCompleted?" on "+fmtDate(p.prepCompleted):"")+".");
-    else if(p.prepStatus==="Did Not Complete") s.push(subj+" started but did not complete the temple preparation class.");
-    subj="They";
-  }
-  if(p.endowmentStatus && p.endowmentStatus!=="Not Endowed"){
-    if(p.endowmentStatus==="Endowed") s.push(subj+" has received the endowment.");
-    else if(p.endowmentStatus==="Date Set") s.push(subj+" has an endowment date set"+(p.endowmentDate?" for "+fmtDate(p.endowmentDate):"")+(p.endowmentTemple?" at the "+p.endowmentTemple+" temple":"")+".");
-    else if(p.endowmentStatus==="Recommend in Progress") s.push(subj+" is working toward a temple recommend for the endowment.");
-    subj="They";
-  }
-  const fhbits=[];
-  if(p.submitting && p.submitting!=="No") fhbits.push((p.submitting==="Active"?"actively":"occasionally")+" submitting family names");
-  if(p.indexing && p.indexing!=="No") fhbits.push((p.indexing==="Active"?"actively":"occasionally")+" indexing");
-  if(genNum(p)) fhbits.push("pedigree documented "+genNum(p)+" generations back");
-  if((parseInt(p.namesReserved,10)||0)>0) fhbits.push((parseInt(p.namesReserved,10)||0)+" names reserved for the temple");
-  if(fhbits.length) s.push(subj+" is "+fhbits.join(", ")+".");
-  if(p.fhGroup){ let t="Assigned to family history "+p.fhGroup; if(p.rotationStatus&&p.rotationStatus!=="Not Scheduled") t+=" ("+p.rotationStatus.toLowerCase()+")"; s.push(t+"."); }
-  if(p.consultant && p.consultant!=="No") s.push("Serves as a "+p.consultant+".");
-  if(p.helper) s.push("Supported by: "+p.helper+".");
-  if(p.notes) s.push("Notes: "+p.notes);
-  return s.length?s.join(" "):(name+" — no temple or family history activity recorded yet.");
-}
-function reviewCard(p){
-  const fl=computeFlags(p);
-  const actions=fl.length?'<ul class="rv-actions">'+fl.map(function(x){return '<li>'+esc(x.t)+'</li>';}).join("")+'</ul>':"";
-  return '<div class="rv-card'+(fl.length?' flag':'')+'" data-id="'+esc(p.id)+'">'+
-    '<div class="rv-name">'+esc(p.name||"—")+(p.phone?' &nbsp;<span style="font-weight:400;color:#6d7180">'+esc(p.phone)+'</span>':'')+'</div>'+
-    '<div class="rv-text">'+esc(narrate(p))+'</div>'+actions+'</div>';
-}
-function priorityGroup(title,arr,detailFn){
-  if(!arr.length) return '<div class="rv-group"><h3>'+title+' (0)</h3><div class="rv-empty">None.</div></div>';
-  return '<div class="rv-group"><h3>'+title+' ('+arr.length+')</h3>'+arr.map(function(p){
-    return '<div class="rv-card" data-id="'+esc(p.id)+'"><div class="rv-name">'+esc(p.name||"—")+'</div><div class="rv-text">'+esc(detailFn(p))+'</div></div>';
-  }).join("")+'</div>';
-}
-function renderReview(){
-  const mode=($("reviewFilter")||{}).value||"all";
-  const flagged=data.filter(function(p){ return computeFlags(p).length>0; });
-  const onTrack=data.filter(function(p){ return computeFlags(p).length===0; });
-  const nowArr=data.filter(inPrepNow), nextArr=data.filter(function(p){return p.prepStatus==="Upcoming — Next Class";});
-  const endowNeed=data.filter(function(p){ return prepDone(p)&&p.endowmentStatus!=="Endowed"&&p.endowmentStatus!=="Date Set"; });
-
-  $("reviewHeader").innerHTML='<b>Temple &amp; Family History — Ward Council Review</b><br>Generated '+fmtDate(new Date().toISOString())+
-    ' · '+data.length+' members on record · '+flagged.length+' needing follow-up.';
-
-  if(!data.length){ $("reviewBody").innerHTML='<div class="rv-empty">No members entered yet.</div>'; return; }
-
-  let html='<div class="rv-stats">'+
-    '<div class="rv-stat prep"><div class="n">'+nowArr.length+'</div><div class="l">In prep class now</div></div>'+
-    '<div class="rv-stat tmp"><div class="n">'+cnt(function(p){return p.endowmentStatus==="Date Set";})+'</div><div class="l">Endowment date set</div></div>'+
-    '<div class="rv-stat fh"><div class="n">'+cnt(function(p){return p.submitting==="Active";})+'</div><div class="l">Actively submitting names</div></div>'+
-    '<div class="rv-stat out"><div class="n">'+flagged.length+'</div><div class="l">Members with a follow-up flag</div></div>'+
-  '</div>';
-
-  const prepRows=OPTS.prepStatus.map(function(o){ const col=o==="Completed"?C.ok:(o==="Did Not Complete"?C.warn:(o==="Not Enrolled"?C.grey:C.info)); return {label:o,value:cnt(function(p){return p.prepStatus===o;}),color:col}; }).filter(function(r){return r.value>0;});
-  const endRows=OPTS.endowmentStatus.map(function(o){ const col=o==="Endowed"?C.ok:(o==="Date Set"?C.gold:(o==="Not Endowed"?C.grey:C.info)); return {label:o,value:cnt(function(p){return p.endowmentStatus===o;}),color:col}; }).filter(function(r){return r.value>0;});
-  html+='<div class="charts">'+
-    barChart("Temple Prep Status", prepRows.length?prepRows:[{label:"—",value:0,color:C.grey}])+
-    barChart("Endowment Status", endRows.length?endRows:[{label:"—",value:0,color:C.grey}])+
-  '</div>';
-
-  const cq=curQuarter(), ci=qIdx(cq);
-  const planned=data.filter(function(p){ return p.planQuarter && p.planQuarter!=="Unset"; });
-  const thisQ=planned.filter(function(p){ return p.planQuarter===cq; });
-  const inProg=planned.filter(function(p){ return p.planStatus==="In progress"; });
-  const doneThisQ=data.filter(function(p){ return p.planStatus==="Completed" && quarterOf(p.planDone)===cq; });
-  const overdue=planned.filter(function(p){ const i=qIdx(p.planQuarter); return p.planStatus!=="Completed" && i!==null && ci!==null && i<ci; });
-  html+='<div class="sectlabel">This Quarter — '+cq+'</div><div class="rv-stats">'+
-    '<div class="rv-stat prep"><div class="n">'+thisQ.length+'</div><div class="l">Goals set this quarter</div></div>'+
-    '<div class="rv-stat"><div class="n">'+inProg.length+'</div><div class="l">In progress</div></div>'+
-    '<div class="rv-stat" style="border-left:4px solid var(--ok)"><div class="n">'+doneThisQ.length+'</div><div class="l">Completed this quarter</div></div>'+
-    '<div class="rv-stat out"><div class="n">'+overdue.length+'</div><div class="l">Overdue (past quarters)</div></div>'+
-  '</div>';
-  if(planned.length){
-    const pc=planned.slice().sort(function(a,b){ const d=(qIdx(a.planQuarter)||0)-(qIdx(b.planQuarter)||0); return d||(a.name||"").localeCompare(b.name||""); })
-      .map(function(p){ return '<div class="rv-card" data-id="'+esc(p.id)+'"><div class="rv-name">'+esc(p.name||"—")+' <span style="font-weight:400;color:#6d7180">· '+esc(p.planQuarter)+'</span></div><div class="rv-text">'+esc(p.planGoal||"(no goal set)")+'</div><div style="margin-top:7px">'+statusBadge(p.planStatus)+(p.planStatus==="Completed"&&p.planDone?' <span class="badge b-grey">'+esc(fmtDate(p.planDone))+'</span>':'')+'</div></div>'; });
-    html+='<div class="rv-group"><h3>Quarter Plan ('+planned.length+')</h3>'+pc.join("")+'</div>';
-  }
-
-  html+=priorityGroup("In the Temple Prep Class Now", nowArr, function(p){ return (p.cohort?p.cohort+" · ":"")+"Status: "+(p.prepStatus||"—")+(p.lastAttended?" · last attended "+fmtDate(p.lastAttended):""); });
-  html+=priorityGroup("Lined Up for the Next Class", nextArr, function(p){ return "Invite and confirm enrollment for the upcoming cohort."; });
-  html+=priorityGroup("Prep Done — Move Toward Endowment", endowNeed, function(p){ return "Completed prep"+(p.prepCompleted?" "+fmtDate(p.prepCompleted):"")+". Begin recommend interviews toward the endowment."; });
-
-  if(flagged.length) html+='<div class="rv-group"><h3>Needs Follow-Up ('+flagged.length+')</h3>'+flagged.map(reviewCard).join("")+'</div>';
-  else html+='<div class="rv-group"><h3>Needs Follow-Up (0)</h3><div class="rv-empty">No outstanding follow-ups. Everyone is accounted for.</div></div>';
-  if(mode==="all") html+='<div class="rv-group"><h3>On Track ('+onTrack.length+')</h3>'+(onTrack.length?onTrack.map(reviewCard).join(""):'<div class="rv-empty">None.</div>')+'</div>';
-
-  $("reviewBody").innerHTML=html;
-}
-$("reviewFilter").addEventListener("change", renderReview);
-$("printBtn").addEventListener("click", function(){ window.print(); });
-$("view-review").addEventListener("click", function(e){ const card=e.target.closest(".rv-card[data-id]"); if(card) openModal(card.dataset.id); });
-
-/* ===================== GUIDED MODAL ===================== */
-const overlay=$("overlay"), modalBody=$("modalBody");
-function optTags(list,v){ const extra=(v && list.indexOf(v)<0)?'<option selected>'+esc(v)+'</option>':''; return '<option value=""></option>'+extra+list.map(function(o){return '<option'+(o===v?' selected':'')+'>'+o+'</option>';}).join(""); }
-function sel(key,list,v){ return '<select id="m_'+key+'" data-k="'+key+'">'+optTags(list,v||"")+'</select>'; }
-function txt(key,v){ return '<input type="text" id="m_'+key+'" data-k="'+key+'" value="'+esc(v||"")+'">'; }
-function num(key,v){ return '<input type="number" min="0" id="m_'+key+'" data-k="'+key+'" value="'+esc(v||"")+'">'; }
-function dat(key,v){ return '<input type="date" id="m_'+key+'" data-k="'+key+'" value="'+esc(v||"")+'">'; }
-function area(key,v){ return '<textarea id="m_'+key+'" data-k="'+key+'">'+esc(v||"")+'</textarea>'; }
-function fld(label,inner,full){ return '<div class="fld'+(full?' full':'')+'"><label>'+label+'</label>'+inner+'</div>'; }
-function buildModal(p){
-  modalBody.innerHTML=
-    '<div class="wzsec"><div class="secgrid">'+
-      fld("Full Name",txt("name",p.name))+fld("Phone",txt("phone",p.phone))+
-      fld("Household / Family",txt("household",p.household))+
-      fld("Temple & FH Role",sel("consultant",OPTS.consultant,p.consultant))+
-    '</div></div>'+
-
-    '<div class="wzsec"><h4>1 · Temple Preparation Class</h4><div class="hint">Where they are in the prep class.</div><div class="secgrid">'+
-      fld("Prep Class Status", sel("prepStatus",OPTS.prepStatus,p.prepStatus))+
-      fld("Cohort / Class Name", txt("cohort",p.cohort))+
-      '<div class="cond hidden" id="condClassDates"><div class="secgrid">'+
-        fld("Class Start Date", dat("prepStart",p.prepStart))+
-        fld("Last Attended", dat("lastAttended",p.lastAttended))+
-        '<div class="stepnote">If more than '+STALE_DAYS+' days since the last class, this member is flagged to reach out.</div>'+
-      '</div></div>'+
-      '<div class="cond hidden" id="condCompleted"><div class="secgrid">'+
-        fld("Completion Date", dat("prepCompleted",p.prepCompleted))+
-        '<div class="stepnote">Saving with a completion date logs it to History automatically.</div>'+
-      '</div></div>'+
-    '</div></div>'+
-
-    '<div class="wzsec"><h4>2 · Endowment</h4><div class="hint">Recommend and endowment scheduling.</div><div class="secgrid">'+
-      fld("Endowment Status", sel("endowmentStatus",OPTS.endowmentStatus,p.endowmentStatus))+
-      '<div class="cond hidden" id="condEndow"><div class="secgrid">'+
-        fld("Endowment Date", dat("endowmentDate",p.endowmentDate))+
-        fld("Temple", txt("endowmentTemple",p.endowmentTemple))+
-      '</div></div>'+
-    '</div></div>'+
-
-    '<div class="wzsec"><h4>3 · Family History &amp; Indexing</h4><div class="hint">Participation and pedigree depth.</div><div class="secgrid">'+
-      fld("Submitting Family Names", sel("submitting",OPTS.participation,p.submitting))+
-      fld("Indexing", sel("indexing",OPTS.participation,p.indexing))+
-      fld("Generations Documented", num("generations",p.generations))+
-      fld("Names Reserved for Temple", num("namesReserved",p.namesReserved))+
-      '<div class="stepnote">Goal: '+GEN_GOAL+' generations documented. Members at '+GEN_GOAL+'+ are counted toward the family-history goal.</div>'+
-    '</div></div>'+
-
-    '<div class="wzsec"><h4>4 · Family History Rotation Group</h4><div class="hint">Small groups rotating through family history work.</div><div class="secgrid">'+
-      fld("FH Group", txt("fhGroup",p.fhGroup))+
-      fld("Rotation Status", sel("rotationStatus",OPTS.rotationStatus,p.rotationStatus))+
-      '<div class="cond hidden" id="condRotation"><div class="secgrid">'+
-        fld("Rotation Start", dat("rotationStart",p.rotationStart))+
-        fld("Rotation End", dat("rotationEnd",p.rotationEnd))+
-      '</div></div>'+
-      fld("Supported By (consultant)", txt("helper",p.helper), true)+
-    '</div></div>'+
-
-    '<div class="wzsec"><h4>5 · Quarter Plan (90-day goal)</h4><div class="hint">Set one focus goal and the quarter you are aiming to reach it.</div><div class="secgrid">'+
-      fld("Quarter Goal", txt("planGoal",p.planGoal), true)+
-      fld("Target Quarter", sel("planQuarter",quarterOptions(),p.planQuarter))+
-      fld("Status", sel("planStatus",OPTS.planStatus,p.planStatus))+
-      '<div class="cond hidden" id="condDone"><div class="secgrid">'+fld("Date Completed", dat("planDone",p.planDone))+'</div></div>'+
-    '</div></div>'+
-
-    '<div class="wzsec"><div class="secgrid">'+fld("Notes", area("notes",p.notes), true)+'</div></div>'+
-
-    '<div class="flagpanel"><div class="ttl">Action Items &amp; Flags</div><div id="flagPanel"></div></div>';
-  ["m_prepStatus","m_endowmentStatus","m_rotationStatus","m_planStatus"].forEach(function(id){ const el=$(id); if(el) el.addEventListener("change", updateConditionals); });
-  modalBody.addEventListener("input", updateFlagsLive);
-  updateConditionals();
-}
-function show(id,on){ const el=$(id); if(el) el.classList.toggle("hidden",!on); }
-function mval(id){ const el=$(id); return el?el.value.trim():""; }
-function updateConditionals(){
-  const ps=mval("m_prepStatus");
-  show("condClassDates", ps==="Currently Enrolled"||ps==="Attending");
-  show("condCompleted", ps==="Completed");
-  const es=mval("m_endowmentStatus"); show("condEndow", es==="Date Set"||es==="Endowed");
-  const rs=mval("m_rotationStatus"); show("condRotation", rs==="Currently Rotating"||rs==="Upcoming"||rs==="Completed");
-  const pls=mval("m_planStatus"); show("condDone", pls==="Completed");
-  updateFlagsLive();
-}
-function collectModal(){
-  const rec={};
-  modalBody.querySelectorAll("[data-k]").forEach(function(el){ const block=el.closest(".cond"); if(block&&block.classList.contains("hidden")) return; rec[el.dataset.k]=el.value.trim(); });
-  return rec;
-}
-function updateFlagsLive(){
-  const f=computeFlags(collectModal()); const panel=$("flagPanel"); if(!panel) return;
-  panel.innerHTML=f.length?'<div class="flagchips">'+f.map(function(x){return '<span class="badge '+x.c+'">&#9873; '+esc(x.t)+'</span>';}).join("")+'</div>':'<div class="none">No follow-up flags — this member is fully accounted for.</div>';
-}
-function openModal(id){
-  const p=id?data.find(function(x){return x.id===id;}):{};
-  editingId=id||null; $("modalTitle").textContent=id?"Edit Member":"Add Member";
-  $("deleteBtn").style.visibility=id?"visible":"hidden"; buildModal(p||{}); overlay.classList.add("show");
-}
-function closeModal(){ overlay.classList.remove("show"); editingId=null; }
-$("addBtn").addEventListener("click", function(){ openModal(null); });
-$("closeModal").addEventListener("click", closeModal);
-$("cancelBtn").addEventListener("click", closeModal);
-overlay.addEventListener("click", function(e){ if(e.target===overlay) closeModal(); });
-$("saveBtn").addEventListener("click", function(){
-  const rec=collectModal();
-  if(!rec.name){ alert("Please enter a name."); return; }
-  rec.updated=new Date().toISOString().slice(0,10);
-  rec.id=editingId||("m"+Date.now()+Math.floor(Math.random()*1000));
-  $("saveBtn").disabled=true;
-  writeMember(rec).then(function(){
-    function logOnce(milestone,date){
-      if(!date) return; const dup=ledger.some(function(e){ return e.memberId===rec.id && e.date===date && (e.milestone||"")===milestone; });
-      if(!dup) writeLedger({memberId:rec.id,name:rec.name,milestone:milestone,date:date,by:"",ts:Date.now()});
-    }
-    if(rec.prepStatus==="Completed" && rec.prepCompleted) logOnce("Completed Temple Prep Class",rec.prepCompleted);
-    if(rec.endowmentStatus==="Endowed" && rec.endowmentDate) logOnce("Endowment",rec.endowmentDate);
-    if(rec.planStatus==="Completed" && rec.planDone && rec.planGoal){
-      const dup=ledger.some(function(e){ return e.memberId===rec.id && e.date===rec.planDone && (e.milestone||"")===rec.planGoal; });
-      if(!dup) writeLedger({memberId:rec.id,name:rec.name,milestone:rec.planGoal,date:rec.planDone,by:"",ts:Date.now()});
-    }
-    closeModal();
-  }).catch(function(e){ alert("Save failed: "+(e.code||e.message)); }).finally(function(){ $("saveBtn").disabled=false; });
-});
-$("deleteBtn").addEventListener("click", function(){
-  if(!editingId) return;
-  if(confirm("Remove this member from the record?")) removeMember(editingId).then(closeModal).catch(function(e){ alert("Delete failed: "+(e.code||e.message)); });
-});
-
-/* ===================== SETTINGS ===================== */
-$("exportBtn").addEventListener("click", function(){
-  const blob=new Blob([JSON.stringify({exported:new Date().toISOString(),members:data,ledger:ledger},null,2)],{type:"application/json"});
-  const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="temple-fh-backup-"+new Date().toISOString().slice(0,10)+".json"; a.click(); URL.revokeObjectURL(a.href);
-  const m=$("ioMsg"); m.className="smsg ok"; m.textContent="Backup downloaded.";
-});
-$("importBtn").addEventListener("click", function(){ $("importFile").click(); });
-$("importFile").addEventListener("change", function(e){
-  const file=e.target.files[0]; if(!file) return; const r=new FileReader();
-  r.onload=function(){
-    try{
-      const obj=JSON.parse(r.result); const arr=Array.isArray(obj)?obj:obj.members; if(!Array.isArray(arr)) throw new Error("bad");
-      const m=$("ioMsg"); m.className="smsg"; m.textContent="Importing "+arr.length+"…";
-      const jobs=arr.map(function(p){ if(!p.id) p.id="m"+Date.now()+Math.floor(Math.random()*100000); return writeMember(p); });
-      Promise.all(jobs).then(function(){ m.className="smsg ok"; m.textContent="Imported "+arr.length+" members into the cloud."; }).catch(function(err){ m.className="smsg err"; m.textContent="Some records failed: "+(err.code||err.message); });
-    }catch(err){ const m2=$("ioMsg"); m2.className="smsg err"; m2.textContent="Could not read that file."; }
-  };
-  r.readAsText(file); e.target.value="";
-});
-
-/* ===================== HISTORY & TRENDS ===================== */
-function renderHistory(){
-  const lb=$("logMember");
-  if(lb){ const cur=lb.value; lb.innerHTML='<option value="">— choose member —</option>'+data.map(function(p){return '<option value="'+esc(p.id)+'">'+esc(p.name||"(unnamed)")+'</option>';}).join(""); if(cur) lb.value=cur; }
-  const lm=$("logMilestone");
-  if(lm && !lm.dataset.filled){ lm.innerHTML='<option value="">— milestone —</option>'+MILESTONES.map(function(m){return '<option>'+m+'</option>';}).join(""); lm.dataset.filled="1"; }
-  const ld=$("logDate"); if(ld && !ld.value) ld.value=new Date().toISOString().slice(0,10);
-
-  $("historyHeader").innerHTML='<b>Temple &amp; Family History — Milestone History</b><br>'+ledger.length+' milestone'+(ledger.length===1?'':'s')+' recorded.';
-  if(!ledger.length){ $("historyBody").innerHTML='<div class="rv-empty">No history yet. Log a milestone above, or mark a prep class “Completed,” an endowment “Endowed,” or a Quarter Plan goal “Completed” and it records here automatically.</div>'; return; }
-
-  const byQ={}; ledger.forEach(function(e){ const q=quarterOf(e.date); if(q) byQ[q]=(byQ[q]||0)+1; });
-  const qRows=Object.keys(byQ).sort(function(a,b){return qIdx(a)-qIdx(b);}).slice(-8).map(function(q){return {label:q,value:byQ[q],color:C.gold};});
-  const byT={}; ledger.forEach(function(e){ const m=e.milestone||"Other"; byT[m]=(byT[m]||0)+1; });
-  const tRows=Object.keys(byT).sort(function(a,b){return byT[b]-byT[a];}).map(function(m){return {label:m,value:byT[m],color:C.info};});
-
-  let html='<div class="charts">'+barChart("Milestones by Quarter", qRows.length?qRows:[{label:"—",value:0,color:C.gold}])+barChart("By Milestone Type", tRows.length?tRows:[{label:"—",value:0,color:C.info}])+'</div>';
-  const entries=ledger.slice().sort(function(a,b){ return (b.date||"").localeCompare(a.date||""); });
-  html+='<div class="rv-group"><h3>Logged Milestones ('+ledger.length+')</h3>'+entries.map(function(e){
-    return '<div class="rv-card"><button class="logdel no-print" data-del="'+esc(e.id)+'" title="Remove">&times;</button>'+
-      '<div class="rv-name">'+esc(e.name||"—")+' <span style="font-weight:400;color:#6d7180">· '+esc(fmtDate(e.date))+'</span></div>'+
-      '<div class="rv-text">'+esc(e.milestone||"")+'</div></div>';
-  }).join("")+'</div>';
-  $("historyBody").innerHTML=html;
-}
-$("addLogBtn").addEventListener("click", function(){
-  const bid=$("logMember").value, ms=$("logMilestone").value, dt=$("logDate").value, m=$("logMsg");
-  const b=data.find(function(x){return x.id===bid;});
-  if(!b||!ms||!dt){ m.className="smsg err"; m.textContent="Choose a member, a milestone, and a date."; return; }
-  writeLedger({memberId:bid,name:b.name,milestone:ms,date:dt,by:"",ts:Date.now()})
-    .then(function(){ m.className="smsg ok"; m.textContent="Recorded "+ms+" for "+b.name+"."; })
-    .catch(function(e){ m.className="smsg err"; m.textContent="Could not record: "+(e.code||e.message); });
-});
-$("historyBody").addEventListener("click", function(e){ const x=e.target.closest("[data-del]"); if(x && confirm("Remove this history entry?")) removeLedger(x.dataset.del).catch(function(err){ alert("Delete failed: "+(err.code||err.message)); }); });
-$("printHistBtn").addEventListener("click", function(){ window.print(); });
-
-function renderAll(){ renderDash(); renderMembers(); renderClasses(); renderFh(); renderReview(); renderHistory(); }
-
-/* ===================== INIT ===================== */
-renderAll();
-startSync();
+/* service worker */
+if("serviceWorker" in navigator){ navigator.serviceWorker.register("sw.js").catch(()=>{}); }
 </script>
 </body>
 </html>
