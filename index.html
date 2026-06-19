@@ -216,12 +216,41 @@ html[data-theme="dark"] .sheetin h3{color:#eaf0f8}
 .srow:first-of-type{border-top:none}
 .srow .k{font-size:14px;font-weight:600}
 .srow .d{font-size:12px;color:var(--muted);margin-top:2px}
-.fontctl{display:flex;gap:6px}
+.fontctl{display:flex;gap:6px;align-items:center}
+.fontctl #fPct{min-width:48px;text-align:center;font-weight:700;color:var(--ink);font-size:13px}
+html[data-theme="dark"] .fontctl #fPct{color:var(--celest)}
+#fPreview{font-family:var(--serif);color:var(--read);font-size:calc(16px * var(--fs));line-height:1.6;
+  background:var(--ground);border:1px solid var(--line);border-radius:10px;padding:11px 13px;transition:font-size .12s}
 .fontctl button{width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:var(--card);
   font-weight:700;color:var(--ink)}
 html[data-theme="dark"] .fontctl button{color:var(--celest)}
 .linkbtn{font-size:13px;color:var(--gold);font-weight:600}
 .foot{text-align:center;font-size:11px;color:var(--muted);margin-top:30px;line-height:1.6}
+
+/* completion banner + certificate */
+.cbanner{display:none;margin:4px 0 10px;border:1px solid var(--gold-line);border-radius:16px;
+  padding:20px 18px;text-align:center;box-shadow:var(--shadow);
+  background:linear-gradient(180deg,rgba(190,150,72,.13),rgba(190,150,72,.03))}
+.cbanner.show{display:block}
+.cbanner .eylabel{font-size:11px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--gold)}
+.cbanner h3{font-family:var(--serif);font-size:20px;color:var(--ink);margin:7px 0 4px}
+html[data-theme="dark"] .cbanner h3{color:#eaf0f8}
+.cbanner p{font-size:13px;color:var(--muted);margin-bottom:14px}
+.cover{position:fixed;inset:0;z-index:60;background:rgba(21,41,66,.6);display:none;align-items:center;
+  justify-content:center;padding:18px;overflow:auto}
+.cover.show{display:flex}
+.cmodal{background:var(--card);border-radius:18px;width:100%;max-width:720px;margin:auto;overflow:hidden;
+  box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.cmhead{background:linear-gradient(180deg,#2a4d78,var(--ink));color:#fff;padding:15px 18px;display:flex;
+  justify-content:space-between;align-items:center}
+.cmhead h3{font-family:var(--serif);font-size:17px;font-weight:600}
+.cmhead .x{background:rgba(255,255,255,.15);width:30px;height:30px;border-radius:8px;color:#fff;font-size:18px}
+.cmbody{padding:18px}
+.cmbody label{font-size:12.5px;font-weight:700;color:var(--text);letter-spacing:.2px}
+#certName{width:100%;margin-top:7px;padding:12px 13px;border:1px solid var(--line);border-radius:10px;
+  font-size:15px;background:var(--card);color:var(--text)}
+.certprev{margin-top:14px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+.certprev canvas{width:100%;height:auto;display:block}
 @media(max-width:520px){ .hero h1{font-size:23px} .brand .t{max-width:40vw} }
 </style>
 </head>
@@ -257,6 +286,12 @@ html[data-theme="dark"] .fontctl button{color:var(--celest)}
         <div class="ptrack"><div class="pfill" id="overPfill"></div></div>
         <span id="overPct">0 of 7 complete</span>
       </div>
+    </div>
+    <div class="cbanner" id="cbanner">
+      <div class="eylabel">Course Complete</div>
+      <h3>You've completed all seven lessons</h3>
+      <p>Download a certificate to mark your preparation for the temple.</p>
+      <button class="btn gold" id="getCert">Get your certificate</button>
     </div>
     <div class="rule">The Lessons</div>
     <div class="cards" id="cards"></div>
@@ -338,9 +373,12 @@ html[data-theme="dark"] .fontctl button{color:var(--celest)}
       <div><div class="k">Dark mode</div><div class="d">Easier reading at night</div></div>
       <div class="sw" id="darkSw"><i></i></div>
     </div>
-    <div class="srow">
-      <div><div class="k">Reading text size</div><div class="d">Adjust the lesson text</div></div>
-      <div class="fontctl"><button id="fMinus">A−</button><button id="fPlus">A＋</button></div>
+    <div class="srow" style="flex-direction:column;align-items:stretch;gap:11px">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div><div class="k">Reading text size</div><div class="d">Changes the lesson text (preview below)</div></div>
+        <div class="fontctl"><button id="fMinus">A−</button><span id="fPct">100%</span><button id="fPlus">A＋</button></div>
+      </div>
+      <div id="fPreview">In the temple, we learn more about Heavenly Father and Jesus Christ.</div>
     </div>
     <div class="srow">
       <div><div class="k">Reset my progress</div><div class="d">Clear completed lessons &amp; saved spots</div></div>
@@ -350,6 +388,22 @@ html[data-theme="dark"] .fontctl button{color:var(--celest)}
       Tip: tap any sentence in <strong>Both</strong> mode to jump the audio to that spot.
     </div>
     <div class="donerow" style="margin-top:8px"><button class="btn ghost" id="closeSet">Close</button></div>
+  </div>
+</div>
+
+<!-- CERTIFICATE -->
+<div class="cover" id="certOverlay">
+  <div class="cmodal">
+    <div class="cmhead"><h3>Certificate of Completion</h3><button class="x" id="certX" aria-label="Close">×</button></div>
+    <div class="cmbody">
+      <label for="certName">Name on the certificate</label>
+      <input id="certName" type="text" placeholder="Enter your full name" autocomplete="name">
+      <div class="certprev"><canvas id="certCanvas" width="1600" height="1130"></canvas></div>
+      <div class="donerow" style="margin:16px 0 2px;gap:10px">
+        <button class="btn gold" id="certDownload">Download certificate</button>
+        <button class="btn ghost" id="certPrint">Print</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -364,7 +418,7 @@ const LS = {
   load(){ try{return JSON.parse(localStorage.getItem(this.k))||{}}catch(e){return{}} },
   save(s){ try{localStorage.setItem(this.k,JSON.stringify(s))}catch(e){} }
 };
-let S = Object.assign({theme:"light",mode:"both",fs:1,follow:true,progress:{}}, LS.load());
+let S = Object.assign({theme:"light",mode:"both",fs:1,follow:true,name:"",progress:{}}, LS.load());
 function persist(){ LS.save(S); }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
@@ -426,6 +480,7 @@ function renderHome(){
   const doneCount=LESSONS.filter(L=>S.progress[L.id]&&S.progress[L.id].done).length;
   $("#overPct").textContent=`${doneCount} of ${LESSONS.length} complete`;
   $("#overPfill").style.width=(doneCount/LESSONS.length*100)+"%";
+  $("#cbanner").classList.toggle("show", doneCount===LESSONS.length);
 }
 
 /* ---------------- render reader ---------------- */
@@ -618,7 +673,9 @@ $("#sheet").onclick=e=>{ if(e.target.id==="sheet") $("#sheet").classList.remove(
 $("#darkSw").onclick=function(){ S.theme=S.theme==="dark"?"light":"dark"; applyTheme(); persist(); };
 function applyTheme(){ document.documentElement.dataset.theme=S.theme; $("#darkSw").classList.toggle("on",S.theme==="dark");
   document.querySelector('meta[name=theme-color]').content = S.theme==="dark"?"#0f2138":"#20406a"; }
-function applyFont(){ document.documentElement.style.setProperty("--fs",S.fs); if(audio&&isFinite(audio.duration))computeTiming(); }
+function applyFont(){ document.documentElement.style.setProperty("--fs",String(S.fs));
+  const pct=$("#fPct"); if(pct) pct.textContent=Math.round(S.fs*100)+"%";
+  if(audio&&isFinite(audio.duration))computeTiming(); }
 $("#fPlus").onclick=()=>{ S.fs=Math.min(1.5,+(S.fs+0.1).toFixed(2)); applyFont(); persist(); };
 $("#fMinus").onclick=()=>{ S.fs=Math.max(0.85,+(S.fs-0.1).toFixed(2)); applyFont(); persist(); };
 $("#resetBtn").onclick=()=>{ if(confirm("Clear all progress and saved spots? This can't be undone.")){ S.progress={}; persist(); renderHome(); refreshDoneBtn(); alert("Progress cleared."); } };
@@ -629,6 +686,61 @@ $("#rate").value="1";
 renderHome();
 ensureTimings();
 window.addEventListener("beforeunload",persist);
+
+/* ---------------- certificate ---------------- */
+const TEMPLE_PATH="M12 1l1.2 2.2L12 4.4l-1.2-1.2L12 1zm-.9 4.2h1.8v2.1h2.2v2H9V7.3h2.1V5.2zM5 9.3h3v1.8H5V9.3zm11 0h3v1.8h-3V9.3zM4 12h16v2H4v-2zm1 3h2.4v6H5v-6zm5.8 0h2.4v6h-2.4v-6zm6.8 0H20v6h-2.4v-6zM9 15h1.2v3.4H9V15zm4.8 0H15v3.4h-1.2V15zM3 21h18v2H3v-2z";
+function fmtDate(d){ return d.toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"}); }
+function drawCertificate(name){
+  const c=$("#certCanvas"); if(!c) return; const x=c.getContext("2d"); if(!x) return; const W=c.width,H=c.height;
+  x.clearRect(0,0,W,H);
+  x.fillStyle="#fffdf7"; x.fillRect(0,0,W,H);
+  x.strokeStyle="#be9648"; x.lineWidth=10; x.strokeRect(42,42,W-84,H-84);
+  x.strokeStyle="#e0d2ad"; x.lineWidth=2; x.strokeRect(66,66,W-132,H-132);
+  // emblem
+  try{ x.save(); const s=7.2; x.translate(W/2-12*s,108); x.scale(s,s); x.fillStyle="#be9648"; x.fill(new Path2D(TEMPLE_PATH)); x.restore(); }catch(e){ x.restore&&x.restore(); }
+  x.textAlign="center";
+  x.fillStyle="#be9648"; try{x.letterSpacing="6px";}catch(e){} x.font="600 26px Georgia, 'Times New Roman', serif";
+  x.fillText("TEMPLE PREPARATION SEMINAR", W/2, 340);
+  try{x.letterSpacing="0px";}catch(e){}
+  x.fillStyle="#20406a"; x.font="600 68px Georgia, serif";
+  x.fillText("Certificate of Completion", W/2, 438);
+  x.fillStyle="#6f7686"; x.font="italic 30px Georgia, serif";
+  x.fillText("This certifies that", W/2, 548);
+  const nm=(name&&name.trim())?name.trim():"Your Name";
+  x.fillStyle="#20406a"; x.font="italic 600 74px Georgia, serif";
+  x.fillText(nm, W/2, 656);
+  const nw=Math.min(W-280, x.measureText(nm).width+140);
+  x.strokeStyle="#e0d2ad"; x.lineWidth=2; x.beginPath(); x.moveTo(W/2-nw/2,690); x.lineTo(W/2+nw/2,690); x.stroke();
+  x.fillStyle="#22303f"; x.font="30px Georgia, serif";
+  x.fillText("has completed the seven-lesson temple preparation course", W/2, 766);
+  x.fillStyle="#20406a"; x.font="600 44px Georgia, serif";
+  x.fillText("Endowed from on High", W/2, 832);
+  x.fillStyle="#6f7686"; x.font="26px Georgia, serif";
+  x.fillText("Completed "+fmtDate(new Date()), W/2, 912);
+  x.fillStyle="#8a7320"; x.font="italic 26px Georgia, serif";
+  x.fillText("\u201C\u2026that thy servants may go forth from this house armed with thy power.\u201D", W/2, 1002);
+  x.fillStyle="#be9648"; x.font="600 22px Georgia, serif"; try{x.letterSpacing="2px";}catch(e){}
+  x.fillText("D&C 109:22", W/2, 1044); try{x.letterSpacing="0px";}catch(e){}
+}
+function openCert(){ $("#certName").value=S.name||""; drawCertificate(S.name||""); $("#certOverlay").classList.add("show"); }
+$("#getCert").onclick=openCert;
+$("#certX").onclick=()=>$("#certOverlay").classList.remove("show");
+$("#certOverlay").onclick=e=>{ if(e.target.id==="certOverlay") $("#certOverlay").classList.remove("show"); };
+$("#certName").oninput=()=>{ drawCertificate($("#certName").value); };
+$("#certName").onchange=()=>{ S.name=$("#certName").value.trim(); persist(); };
+$("#certDownload").onclick=()=>{
+  drawCertificate($("#certName").value);
+  const c=$("#certCanvas"); const fn=( ($("#certName").value.trim()||"Certificate").replace(/[^\w\s-]/g,"").replace(/\s+/g,"-") )+"-Endowed-from-on-High.png";
+  c.toBlob(b=>{ if(!b) return; const u=URL.createObjectURL(b); const a=document.createElement("a"); a.href=u; a.download=fn; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(u),1500); });
+};
+$("#certPrint").onclick=()=>{
+  drawCertificate($("#certName").value);
+  const data=$("#certCanvas").toDataURL("image/png");
+  const w=window.open("","_blank");
+  if(!w){ alert("Please allow pop-ups to print, or use Download instead."); return; }
+  w.document.write('<html><head><title>Certificate</title><style>@page{size:landscape;margin:0}html,body{margin:0}img{width:100%;display:block}</style></head><body><img src="'+data+'"></body></html>');
+  w.document.close(); w.focus(); setTimeout(()=>{ w.print(); },400);
+};
 
 /* service worker */
 if("serviceWorker" in navigator){ navigator.serviceWorker.register("sw.js").catch(()=>{}); }
